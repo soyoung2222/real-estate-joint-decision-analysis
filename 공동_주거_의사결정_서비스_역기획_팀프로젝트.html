@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>공동 주거 의사결정 서비스 역기획</title>
+<style>
+  :root{
+    --bg:#f6f7fb;
+    --paper:#ffffff;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --line:#e5e7eb;
+    --primary:#3157d5;
+    --primary-soft:#eef2ff;
+    --accent:#0f766e;
+    --accent-soft:#ecfdf5;
+    --warn:#b45309;
+    --warn-soft:#fff7ed;
+    --danger:#b91c1c;
+    --danger-soft:#fef2f2;
+    --shadow:0 12px 35px rgba(31,41,55,.08);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family: Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    line-height:1.72;
+  }
+  .wrap{
+    max-width:1380px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:280px minmax(0,1fr);
+    gap:28px;
+    padding:28px;
+  }
+  aside{
+    position:sticky;
+    top:20px;
+    align-self:start;
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+    max-height:calc(100vh - 40px);
+    overflow:auto;
+  }
+  .brand{
+    font-weight:800;
+    font-size:18px;
+    margin-bottom:6px;
+  }
+  .brand-sub{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:18px;
+  }
+  nav a{
+    display:block;
+    text-decoration:none;
+    color:#374151;
+    padding:8px 10px;
+    margin:2px 0;
+    border-radius:10px;
+    font-size:14px;
+  }
+  nav a:hover{background:var(--primary-soft); color:var(--primary)}
+  main{min-width:0}
+  .hero{
+    background:linear-gradient(135deg,#1f3fb8,#3157d5 55%,#5b7bea);
+    color:#fff;
+    border-radius:26px;
+    padding:42px;
+    box-shadow:var(--shadow);
+    margin-bottom:24px;
+  }
+  .hero .eyebrow{
+    font-size:13px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    opacity:.82;
+    font-weight:700;
+  }
+  .hero h1{
+    margin:10px 0 12px;
+    font-size:38px;
+    line-height:1.25;
+  }
+  .hero p{max-width:900px; margin:0; font-size:17px; opacity:.95}
+  .hero .tags{margin-top:20px; display:flex; flex-wrap:wrap; gap:8px}
+  .tag{
+    display:inline-flex;
+    align-items:center;
+    padding:7px 11px;
+    border-radius:999px;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.22);
+    font-size:13px;
+    font-weight:700;
+  }
+  section{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:30px;
+    margin-bottom:20px;
+    box-shadow:0 7px 25px rgba(31,41,55,.04);
+  }
+  h2{
+    margin:0 0 18px;
+    font-size:26px;
+    letter-spacing:-.02em;
+  }
+  h3{
+    margin:24px 0 10px;
+    font-size:19px;
+  }
+  h4{margin:18px 0 8px;font-size:16px}
+  p{margin:8px 0}
+  .lead{
+    font-size:18px;
+    font-weight:700;
+    color:#111827;
+  }
+  blockquote{
+    margin:14px 0;
+    padding:16px 18px;
+    border-left:4px solid var(--primary);
+    background:var(--primary-soft);
+    border-radius:0 12px 12px 0;
+    font-weight:650;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:14px;
+  }
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:14px;
+  }
+  .card{
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    background:#fff;
+  }
+  .card h3,.card h4{margin-top:0}
+  .soft-primary{background:var(--primary-soft); border-color:#dbe2ff}
+  .soft-green{background:var(--accent-soft); border-color:#c7f1df}
+  .soft-warn{background:var(--warn-soft); border-color:#fed7aa}
+  .soft-danger{background:var(--danger-soft); border-color:#fecaca}
+  .kicker{font-size:12px;font-weight:800;color:var(--primary);letter-spacing:.08em;text-transform:uppercase}
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    margin:14px 0;
+  }
+  .step{
+    padding:9px 12px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:#fafafa;
+    font-size:14px;
+    font-weight:700;
+  }
+  .arrow{color:#9ca3af;font-weight:800}
+  .highlight-step{
+    background:var(--primary-soft);
+    border-color:#c7d2fe;
+    color:var(--primary);
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin:14px 0;
+    font-size:14px;
+  }
+  th,td{
+    border:1px solid var(--line);
+    padding:11px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+  th{
+    background:#f9fafb;
+    font-weight:800;
+  }
+  ul,ol{padding-left:22px}
+  li{margin:4px 0}
+  .metric{
+    font-size:32px;
+    font-weight:900;
+    color:var(--primary);
+    margin:4px 0 6px;
+  }
+  .pill{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:800;
+    background:#f3f4f6;
+    margin:2px 4px 2px 0;
+  }
+  .hero-feature{
+    border:2px solid #c7d2fe;
+    background:linear-gradient(180deg,#f7f8ff,#ffffff);
+  }
+  .compare{
+    display:grid;
+    grid-template-columns:1fr 72px 1fr;
+    gap:16px;
+    align-items:stretch;
+  }
+  .compare .mid{
+    display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--primary)
+  }
+  .footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    padding:16px 0 30px;
+  }
+  .small{font-size:13px;color:var(--muted)}
+  @media (max-width:980px){
+    .wrap{grid-template-columns:1fr;padding:16px}
+    aside{position:relative;top:auto;max-height:none}
+    .grid,.grid-3,.compare{grid-template-columns:1fr}
+    .compare .mid{padding:6px}
+    .hero{padding:28px}
+    .hero h1{font-size:30px}
+  }
+  @media print{
+    body{background:#fff}
+    .wrap{display:block;max-width:none;padding:0}
+    aside{display:none}
+    section,.hero{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <aside>
+    <div class="brand">공동 주거 의사결정 서비스</div>
+    <div class="brand-sub">팀프로젝트 역기획 정리</div>
+    <nav>
+      <a href="#overview">1. 프로젝트 개요</a>
+      <a href="#customer">2. 핵심 Customer</a>
+      <a href="#problem">3. 핵심 Problem</a>
+      <a href="#problem-structure">4. 문제 구조</a>
+      <a href="#question">5. 사용자 질문</a>
+      <a href="#asis">6. AS-IS Journey</a>
+      <a href="#tobe">7. TO-BE Journey</a>
+      <a href="#features">8. 핵심 기능</a>
+      <a href="#hero-feature">9. Hero Feature</a>
+      <a href="#difference">10. 차별점</a>
+      <a href="#base-service">11. 기준 서비스</a>
+      <a href="#benchmark">12. Benchmark</a>
+      <a href="#mvp">13. MVP 범위</a>
+      <a href="#screens">14. 핵심 화면</a>
+      <a href="#kpi">15. KPI</a>
+      <a href="#hypothesis">16. 가설</a>
+      <a href="#cautions">17. 주의할 점</a>
+      <a href="#final">18. 최종 정의</a>
+      <a href="#process">19. 진행 순서</a>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="hero">
+      <div class="eyebrow">Reverse Planning Team Project</div>
+      <h1>공동 주거 의사결정 서비스 역기획</h1>
+      <p>함께 살 집을 구하는 두 사람의 서로 다른 주거 조건과 매물 평가를 한곳에 모아 비교하고, 의견 차이를 조율하여 최종 매물 선택까지 돕는 공동 주거 의사결정 서비스</p>
+      <div class="tags">
+        <span class="tag">기준 서비스: 다방</span>
+        <span class="tag">Primary Target: 예비부부·신혼부부</span>
+        <span class="tag">핵심: Joint Decision Making</span>
+        <span class="tag">Hero Feature: 공동 적합도 + 조건 충돌 분석</span>
+      </div>
+    </div>
+
+    <section id="overview">
+      <div class="kicker">01 · Overview</div>
+      <h2>프로젝트 개요</h2>
+      <h3>프로젝트 주제</h3>
+      <p class="lead">공동 주거자를 위한 매물 탐색·비교·합의 지원 서비스</p>
+      <blockquote>나의 방 찾기 → 우리의 집 찾기</blockquote>
+      <p>기존 다방의 개인 중심 매물 탐색 경험을, 두 사람이 함께 조건을 정하고 후보를 비교하며 하나의 선택에 합의하는 경험으로 확장한다.</p>
+    </section>
+
+    <section id="customer">
+      <div class="kicker">02 · Customer</div>
+      <h2>핵심 Customer</h2>
+      <blockquote>수도권에서 처음으로 함께 거주할 전·월세 주택을 찾는 예비부부·신혼부부</blockquote>
+
+      <div class="grid">
+        <div class="card">
+          <h3>A 사용자 예시</h3>
+          <ul>
+            <li>강남 출퇴근 40분 이내</li>
+            <li>역 도보 10분</li>
+            <li>보증금 3억 이하</li>
+            <li>구축 가능</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>B 사용자 예시</h3>
+          <ul>
+            <li>여의도 출퇴근 40분 이내</li>
+            <li>20평 이상</li>
+            <li>주차 필수</li>
+            <li>15년 이내 건물 선호</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>왜 이 타깃인가?</h3>
+      <p>공동 주거에서는 단순히 좋은 매물을 찾는 것보다 <strong>서로 다른 기준을 조율하고 하나의 선택에 합의하는 문제</strong>가 명확하게 발생한다.</p>
+
+      <h3>확장 타깃</h3>
+      <span class="pill">동거 커플</span>
+      <span class="pill">친구·룸메이트</span>
+      <span class="pill">가족 공동 주거</span>
+      <span class="pill">부모-자녀 공동 의사결정</span>
+    </section>
+
+    <section id="problem">
+      <div class="kicker">03 · Problem</div>
+      <h2>핵심 Problem</h2>
+      <blockquote>공동 주거 탐색 과정에서 각 참여자의 조건·우선순위·매물 평가가 부동산 앱, 카카오톡, 메모 등에 분산되면서 반복 탐색과 비교가 발생하고 최종 매물에 대한 합의 비용이 증가한다.</blockquote>
+      <p>즉, 기존 부동산 서비스는 개인의 매물 탐색에는 최적화되어 있지만, <strong>두 명 이상의 사용자가 함께 조건을 조율하고 매물을 평가해 하나의 선택에 합의하는 과정</strong>은 충분히 지원하지 못한다.</p>
+    </section>
+
+    <section id="problem-structure">
+      <div class="kicker">04 · Problem Structure</div>
+      <h2>핵심 문제 구조</h2>
+      <div class="grid-3">
+        <div class="card soft-primary">
+          <h3>Information Fragmentation</h3>
+          <p>매물이 관심목록, 카카오톡 링크, 캡처, 메모 등에 흩어진다.</p>
+        </div>
+        <div class="card soft-primary">
+          <h3>Preference Fragmentation</h3>
+          <p>서로 중요하게 생각하는 조건과 우선순위가 구조화되지 않는다.</p>
+        </div>
+        <div class="card soft-warn">
+          <h3>Manual Comparison</h3>
+          <p>공유된 매물을 두 사람이 다시 열어보고 직접 비교해야 한다.</p>
+        </div>
+        <div class="card soft-warn">
+          <h3>Preference Conflict</h3>
+          <p>가격·면적·신축·교통·주차 등에서 의견 충돌이 발생한다.</p>
+        </div>
+        <div class="card soft-danger">
+          <h3>Decision Cost</h3>
+          <p>무엇을 양보해야 전체 만족도가 높아지는지 판단하기 어렵다.</p>
+        </div>
+        <div class="card soft-danger">
+          <h3>Repeated Search</h3>
+          <p>합의가 되지 않으면 탐색과 공유가 반복된다.</p>
+        </div>
+      </div>
+      <div class="flow">
+        <span class="step">Information Fragmentation</span><span class="arrow">→</span>
+        <span class="step">Preference Fragmentation</span><span class="arrow">→</span>
+        <span class="step">Manual Comparison</span><span class="arrow">→</span>
+        <span class="step">Preference Conflict</span><span class="arrow">→</span>
+        <span class="step">Decision Cost 증가</span><span class="arrow">→</span>
+        <span class="step">Repeated Search</span>
+      </div>
+    </section>
+
+    <section id="question">
+      <div class="kicker">05 · Core Question</div>
+      <h2>해결하고자 하는 사용자 질문</h2>
+      <div class="compare">
+        <div class="card">
+          <h3>일반 부동산 추천</h3>
+          <p class="lead">“나에게 좋은 집은 무엇인가?”</p>
+        </div>
+        <div class="mid">VS</div>
+        <div class="card soft-green">
+          <h3>공동 주거 의사결정</h3>
+          <p class="lead">“우리 둘에게 가장 좋은 집은 무엇인가?”</p>
+        </div>
+      </div>
+      <blockquote><strong>Joint Decision Making</strong> — 단순한 매물 추천이 아니라 공동 의사결정 지원</blockquote>
+    </section>
+
+    <section id="asis">
+      <div class="kicker">06 · AS-IS</div>
+      <h2>AS-IS User Journey</h2>
+      <div class="flow">
+        <span class="step">각자 검색</span><span class="arrow">→</span>
+        <span class="step">링크 공유</span><span class="arrow">→</span>
+        <span class="step">카카오톡 논의</span><span class="arrow">→</span>
+        <span class="step">다시 검색</span><span class="arrow">→</span>
+        <span class="step">수동 비교</span><span class="arrow">→</span>
+        <span class="step">의견 충돌</span><span class="arrow">→</span>
+        <span class="step">후보 결정</span>
+      </div>
+      <p>핵심 문제는 매물 탐색 자체보다, <strong>탐색 이후 공동 비교·평가·합의 과정이 외부 메신저와 수동 작업에 의존</strong>한다는 점이다.</p>
+    </section>
+
+    <section id="tobe">
+      <div class="kicker">07 · TO-BE</div>
+      <h2>TO-BE User Journey</h2>
+      <div class="flow">
+        <span class="step highlight-step">공동 집찾기 생성</span><span class="arrow">→</span>
+        <span class="step">각자 조건 설정</span><span class="arrow">→</span>
+        <span class="step">공동 탐색</span><span class="arrow">→</span>
+        <span class="step">공동 관심매물</span><span class="arrow">→</span>
+        <span class="step">각자 평가</span><span class="arrow">→</span>
+        <span class="step highlight-step">공동 적합도</span><span class="arrow">→</span>
+        <span class="step highlight-step">조건 충돌 분석</span><span class="arrow">→</span>
+        <span class="step highlight-step">AI 타협안</span><span class="arrow">→</span>
+        <span class="step">후보 합의</span>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h3>① 공동 집찾기</h3>
+          <p>“우리의 신혼집 찾기” 프로젝트를 생성하고 파트너를 초대한다.</p>
+        </div>
+        <div class="card">
+          <h3>② 조건 중요도</h3>
+          <p><strong>필수 / 중요 / 있으면 좋음</strong>으로 각자의 기준을 구조화한다.</p>
+        </div>
+        <div class="card">
+          <h3>③ 공동 관심매물</h3>
+          <p>각자가 찾은 후보를 하나의 공간에 저장해 링크 분산을 줄인다.</p>
+        </div>
+        <div class="card">
+          <h3>④ 각자 평가</h3>
+          <p>❤️ 좋음 · 🤔 고민 · 👎 별로 등으로 독립적으로 평가한다.</p>
+        </div>
+        <div class="card">
+          <h3>⑤ 공동 적합도</h3>
+          <p>개인별 만족도와 공통 충족 조건을 함께 보여준다.</p>
+        </div>
+        <div class="card">
+          <h3>⑥ AI 타협안</h3>
+          <p>의견 차이를 설명하고 조건 완화 시 후보 변화를 제안한다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="kicker">08 · Features</div>
+      <h2>핵심 기능 구조</h2>
+      <table>
+        <thead>
+          <tr><th>영역</th><th>핵심 기능</th><th>해결 문제</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>공동 조건</td><td>각자 조건·중요도 입력</td><td>서로의 기준 파악</td></tr>
+          <tr><td>공동 탐색</td><td>공동 관심매물 보드</td><td>링크·매물 분산</td></tr>
+          <tr><td>공동 평가</td><td>투표·평가·코멘트</td><td>상대방 의견 파악</td></tr>
+          <tr><td>합의 지원</td><td>적합도·충돌 분석·AI 타협안</td><td>최종 의사결정</td></tr>
+          <tr><td>후속 행동</td><td>후보 선정·방문 일정 조율</td><td>탐색 이후 행동 연결</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="hero-feature" class="hero-feature">
+      <div class="kicker">09 · Hero Feature</div>
+      <h2>공동 적합도 + 조건 충돌 분석</h2>
+      <div class="metric">공동 적합도 83%</div>
+      <p><strong>A 만족도 91%</strong> · <strong>B 만족도 75%</strong></p>
+
+      <div class="grid">
+        <div class="card soft-green">
+          <h3>반드시 충족</h3>
+          <ul>
+            <li>✓ 예산</li>
+            <li>✓ 출퇴근</li>
+            <li>✓ 지하철 접근성</li>
+          </ul>
+        </div>
+        <div class="card soft-warn">
+          <h3>의견 차이</h3>
+          <ul>
+            <li>⚠ B는 신축을 필수로 설정</li>
+            <li>⚠ A는 면적 20평 이상을 중요하게 설정</li>
+          </ul>
+        </div>
+      </div>
+
+      <blockquote>AI 제안: 신축 기준을 10년 → 15년으로 조정할 경우 두 사람의 다른 필수조건을 유지하면서 후보가 9개 증가합니다.</blockquote>
+      <p>이 기능이 프로젝트의 대표 화면이자, 단순 매물 비교 서비스와의 차별점을 가장 명확히 보여주는 부분이다.</p>
+    </section>
+
+    <section id="difference">
+      <div class="kicker">10 · Differentiation</div>
+      <h2>일반 매물 비교 서비스와의 차이</h2>
+      <div class="compare">
+        <div class="card">
+          <h3>일반 매물 비교</h3>
+          <p>가격 · 위치 · 교통 · 면적 · 옵션 등 <strong>매물 자체의 속성</strong>을 비교한다.</p>
+          <p class="small">Property Comparison</p>
+        </div>
+        <div class="mid">→</div>
+        <div class="card soft-primary">
+          <h3>공동 주거 의사결정</h3>
+          <p><strong>사람의 선호 차이</strong>까지 비교하고, 충돌을 발견해 합의까지 지원한다.</p>
+          <p class="small">Preference Comparison → Conflict Detection → Consensus</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="base-service">
+      <div class="kicker">11 · Base Service</div>
+      <h2>기준 서비스: 다방</h2>
+      <p>다방의 개인 중심 User Journey를 기준으로 개선 전후를 명확하게 보여준다.</p>
+      <h3>기존 구조</h3>
+      <div class="flow">
+        <span class="step">조건 설정</span><span class="arrow">→</span>
+        <span class="step">지도 탐색</span><span class="arrow">→</span>
+        <span class="step">매물 상세</span><span class="arrow">→</span>
+        <span class="step">관심매물</span><span class="arrow">→</span>
+        <span class="step">문의</span>
+      </div>
+      <h3>개선 구조</h3>
+      <div class="flow">
+        <span class="step highlight-step">공동 집찾기</span><span class="arrow">→</span>
+        <span class="step">각자 조건</span><span class="arrow">→</span>
+        <span class="step">매물 탐색</span><span class="arrow">→</span>
+        <span class="step">공동 관심매물</span><span class="arrow">→</span>
+        <span class="step">각자 평가</span><span class="arrow">→</span>
+        <span class="step highlight-step">공동 적합도</span><span class="arrow">→</span>
+        <span class="step highlight-step">AI 타협안</span><span class="arrow">→</span>
+        <span class="step">후보 선정</span>
+      </div>
+    </section>
+
+    <section id="benchmark">
+      <div class="kicker">12 · Benchmark</div>
+      <h2>Benchmark 및 Reference 서비스</h2>
+      <table>
+        <thead>
+          <tr><th>서비스</th><th>참고 포인트</th><th>우리 서비스 적용</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>네이버부동산</strong></td><td>관심지역·관심단지·관심매물·지도 기반 탐색</td><td>후보 관리 및 탐색 UX</td></tr>
+          <tr><td><strong>직방</strong></td><td>AI 기반 조건 탐색·대화형 추천·중개사 연결</td><td>AI 설명·추천 구조</td></tr>
+          <tr><td><strong>Airbnb</strong></td><td>공동 Wishlist·초대·투표·메모</td><td><strong>같이 고르기</strong></td></tr>
+          <tr><td><strong>Google Maps</strong></td><td>공동 장소 리스트·지도 기반 저장</td><td><strong>같이 모으기</strong></td></tr>
+          <tr><td><strong>Doodle</strong></td><td>여러 참여자의 선택을 모아 합의</td><td><strong>같이 합의하기</strong></td></tr>
+          <tr><td><strong>Wanderlog</strong></td><td>하나의 프로젝트를 여러 사용자가 공동 관리</td><td>우리집 찾기 프로젝트 구조</td></tr>
+        </tbody>
+      </table>
+
+      <blockquote>Airbnb의 ‘같이 고르기’ + Google Maps의 ‘같이 모으기’ + Doodle의 ‘같이 합의하기’</blockquote>
+    </section>
+
+    <section id="mvp">
+      <div class="kicker">13 · MVP</div>
+      <h2>MVP 범위</h2>
+      <ol>
+        <li>공동 집찾기 생성</li>
+        <li>파트너 초대</li>
+        <li>각자 주거조건 설정</li>
+        <li>공동 관심매물</li>
+        <li>각자 매물 평가</li>
+        <li>공동 적합도 + 의견 차이 확인</li>
+        <li>최종 후보 선정</li>
+      </ol>
+
+      <div class="grid">
+        <div class="card soft-green">
+          <h3>후속 기능</h3>
+          <ul>
+            <li>방문 일정 조율</li>
+            <li>중개사 문의 연결</li>
+            <li>공동 메모</li>
+            <li>후보 매물 비교</li>
+          </ul>
+        </div>
+        <div class="card soft-danger">
+          <h3>MVP 후순위/제외</h3>
+          <ul>
+            <li>전세사기 위험 진단</li>
+            <li>등기부등본 분석</li>
+            <li>보증보험</li>
+            <li>대출 추천</li>
+            <li>전자계약</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="screens">
+      <div class="kicker">14 · Prototype</div>
+      <h2>MVP 핵심 화면</h2>
+      <div class="grid">
+        <div class="card"><h3>화면 1</h3><p><strong>공동 집찾기 생성</strong><br>프로젝트 이름 · 입주 목표일 · 파트너 초대</p></div>
+        <div class="card"><h3>화면 2</h3><p><strong>나의 주거조건</strong><br>예산 · 지역 · 출퇴근 · 면적 · 신축 · 주차 · 중요도</p></div>
+        <div class="card"><h3>화면 3</h3><p><strong>두 사람의 공동 조건</strong><br>공통 조건 · 다른 조건 · 필수 조건 충돌</p></div>
+        <div class="card"><h3>화면 4</h3><p><strong>매물 탐색</strong><br>공동 조건 기반 후보 · 지도 · 공동 관심매물 저장</p></div>
+        <div class="card"><h3>화면 5</h3><p><strong>공동 관심매물</strong><br>저장 후보 · A/B 평가 · 평가 완료 여부</p></div>
+        <div class="card"><h3>화면 6</h3><p><strong>매물 비교</strong><br>공동 적합도 · 개인별 만족도 · 공통 만족 조건</p></div>
+        <div class="card"><h3>화면 7</h3><p><strong>AI 의견차이 분석</strong><br>충돌 조건 · 타협안 · 조건 변경 시 후보 변화</p></div>
+      </div>
+    </section>
+
+    <section id="kpi">
+      <div class="kicker">15 · KPI</div>
+      <h2>KPI</h2>
+      <div class="card soft-primary">
+        <div class="small">North Star Metric</div>
+        <div class="metric">공동 후보 합의 완료율</div>
+        <p>공동 집찾기를 시작한 사용자 중 최종 후보 매물에 합의한 비율</p>
+      </div>
+
+      <table>
+        <thead>
+          <tr><th>구분</th><th>지표</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Activation</td><td>파트너 초대 완료율 · 양측 조건 입력 완료율</td></tr>
+          <tr><td>Engagement</td><td>공동 관심매물 등록 수 · 평가 참여율 · 비교 기능 사용률 · AI 타협안 확인율</td></tr>
+          <tr><td>Decision</td><td>공동 후보 선정률 · 공동 후보 합의 완료율 · 후보 선정 소요시간 · 반복 탐색 횟수</td></tr>
+          <tr><td>Conversion</td><td>후보 → 중개 문의 전환율 · 후보 → 방문예약 전환율</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="hypothesis">
+      <div class="kicker">16 · Hypothesis</div>
+      <h2>핵심 가설</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>문제 가설</h3>
+          <p>공동 주거자는 각자의 조건과 매물 평가가 여러 채널에 분산되어 있어 반복적인 매물 공유와 수동 비교를 경험하며, 최종 후보 합의까지 불필요한 시간과 커뮤니케이션 비용이 발생한다.</p>
+        </div>
+        <div class="card">
+          <h3>솔루션 가설</h3>
+          <p>두 사람의 주거 조건과 매물 평가를 하나의 서비스에서 구조화하고 의견 차이를 시각화하면, 반복적인 공유·비교가 감소하고 최종 후보 도달 시간이 단축될 것이다.</p>
+        </div>
+        <div class="card">
+          <h3>기능 가설</h3>
+          <p>두 사람의 조건 충돌과 타협 가능한 조건을 보여주면 단순 매물 추천보다 공동 후보 선정률이 높아질 것이다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="cautions">
+      <div class="kicker">17 · Guardrails</div>
+      <h2>프로젝트에서 주의할 점</h2>
+      <div class="grid">
+        <div class="card soft-warn">
+          <h3>① AI 추천 서비스가 되지 않기</h3>
+          <p><strong>AI가 좋은 집을 찾아준다</strong>가 아니라, <strong>AI가 두 사람의 서로 다른 기준을 분석하고 합의를 돕는다</strong>가 핵심이다.</p>
+        </div>
+        <div class="card soft-warn">
+          <h3>② 계약 단계까지 넓히지 않기</h3>
+          <p>본 프로젝트 범위는 <strong>탐색 → 비교 → 의견 조율 → 후보 합의</strong>까지로 제한한다.</p>
+        </div>
+        <div class="card soft-primary">
+          <h3>③ Share와 Collaborate 구분하기</h3>
+          <p>링크 전달은 Share이고, 하나의 공간에서 후보를 저장·평가·합의하는 것은 Collaborate다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="final">
+      <div class="kicker">18 · Final Definition</div>
+      <h2>프로젝트 최종 정의</h2>
+      <table>
+        <tbody>
+          <tr><th>프로젝트명</th><td><strong>다방 공동 주거 의사결정 서비스 역기획</strong></td></tr>
+          <tr><th>Target</th><td>수도권에서 처음 함께 거주할 전·월세 주택을 탐색하는 예비부부·신혼부부</td></tr>
+          <tr><th>Problem</th><td>기존 부동산 서비스가 개인 중심의 매물 탐색에 최적화되어 있어, 공동 주거자는 각자의 조건·우선순위·매물 평가를 여러 채널에서 수동으로 비교해야 하고 하나의 매물에 합의하기 어렵다.</td></tr>
+          <tr><th>Solution</th><td>각자의 조건과 중요도를 독립적으로 설정하고, 공동 관심매물에서 평가를 수집한 뒤 <strong>공동 적합도·조건 충돌·AI 타협안</strong>을 제공하여 최종 후보 선택을 지원한다.</td></tr>
+          <tr><th>핵심 가치</th><td><strong>혼자 찾는 집에서, 함께 결정하는 집으로.</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3>AS-IS → TO-BE 요약</h3>
+      <p><strong>AS-IS</strong></p>
+      <div class="flow">
+        <span class="step">각자 검색</span><span class="arrow">→</span>
+        <span class="step">링크 공유</span><span class="arrow">→</span>
+        <span class="step">카카오톡 논의</span><span class="arrow">→</span>
+        <span class="step">수동 비교</span><span class="arrow">→</span>
+        <span class="step">의견 충돌</span>
+      </div>
+      <p><strong>TO-BE</strong></p>
+      <div class="flow">
+        <span class="step highlight-step">공동 집찾기</span><span class="arrow">→</span>
+        <span class="step">각자 조건</span><span class="arrow">→</span>
+        <span class="step">공동 관심매물</span><span class="arrow">→</span>
+        <span class="step">각자 평가</span><span class="arrow">→</span>
+        <span class="step highlight-step">공동 적합도</span><span class="arrow">→</span>
+        <span class="step highlight-step">AI 타협안</span><span class="arrow">→</span>
+        <span class="step">후보 합의</span>
+      </div>
+    </section>
+
+    <section id="process">
+      <div class="kicker">19 · Next Steps</div>
+      <h2>프로젝트 진행 추천 순서</h2>
+      <ol>
+        <li><strong>문제 가설 수립</strong> — 실제 공동 주거 탐색에서 발생하는 불편 정의</li>
+        <li><strong>타깃 사용자 인터뷰</strong> — 예비부부·신혼부부·최근 공동 주거 탐색 경험자</li>
+        <li><strong>AS-IS Journey 정리</strong> — 탐색·공유·비교·논의·후보 선정</li>
+        <li><strong>경쟁·참조 서비스 분석</strong> — 다방·네이버부동산·직방·Airbnb·Google Maps·Doodle·Wanderlog</li>
+        <li><strong>핵심 Pain 검증</strong> — 링크 공유·조건 인지·수동 비교·의견 충돌·합의 지연</li>
+        <li><strong>Solution 정의</strong> — 공동 조건·공동 관심매물·공동 평가·공동 적합도·AI 타협안</li>
+        <li><strong>MVP 및 프로토타입 제작</strong> — 핵심 6~7개 화면과 대표 시나리오</li>
+        <li><strong>KPI 및 검증 설계</strong> — 공동 후보 합의 완료율·후보 선정 시간·반복 탐색 감소</li>
+      </ol>
+    </section>
+
+    <div class="footer">공동 주거 의사결정 서비스 역기획 · 팀프로젝트 정리본</div>
+  </main>
+</div>
+</body>
+</html>
