@@ -481,7 +481,8 @@ footer{
       <tr><td>후보 비교가 한 번에 끝나지 않고 반복된다</td><td><span class="p p-ok">확인</span></td><td>당근부동산 조사 — 전세 2.5개월·4.1곳</td></tr>
       <tr><td>개인용 매물 채점·기록은 이미 포화</td><td><span class="p p-ok">확인</span></td><td>국내 앱 20개+</td></tr>
       <tr><td>2인 초대 구조 자체는 성립 가능</td><td><span class="p p-ok">존재 증명</span></td><td>특별시 · 웨딩노트 · MarryNote</td></tr>
-      <tr><td><strong>둘의 조건 충돌이 실제로 결정을 지연시킨다</strong></td><td><span class="p p-f">미검증</span></td><td>공개 데이터 없음 → <strong>H2-b</strong></td></tr>
+      <tr><td><strong>2인이 집 고를 때 조건 충돌이 실재한다</strong></td><td><span class="p p-ok">확정</span></td><td><strong>Zillow 2020 — 커플 77%가 다퉜고 그중 must-have 조건 47%</strong> → H2-b-1</td></tr>
+      <tr><td><strong>그 충돌이 결정을 지연시킨다</strong></td><td><span class="p p-f">미검증</span></td><td>공개 데이터 없음. 오히려 같은 조사에서 <strong>60%가 “결국 상관없었다”</strong> → <strong>H2-b-2</strong></td></tr>
       <tr><td><strong>초대받은 상대가 조건까지 입력한다</strong></td><td><span class="p p-f">최우선 미검증</span></td><td>비교군 수락률 비공개 → <strong>H1</strong></td></tr>
     </tbody>
   </table></div>
@@ -928,7 +929,7 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
       <tr><td class="k">2 · 진입 위협</td><td><strong>특별시 · 웨딩노트 · MarryNote</strong></td><td>6자리 초대코드로 2인 연결, “신혼집도 함께 정하고”</td><td><strong>H1의 사실상 유일한 국내 비교군</strong> (수치는 비공개)</td></tr>
       <tr><td class="k">2</td><td>네이버페이 부동산 (현재)</td><td>관심매물·단지·지역 저장</td><td>30일+ 방치 비중 — <strong>내부 데이터</strong></td></tr>
       <tr><td class="k">2</td><td>직방 · 호갱노노</td><td>AI 조건 추천, 대화형 탐색</td><td>조건 입력을 어디까지 요구하고 어디서 이탈하나</td></tr>
-      <tr><td class="k">3 · 해외 선행</td><td><strong>TwoKeys</strong> (밴쿠버, 2026-05 오픈베타)</td><td>커플·룸메이트 공유 공간, 항목별 공동 채점</td><td><strong>가장 가까운 선행 — 이들이 어디서 막히는지가 우리 지도</strong></td></tr>
+      <tr><td class="k">3 · 해외 선행</td><td><strong>TwoKeys</strong> (밴쿠버, 2026-05 오픈베타)</td><td>공유 공간 + <strong>각자 평점 → 협력 평점 → 총합 평점</strong></td><td><strong>가장 가까운 선행인데 우리와 반대 설계</strong> — 매물에 저장 + 집계. 사실상 집노트의 2인 버전 ↓</td></tr>
     </tbody>
   </table></div>
   <p><strong>Tier 0을 맨 위에 두는 게 이 표의 핵심이다.</strong> 경쟁 상대는 다른 부동산 앱이 아니다.</p>
@@ -958,6 +959,11 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
 
   <h3>여기서 나오는 결론 셋</h3>
   <p><strong>① 계산 구조는 국내에 이미 검증된 선행이 있다.</strong> 위밋플레이스는 각자의 출발지를 받아 하나의 해로 수렴시킨다. 우리와 수학적으로 같은 구조이고, 국내 사용자가 이 방식을 받아들인다는 증거다.</p>
+  <div class="pull warn">
+    <p><strong>가장 가까운 선행 사례가 우리가 기각한 방식을 쓴다.</strong> TwoKeys는 각자 매물에 평점을 매기고 <strong>총합 평점으로 일치도를 시각화</strong>한다 — <code>0003</code>(매물이 아니라 사람에 저장)과 <code>0001</code>(총점 금지) 둘 다에 반대된다. 존재 이유도 <strong>“viewing fatigue”</strong>(그룹챗·링크 분산·일정 추적)이라 <strong>위 갈래를 푼다.</strong></p>
+    <p style="margin-top:8px"><strong>그래서 아래 갈래는 여전히 비어 있다.</strong> 동시에 이건 실험이기도 하다 — TwoKeys가 성장하면 총점이 2인 맥락에서도 통한다는 증거가 되므로 <code>decisions/0001</code>의 되돌릴 조건에 추가했다.</p>
+  </div>
+
   <div class="pull">
     <p><strong>② 충돌 표현의 참조군은 부동산이 아니라 의료에 있었다.</strong> 두 개 이상의 선택지 간 trade-off를 총점 없이 제시하는 문제는 <strong>환자 의사결정보조자료(PtDA)</strong> 분야에서 20년 넘게 표준화돼 왔다.</p>
   </div>
@@ -1387,7 +1393,8 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
     <tbody>
       <tr><td class="k">H1</td><td><strong>상대가 초대를 받아 조건을 입력하나</strong></td><td><span class="p p-f">모름 — 최우선</span></td></tr>
       <tr><td class="k">H2-a</td><td>집 구할 때 여러 번 비교하나</td><td><span class="p p-ok">확정</span></td></tr>
-      <tr><td class="k">H2-b</td><td><strong>둘이라서 더 오래 걸리나</strong></td><td><span class="p p-f">모름 — 핵심인데 비어 있음</span></td></tr>
+      <tr><td class="k">H2-b-1</td><td>집 고를 때 조건 충돌이 실재하나</td><td><span class="p p-ok">확정</span> — Zillow 77%</td></tr>
+      <tr><td class="k">H2-b-2</td><td><strong>그 충돌이 결정을 지연시키나</strong></td><td><span class="p p-f">모름 — 급소</span></td></tr>
       <tr><td class="k">H3</td><td>출근지·예산을 입력해줄까</td><td><span class="p p-off">설계로 완화 가능</span></td></tr>
       <tr><td class="k">H4</td><td>네이버 데이터로 비용 계산이 되나</td><td><span class="p p-off">반만 됨</span></td></tr>
       <tr><td class="k">H5</td><td>매물이 비교보다 빨리 사라지나</td><td><span class="p p-off">반은 맞고 반은 틀림</span></td></tr>
@@ -1432,8 +1439,30 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
     <p>당근부동산 이용자 971명 기준이라 직거래 성향이 과대 대표됐을 수 있다. 발표에서 “전 국민이 2.5개월”로 말하면 안 된다.</p>
   </div>
 
-  <h3>H2-b — 2인 갈등이 결정을 지연시킨다 · 미검증 · 급소</h3>
-  <p>위 조사는 <strong>1인 기준 탐색 행동만</strong> 보여준다. 두 사람이 함께 구할 때 조율 비용이 추가로 드는지는 <strong>어떤 공개 데이터에도 없다.</strong></p>
+  <h3>H2-b-1 — 조건 충돌이 실재한다 · 확정</h3>
+  <p>외국 서비스(TwoKeys)가 왜 만들어졌는지를 역추적하다 근거를 찾았다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>커플이 집 사면서 다툰 항목 (미국, 2020)</th><th class="num">비율</th></tr></thead>
+    <tbody>
+      <tr><td class="k">집 크기 · 스타일</td><td class="num">54%</td></tr>
+      <tr><td class="k"><strong>must-have 기능 · deal breaker</strong></td><td class="num"><strong>47%</strong> ★</td></tr>
+      <tr><td class="k">위치</td><td class="num">42%</td></tr>
+      <tr><td class="k">예산</td><td class="num">37%</td></tr>
+      <tr><td class="k">수리 여부</td><td class="num">29%</td></tr>
+    </tbody>
+  </table></div>
+  <p><strong>전체의 77%가 다퉜고, 조건 관련이 예산보다 높다.</strong> 그리고 <code>must-have / deal breaker</code>가 <strong>우리 “필수조건”과 정확히 대응한다.</strong></p>
+  <div class="note">
+    <span class="nlabel">범위가 다르면 결과가 뒤집힌다</span>
+    <p>국내 <strong>결혼준비</strong> 갈등 조사에서는 비용·양가·가치관이 상위이고 주거 조건은 안 나온다. 그건 예식·예단을 포함한 전반이고, 위 조사는 <strong>집 고르는 과정에 한정</strong>했다. <strong>범위를 좁히면 조건 충돌이 드러난다.</strong></p>
+  </div>
+  <p><strong>한계</strong> — 미국·2020년·<strong>매매</strong> 기준이고(우리는 전월세), 원문이 403이라 <strong>표본 크기를 확인하지 못했다.</strong> 다수 매체가 같은 수치를 인용해 교차 확인만 됐다.</p>
+
+  <h3>H2-b-2 — 그 충돌이 결정을 지연시킨다 · 미검증 · 급소</h3>
+  <p>충돌이 있다는 것과 그것이 <strong>결정을 늦춘다</strong>는 것은 다른 주장이다. 후자는 <strong>어떤 공개 데이터에도 없다.</strong></p>
+  <div class="pull warn">
+    <p><strong>오히려 반대 증거가 있다.</strong> 같은 Zillow 조사에서 <strong>60%가 “결국 상관없었다”</strong>고 답했다. 다투기는 하지만 결과에 미치는 영향은 제한적일 수 있다.</p>
+  </div>
   <div class="tw"><table>
     <tbody>
       <tr><td class="k">측정</td><td>최근 6개월 내 2인 이상이 함께 집을 구한 사용자 인터뷰</td></tr>
