@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>조건 입력 UI 설계 & 임장일기 벤치마크</title>
+<style>
+:root{
+  --ink:#1e2b25; --muted:#5b675f; --faint:#8a958c;
+  --paper:#f5f7f1; --raised:#ffffff; --line:#d7ddd2; --line-soft:#e6eae1;
+  --accent:#2f7d5c; --accent-soft:#e4efe7; --accent-soft-ink:#1f5e42;
+  --clay:#a8672f; --clay-soft:#f3e6d8;
+  --shadow: 0 1px 2px rgba(30,43,37,.04), 0 8px 24px rgba(30,43,37,.06);
+}
+*{box-sizing:border-box;}
+body{ margin:0; background:var(--paper); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  line-height:1.68; font-size:16px; }
+.topbar{ background:#05100a; color:#cfe6d7; padding:.6rem 1.25rem; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; }
+.wrap{ max-width:980px; margin:0 auto; padding:2.2rem 1.4rem 5rem; }
+header.hero{ border-bottom:1px solid var(--line); padding-bottom:1.6rem; margin-bottom:2rem; }
+.eyebrow{ font-size:.76rem; letter-spacing:.1em; color:var(--accent); font-weight:700; text-transform:uppercase; margin-bottom:.5rem; }
+h1{ font-size:clamp(1.5rem,4vw,2.1rem); line-height:1.25; letter-spacing:-.02em; margin:0 0 .6rem; font-weight:800; }
+.lede{ color:var(--muted); font-size:1rem; max-width:70ch; margin:0; }
+
+section{ margin:3rem 0; }
+.sec-head{ display:flex; align-items:baseline; gap:.6rem; margin-bottom:.3rem; flex-wrap:wrap; }
+.sec-code{ font-family:Georgia,serif; font-size:1.4rem; font-weight:700; color:var(--accent); }
+h2{ font-size:1.25rem; margin:0; }
+.sec-lede{ color:var(--muted); font-size:.9rem; margin:.4rem 0 1.1rem; max-width:72ch; }
+
+/* screenshot gallery */
+.shot-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.4rem; margin:1rem 0; }
+.shot-card{ background:var(--raised); border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+.shot-card img{ width:100%; display:block; border-bottom:1px solid var(--line); }
+.shot-cap{ padding:.7rem .8rem; font-size:.82rem; color:var(--muted); }
+.shot-cap b{ color:var(--ink); display:block; margin-bottom:.2rem; font-size:.85rem; }
+.shot-tag{ display:inline-block; font-size:.65rem; font-weight:700; text-transform:uppercase; padding:.1rem .45rem; border-radius:999px; margin-bottom:.4rem; }
+.tag-good{ background:var(--accent-soft); color:var(--accent-soft-ink); }
+.tag-bad{ background:var(--clay-soft); color:var(--clay); }
+
+table.ft{ width:100%; border-collapse:collapse; font-size:.87rem; background:var(--raised); }
+table.ft th{ text-align:left; background:var(--accent-soft); color:var(--accent-soft-ink); font-size:.72rem; text-transform:uppercase; letter-spacing:.03em; padding:.6rem .7rem; }
+table.ft td{ padding:.65rem .7rem; border-top:1px solid var(--line-soft); vertical-align:top; }
+.table-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:12px; margin:1rem 0; }
+
+.pool-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin:1rem 0; }
+.pool-card{ border:1px solid var(--line); border-radius:12px; padding:1rem 1.1rem; background:var(--raised); }
+.pool-card h4{ margin:0 0 .5rem; font-size:.85rem; color:var(--accent-soft-ink); }
+.pool-card ul{ margin:0; padding-left:1.1rem; font-size:.85rem; }
+.pool-card li{ margin:.3rem 0; }
+.pool-card.locked{ background:var(--accent-soft); border-color:var(--accent); }
+.pool-card.optional{ background:var(--clay-soft); border-color:var(--clay); }
+
+.recommend{ border:1.5px solid var(--accent); background:var(--accent-soft); border-radius:12px; padding:1rem 1.2rem; margin:1rem 0; font-size:.9rem; color:var(--accent-soft-ink); }
+.recommend b{ display:block; font-size:.72rem; text-transform:uppercase; letter-spacing:.04em; margin-bottom:.3rem; }
+
+/* phone mockups */
+.screens-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:2rem 1.4rem; margin-top:1.4rem; }
+.screen-card{ display:flex; flex-direction:column; gap:.7rem; }
+.screen-step{ font-size:.72rem; letter-spacing:.05em; text-transform:uppercase; color:var(--accent); font-weight:700; }
+.phone{ width:100%; max-width:210px; margin:0 auto; background:#10140f; border-radius:24px; padding:8px; box-shadow:var(--shadow); }
+.screen{ background:#fbfbf7; border-radius:16px; overflow:hidden; min-height:380px; color:#1d2620; display:flex; flex-direction:column; font-size:.68rem; }
+.s-bar{ background:#fff; padding:.5rem .65rem; font-weight:700; font-size:.72rem; border-bottom:1px solid #ececE5; color:#1d2620; }
+.s-bar .back{ color:#9aa79d; font-weight:400; }
+.s-body{ padding:.55rem .55rem; flex:1; display:flex; flex-direction:column; gap:.4rem; }
+.s-row{ display:flex; gap:.5rem; align-items:center; background:#fff; border:1px solid #ececE5; border-radius:9px; padding:.42rem .5rem; }
+.s-row .t1{ font-weight:700; font-size:.68rem; color:#1d2620; }
+.s-row .t2{ font-size:.6rem; color:#8a958c; }
+.s-chip{ display:inline-flex; align-items:center; gap:.3rem; border:1px solid #d8e0da; border-radius:999px; padding:.32rem .55rem; font-size:.64rem; background:#fff; }
+.s-chip.on{ background:#2f7d5c; color:#fff; border-color:#2f7d5c; }
+.s-chiprow{ display:flex; flex-wrap:wrap; gap:.35rem; }
+.s-note{ background:#eef4f0; border:1px dashed #9fc4ac; color:#1f5e42; border-radius:9px; padding:.45rem .55rem; font-size:.62rem; }
+.s-cta{ margin-top:auto; background:#2f7d5c; color:#fff; text-align:center; border-radius:9px; padding:.48rem; font-weight:700; font-size:.68rem; }
+.s-cta.ghost{ background:transparent; border:1px solid #cfd9d2; color:#5b675f; }
+.s-caption{ font-size:.85rem; color:var(--muted); }
+.s-caption b{ color:var(--ink); }
+
+footer{ margin-top:3rem; padding-top:1.2rem; border-top:1px solid var(--line); color:var(--faint); font-size:.78rem; }
+</style>
+</head>
+<body>
+<div class="topbar">서비스 역기획 · 팀4 · 8/19 조건 입력 UI 설계</div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">참조서비스 직접 탐색 + UI 설계</div>
+    <h1>조건 입력 UI 설계 & 임장일기 벤치마크</h1>
+    <p class="lede">임장일기·집노트·손품노트를 직접 써본 결과와, 우리 조건 입력 화면(A/B 예시)을 근거로 필수/선택 항목을 정하고 화면을 설계합니다.</p>
+  </header>
+
+  <section id="imjang">
+    <div class="sec-head"><span class="sec-code">A</span><h2>임장일기 — 실제 사용 화면</h2></div>
+    <p class="sec-lede">온보딩 4문항 → 개인화 요약 → 매물 링크 등록(AI 자동 파싱) → 3단 체크리스트 순서로 확인했습니다.</p>
+
+    <div class="shot-grid">
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_01.png" alt="임장일기 인트로">
+        <div class="shot-cap"><b>인트로</b>"매물 하나를, 바로 임장할 수 있게 정리하세요" — 첫 화면부터 가치제안이 명확</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_04.png" alt="온보딩 질문 1">
+        <div class="shot-cap"><b>Q1/4 · 상황</b>"오늘 어떤 집을 찾고 계신가요?" — 첫집/이사/투자/고객용, 단일 선택</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_05.png" alt="온보딩 질문 2">
+        <div class="shot-cap"><b>Q2/4 · 페인포인트</b>"임장하고 나면 뭐가 가장 헷갈리나요?" — 우리 문제정의와 동일한 질문</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_06.png" alt="온보딩 질문 3">
+        <div class="shot-cap"><b>Q3/4 · 필수조건의 원형</b><span class="shot-tag tag-good">녹일 점</span>"가장 중요한 것 (최대 3개)" — 입지/가격/상태/구조/투자가치 중 선택. 이게 그대로 체크리스트가 됨</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_07.png" alt="온보딩 질문 4">
+        <div class="shot-cap"><b>Q4/4 · 탈락조건</b><span class="shot-tag tag-good">녹일 점</span>"절대 안 되는 건?" — 우리의 "필수조건 불충족" 개념과 정확히 대응</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_08.png" alt="개인화 요약">
+        <div class="shot-cap"><b>개인화 요약</b><span class="shot-tag tag-good">녹일 점</span>"이사할 집을 찾기 위한 임장이네요. 입지가 중요하지만 자꾸 헷갈리네요" — 답변을 그대로 요약해 되돌려줌</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_09.png" alt="매물 링크 입력">
+        <div class="shot-cap"><b>매물 등록</b>"매물 링크를 붙여넣으세요" + "예시 매물로 시작하기"</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_10.png" alt="예시 매물 오류">
+        <div class="shot-cap"><b>예시 매물 오류</b><span class="shot-tag tag-bad">부족한 점</span>"지금은 예시 매물을 불러올 수 없어요" — 데모 기능이 고장난 채 방치. 첫인상 신뢰도 저하</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_11.png" alt="AI 자동 파싱 로딩">
+        <div class="shot-cap"><b>AI 자동 파싱</b><span class="shot-tag tag-good">녹일 점</span>"매물 읽는 중 → 핵심 정보 찾는 중 → 방문 카드 준비 중" — 링크만으로 정보 자동 추출, 로딩 자체를 진행 서사로 만듦</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_15.png" alt="3단 체크리스트">
+        <div class="shot-cap"><b>3단 체크리스트</b><span class="shot-tag tag-good">핵심 참고</span>꼭 확인(필수) · 있으면 좋은 점(선호) · 탈락 조건(dealbreaker) — 우리가 지금 설계하려는 필수/선택 구조와 동일한 3단 분류</div>
+      </div>
+      <div class="shot-card">
+        <img src="임장일기/KakaoTalk_20260819_140015228_18.png" alt="사이트 목록">
+        <div class="shot-cap"><b>지원 사이트</b>한국(네이버부동산·피터팬), 미국(Zillow·Realtor·Redfin), 영국(Rightmove) — 우리는 네이버 안에 있어 불필요하지만 확장성 참고</div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table class="ft">
+        <tr><th>서비스</th><th>우리 서비스에 녹여야 할 점</th><th>부족한 점 / 참고만 할 것</th></tr>
+        <tr>
+          <td><b>임장일기</b></td>
+          <td>
+            ① 온보딩 4문항(상황·페인포인트·중요한 것 최대3개·탈락조건)이 그대로 개인화된 체크리스트로 전환되는 흐름 — 우리 조건입력(필수①②·확인)에 그대로 적용 가능<br>
+            ② 답변을 요약해 "OO한 임장이네요"로 되돌려주는 확인 화면 — 우리 초대 진입 시 "OO님과 함께 고르는 집이네요" 식으로 응용<br>
+            ③ 링크만으로 정보를 자동 파싱하는 로딩 연출(단계별 체크) — 다만 우리는 네이버 내부라 파싱 자체는 불필요
+          </td>
+          <td>
+            ① 예시 매물 데모가 고장난 채 방치 — 데모/체험 기능은 만들려면 반드시 상시 동작 확인 필요<br>
+            ② 체크리스트가 매물마다 개별 관리 — 매물이 사라지면 그 체크리스트도 함께 사라짐 (우리는 `decisions/0003`대로 조건을 사람에 저장해 이 문제를 피함)<br>
+            ③ 온보딩부터 결제/방문까지 전부 <b>1인 기준</b> — 상대방(2번째 사용자)을 위한 질문이나 초대 개념 자체가 없음<br>
+            ④ 매물 특징 텍스트가 중개사 원문(광고 문구 포함) 그대로 노출 — 정제되지 않은 정보 품질
+          </td>
+        </tr>
+        <tr>
+          <td><b>집노트</b></td>
+          <td>—</td>
+          <td>UI 완성도가 낮고, 항목별 점수를 매겨 사후 평가하는 느낌 — <code>decisions/0001</code>(총점 금지)이 정확히 반대 방향으로 정한 이유가 다시 확인됨. 참고할 요소 없음</td>
+        </tr>
+        <tr>
+          <td><b>손품노트</b></td>
+          <td>동선·예산 등 조건을 미리 입력받는 컨셉 자체는 유효</td>
+          <td>아파트 단지로 범위가 한정됨 — 우리 타깃(원룸·투룸·오피스텔 포함 전월세 전반)에는 그대로 적용하기 어려움</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="fields">
+    <div class="sec-head"><span class="sec-code">B</span><h2>조건 입력 필드 — 필수/선택 결정</h2></div>
+    <p class="sec-lede">A/B 예시(출근지·예산·필수①②·선호·확인)를 그대로 스키마로 굳히고, 임장일기의 3단 구조(꼭확인/있으면좋은점/탈락조건)를 겹쳐서 확정합니다.</p>
+
+    <div class="table-scroll">
+      <table class="ft">
+        <tr><th>구분</th><th>필수 여부</th><th>개수</th><th>A 예시</th><th>B 예시</th></tr>
+        <tr><td>출근지 · 교통수단</td><td>항상 필수</td><td>1</td><td>강남역 · 대중교통</td><td>여의도역 · 대중교통</td></tr>
+        <tr><td>예산 (월 실부담 상한)</td><td>항상 필수</td><td>1</td><td>≤ 130만</td><td>≤ 150만</td></tr>
+        <tr><td>필수조건</td><td>필수 (풀에서 선택)</td><td>정확히 2</td><td>통근 ≤40분 · 역 도보 ≤10분</td><td>전용 ≥66㎡ · 주차 가능</td></tr>
+        <tr><td>선호조건</td><td>선택</td><td>0~1</td><td>층수 ≥3층</td><td>(비움)</td></tr>
+        <tr><td>확인조건</td><td>선택</td><td>0~2</td><td>(비움)</td><td>반려동물 가능 여부</td></tr>
+      </table>
+    </div>
+
+    <div class="recommend">
+      <b>왜 이 구조가 맞는가</b>
+      임장일기 Q3("중요한 것 최대 3개")·Q4("절대 안 되는 것")가 그대로 체크리스트의 "꼭 확인"·"탈락 조건"이 되는 걸 보면, <b>사람마다 무엇이 필수인지가 다르다</b>는 게 핵심입니다. 그래서 반려동물 같은 항목을 처음부터 "확인 전용"으로 고정하면 안 됩니다 — A처럼 필요 없는 사람도 있고, B처럼 필수급인 사람도 있습니다. 항목은 <b>하나의 선택 풀</b>에 두고, 사용자가 자신에게 맞는 자리(필수/선호/확인)에 직접 배치하게 하는 것이 맞습니다.
+    </div>
+
+    <h3 style="font-size:1rem;margin:1.6rem 0 .6rem;">조건 후보 풀 (사용자가 배치하는 원재료)</h3>
+    <div class="pool-grid">
+      <div class="pool-card locked">
+        <h4>거리·공간 — 주로 필수①②에</h4>
+        <ul>
+          <li>통근시간 상한</li>
+          <li>역 도보거리 상한</li>
+          <li>전용면적 하한</li>
+          <li>방 개수</li>
+        </ul>
+      </div>
+      <div class="pool-card">
+        <h4>편의 — 필수 또는 선호</h4>
+        <ul>
+          <li>주차 가능 여부</li>
+          <li>엘리베이터 유무</li>
+          <li>화장실 개수·분리형</li>
+          <li>베란다·발코니 유무</li>
+        </ul>
+      </div>
+      <div class="pool-card optional">
+        <h4>확인 — 예/아니오 사실조회형</h4>
+        <ul>
+          <li>반려동물 가능 여부</li>
+          <li>즉시 입주 가능 여부</li>
+          <li>근저당(융자) 없는 매물</li>
+          <li>전입신고 가능 여부</li>
+        </ul>
+      </div>
+      <div class="pool-card">
+        <h4>선호 — 있으면 좋음 (최대 1개)</h4>
+        <ul>
+          <li>층수(고층 선호 등)</li>
+          <li>신축 연차</li>
+          <li>방향·채광</li>
+        </ul>
+      </div>
+      <div class="pool-card">
+        <h4>주변환경 — 선호 또는 확인</h4>
+        <ul>
+          <li>저층·상가/식당 인접 회피 (벌레 우려)</li>
+          <li>유흥가·번화가 인접 회피 (소음·치안)</li>
+          <li>대로변 소음 회피</li>
+        </ul>
+      </div>
+    </div>
+    <div class="recommend" style="margin-top:.8rem;">
+      <b>주변환경 항목을 넣은 이유</b>
+      벌레가 싫어서 1층·상가 인접 매물을 피하는 사람, 조용한 걸 원해서 유흥가·대로변을 피하는 사람이 실제로 있습니다. 이런 항목은 매물 자체의 속성(면적·주차 등)이 아니라 <b>건물 주변 맥락</b>이라 별도 카테고리로 분리했습니다. 사람에 따라 "선호"에 둘 수도, "필수①②"로 승격할 수도 있게 같은 풀에 둡니다.
+    </div>
+
+    <div class="recommend">
+      <b>확인 항목과 미확인 정보 질문 카드의 연결</b>
+      "확인" 항목에서 사용자가 "모름 · 중개사에게 물어볼래요"를 고르면, 방문 후보 확정 화면의 <b>미확인 정보 질문 카드</b>에 자동으로 들어가도록 설계하면 입력 부담 없이 정보 공백을 그대로 다음 단계로 넘길 수 있습니다.
+    </div>
+  </section>
+
+  <section id="screens">
+    <div class="sec-head"><span class="sec-code">C</span><h2>조건 입력 화면 UI</h2></div>
+    <p class="sec-lede">한 화면에 다 묻지 않고, 필요한 순간에 하나씩 받는다는 원칙(H3 완화 설계)을 그대로 따릅니다.</p>
+    <div class="screens-grid">
+
+      <div class="screen-card">
+        <span class="screen-step">1 · 출근지</span>
+        <div class="phone"><div class="screen">
+          <div class="s-bar">조건 입력 (1/4)</div>
+          <div class="s-body">
+            <div class="s-row"><div class="t1">📍 어디로 출근하시나요?</div></div>
+            <div class="s-row"><div class="t1">강남역</div><div class="t2" style="margin-left:auto;">검색</div></div>
+            <div class="s-chiprow">
+              <span class="s-chip on">대중교통</span><span class="s-chip">자가용</span><span class="s-chip">도보</span>
+            </div>
+            <div class="s-cta">다음</div>
+          </div>
+        </div></div>
+        <p class="s-caption">항상 필수. 출근지가 두 사람의 트레이드오프를 만드는 핵심 값입니다.</p>
+      </div>
+
+      <div class="screen-card">
+        <span class="screen-step">2 · 예산</span>
+        <div class="phone"><div class="screen">
+          <div class="s-bar"><span class="back">← </span>조건 입력 (2/4)</div>
+          <div class="s-body">
+            <div class="s-row"><div class="t1">월 실부담 상한</div></div>
+            <div class="s-row"><div class="t1" style="font-size:.9rem;">130만원</div><div class="t2" style="margin-left:auto;">보증금+월세+관리비 환산</div></div>
+            <div class="s-note">전세면 실부담으로 자동 환산해요</div>
+            <div class="s-cta">다음</div>
+          </div>
+        </div></div>
+        <p class="s-caption">항상 필수. 전세/월세 상관없이 "실질 주거비" 한 값으로 통일해 받습니다.</p>
+      </div>
+
+      <div class="screen-card">
+        <span class="screen-step">3 · 필수조건 (정확히 2개)</span>
+        <div class="phone"><div class="screen">
+          <div class="s-bar"><span class="back">← </span>조건 입력 (3/4)</div>
+          <div class="s-body">
+            <div class="s-row"><div class="t1">양보 못하는 조건 2개를 고르세요</div></div>
+            <div class="s-chiprow">
+              <span class="s-chip on">통근 ≤40분</span><span class="s-chip on">역도보 ≤10분</span>
+              <span class="s-chip">전용 ≥66㎡</span><span class="s-chip">주차 가능</span>
+              <span class="s-chip">반려동물</span><span class="s-chip">상가인접회피</span>
+            </div>
+            <div class="s-note">2/2 선택됨 · 더 고르려면 하나를 빼세요</div>
+            <div class="s-cta">다음</div>
+          </div>
+        </div></div>
+        <p class="s-caption">풀에서 정확히 2개만. 반려동물처럼 특수조건도 이 사람에겐 필수가 될 수 있습니다.</p>
+      </div>
+
+      <div class="screen-card">
+        <span class="screen-step">4 · 선호·확인 (선택)</span>
+        <div class="phone"><div class="screen">
+          <div class="s-bar"><span class="back">← </span>조건 입력 (4/4)</div>
+          <div class="s-body">
+            <div class="s-row"><div class="t1">있으면 좋은 점 (선택)</div></div>
+            <div class="s-chiprow"><span class="s-chip on">층수 ≥3층</span><span class="s-chip">신축</span><span class="s-chip">채광</span></div>
+            <div class="s-row"><div class="t1">확인하고 싶은 것 (선택)</div></div>
+            <div class="s-chiprow"><span class="s-chip">반려동물</span><span class="s-chip">즉시입주</span><span class="s-chip">융자 없음</span></div>
+            <div class="s-cta">완료 · 건너뛰어도 됩니다</div>
+          </div>
+        </div></div>
+        <p class="s-caption">이 화면은 통째로 건너뛸 수 있습니다. 입력 마찰이 가장 중요한 KSF이기 때문입니다.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="onboarding">
+    <div class="sec-head"><span class="sec-code">D</span><h2>앱 시작화면 — 설명 UI</h2></div>
+    <p class="sec-lede">임장일기의 "가치제안 → 안심 문구" 순서를 가져오되, 우리는 온보딩 질문 없이 2장으로 끝냅니다 — 조건 입력은 이미 STEP C 화면이 따로 있기 때문입니다.</p>
+    <div class="screens-grid">
+
+      <div class="screen-card">
+        <span class="screen-step">진입 1 · 가치제안</span>
+        <div class="phone"><div class="screen">
+          <div class="s-body" style="justify-content:center;align-items:center;text-align:center;padding:1.2rem;">
+            <div style="font-size:1.7rem;">🏠🤝</div>
+            <div style="font-weight:800;font-size:.95rem;margin-top:.4rem;">혼자 찾는 집에서,<br>함께 결정하는 집으로.</div>
+            <div style="font-size:.68rem;color:#5b675f;margin-top:.5rem;">둘이서 관심매물 5개를 놓고,<br>이번에 볼 2곳을 정해요.</div>
+            <div class="s-cta" style="margin-top:1.2rem;width:100%;">시작하기</div>
+          </div>
+        </div></div>
+        <p class="s-caption">임장일기의 "사진은 사진대로, 메모는 메모대로" 톤을 참고했습니다.</p>
+      </div>
+
+      <div class="screen-card">
+        <span class="screen-step">진입 2 · 안심 문구</span>
+        <div class="phone"><div class="screen">
+          <div class="s-body">
+            <div class="s-row"><div class="t1">✅ 가입 없이 먼저 볼 수 있어요</div></div>
+            <div class="s-row"><div class="t1">✅ 조건은 나중에, 하나씩만 받아요</div></div>
+            <div class="s-row"><div class="t1">✅ 점수가 아니라 "무엇을 양보하는지"를 알려드려요</div></div>
+            <div class="s-note">상대가 아직 없어도 혼자서 실질 주거비·통근은 바로 볼 수 있어요</div>
+            <div class="s-cta">관심매물 보러 가기</div>
+          </div>
+        </div></div>
+        <p class="s-caption">임장일기처럼 온보딩 질문(4단계)을 여기서 하지 않습니다 — 조건 입력은 관심매물 3번째 저장 시점에 자연스럽게 유도합니다 (킥오프카드 STEP 1 참고).</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="weddingnote">
+    <div class="sec-head"><span class="sec-code">E</span><h2>웨딩노트 — 초대 수락 화면, 그리고 발견한 결함</h2></div>
+    <p class="sec-lede">웨딩노트는 브리프 v0.1에서 이미 "2인 초대가 실제로 작동한다"는 존재 증명으로 인용됐던 서비스입니다. 이번에 초대 수락자 화면까지 직접 확인한 결과, 우리 H1 설계에 그대로 반영해야 할 결함을 하나 발견했습니다.</p>
+
+    <div class="shot-grid">
+      <div class="shot-card">
+        <img src="웨딩노트/01_초대수락화면.png" alt="웨딩노트 초대 수락 화면">
+        <div class="shot-cap"><b>초대 수락</b>"○○○님의 결혼 준비에 함께하시겠어요?" — "함께하기" 버튼 하나로 즉시 합류. 가입 절차 없이 매끄러움</div>
+      </div>
+      <div class="shot-card">
+        <img src="웨딩노트/02_알림번호입력.png" alt="알림 받을 번호 입력">
+        <div class="shot-cap"><b>알림 번호 입력</b>수락 직후 "알림 받을 번호를 남겨 주세요" — 카카오톡 알림톡 수신 동의가 <b>선택 단계</b>로 분리되어 있음. "나중에 하기"로 건너뛸 수 있음</div>
+      </div>
+      <div class="shot-card">
+        <img src="웨딩노트/03_홈화면_수락직후.png" alt="수락 직후 홈 화면">
+        <div class="shot-cap"><b>합류 후 홈</b>"○○○님 안녕하세요! 결혼 준비를 시작해요" — 수락자 본인에게는 확인 화면이 바로 주어짐</div>
+      </div>
+      <div class="shot-card">
+        <img src="웨딩노트/04_홈화면_알림배너.png" alt="알림 배너">
+        <div class="shot-cap"><b>알림 안내 배너</b>"알림은 번호를 남긴 사람에게만 가요" — 번호를 남기지 않으면 그 사람은 이후 어떤 알림도 받지 않는다는 것을 명시</div>
+      </div>
+      <div class="shot-card">
+        <img src="웨딩노트/05_홈화면_하단.png" alt="홈 화면 하단">
+        <div class="shot-cap"><b>홈 하단</b>웨딩박람회 광고 노출 — 알림·초대 흐름과는 무관하지만 홈 화면 구성 참고용</div>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <table class="ft">
+        <tr><th>발견한 문제</th><th>내용</th></tr>
+        <tr>
+          <td><b>초대 수락 알림이 양쪽 모두에게 안 감</b></td>
+          <td>상대가 "함께하기"를 눌러 실제로 합류해도, <b>초대를 보낸 사람은 물론 수락한 사람 본인의 앱에도 "함께 시작됐다"는 알림이 뜨지 않는다.</b> 직접 확인해봐도 양쪽 다 아무 알림을 못 받았다 — 즉 초대자만의 문제가 아니라, 이 서비스에는 <b>이벤트 발생 시 알림을 쏘는 장치 자체가 없다.</b> 알림은 오직 "번호를 남긴 사람"에게 가는 카카오톡 알림톡(결제일·예식일 등 일정 안내)뿐이고, 그마저도 초대·합류라는 이벤트와는 무관하다.</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="recommend">
+      <b>우리 서비스에 반드시 반영 — 양방향 알림을 기본 원칙으로</b>
+      H1(초대 수락률)이 최우선 지표인데, 웨딩노트는 애초에 "이벤트가 생기면 알린다"는 장치 자체가 없어서 초대자·수락자 <b>둘 다</b> 아무것도 모른 채로 있게 됩니다. 이건 초대 수락 하나의 문제가 아니라 <b>공동 작업 서비스의 기본 조건</b>입니다 — 혼자 쓰는 앱이 아니라면, 상대가 뭔가 하면 나에게 보이고 내가 뭔가 하면 상대에게 보여야 합니다.<br><br>
+      그래서 <b>"수락" 뿐 아니라 상태가 바뀌는 모든 지점에서, 관련된 두 사람 모두에게</b> 알림을 보냅니다. 전화번호 같은 별도 옵트인 단계도 두지 않습니다 — 이미 로그인된 계정에 앱 알림으로 기본 켜두고, 원치 않으면 설정에서만 끄게 합니다.
+      <ul style="margin:.6rem 0 0;padding-left:1.2rem;">
+        <li>상대가 초대를 수락함 → <b>나</b>에게 알림</li>
+        <li>상대가 조건 입력을 완료함 → <b>나</b>에게 알림</li>
+        <li>내가(또는 상대가) 새 매물을 공동 후보에 추가함 → <b>상대</b>에게 알림</li>
+        <li>매물 평가·양보 지점이 갱신됨 → <b>양쪽 모두</b>에게 알림</li>
+        <li>방문 후보가 확정되거나 유지·보류·제외로 바뀜 → <b>양쪽 모두</b>에게 알림</li>
+      </ul>
+    </div>
+
+    <div class="screens-grid">
+      <div class="screen-card">
+        <span class="screen-step">보완 · 양방향 알림 피드</span>
+        <div class="phone"><div class="screen">
+          <div class="s-bar">🔔 알림</div>
+          <div class="s-body">
+            <div class="s-row"><div class="t1">🎉 상대가 초대를 수락했어요</div></div>
+            <div class="s-row"><div class="t1">✅ 상대가 조건 입력을 완료했어요</div></div>
+            <div class="s-row"><div class="t1">🏠 새 매물이 공동 후보에 추가됐어요</div></div>
+            <div class="s-row"><div class="t1">⚖️ 역삼동 투룸에 양보 지점이 생겼어요</div></div>
+            <div class="s-cta">지금 바로 확인하러 가기</div>
+          </div>
+        </div></div>
+        <p class="s-caption">특정 이벤트 하나가 아니라, 상태가 바뀌는 모든 지점에서 두 사람 모두에게 갑니다. 별도 전화번호 입력 같은 옵트인 단계 없이 로그인 계정에 바로 갑니다. 웨딩노트처럼 "아무 알림도 없는" 상태를 원천적으로 피합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>프로젝트02 서비스 역기획 · 팀4 · 참조: 임장일기(직접 사용) · 집노트 · 손품노트(소영) · 웨딩노트(직접 사용) · TEAM4 브리프 v0.1</footer>
+</div>
+</body>
+</html>
