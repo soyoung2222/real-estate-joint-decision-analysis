@@ -1,0 +1,1604 @@
+<!doctype html>
+<html lang="ko" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>공동 집 찾기 앱 와이어프레임</title>
+<style>:root {
+  color-scheme: light;
+  background-color: transparent !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --main-surface-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: rgb(3 199 90);
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: rgb(3 199 90);
+  --font-size-base: 14px;
+  --red: light-dark(rgb(186 38 35), rgb(250 66 62));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 10px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-visualize-standalone] {
+  background-color: var(--background) !important;
+}
+
+/* Generic mobile code-block hosts provide light/dark mode but no series palette.
+   AppBlock hosts set all six variables themselves. */
+:root:not([data-app-block-surface]) {
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(#f3883b, #f59a56);
+  --viz-series-3: light-dark(#5dc977, #74d58b);
+  --viz-series-4: light-dark(#eb77b1, #f08fc0);
+  --viz-series-5: light-dark(#9b79ec, #aa91ef);
+  --viz-series-6: light-dark(#3ab9b1, #5acbc2);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html > body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+:root:not([data-app-block-surface]) > body {
+  padding: 12px;
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive > .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align="right"]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align="center"]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget > :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The bundled tooltip runtime owns [data-tooltip]. AppBlock's CSS-only
+   pseudo-tooltip can widen dense grids even while hidden. */
+main [data-tooltip]::after {
+  content: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls > .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--interactive-label-primary-default, var(--primary-foreground));
+  background: var(--interactive-bg-primary-default, var(--foreground));
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(
+    in srgb,
+    var(--interactive-label-primary-default, var(--primary-foreground)) 50%,
+    transparent
+  );
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type="file"] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type="file"]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type="file"]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type="color"] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type="checkbox"]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: "";
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type="radio"]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: "";
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed="true"],
+    [aria-selected="true"],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget > svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+</style>
+</head>
+<body>
+<div id="housing-wireframe" class="hw-wrap">
+  <style>
+    #housing-wireframe {
+      color: var(--foreground);
+      background: transparent;
+      width: 100%;
+    }
+    #housing-wireframe * { box-sizing: border-box; }
+    #housing-wireframe .hw-flow {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    #housing-wireframe .hw-flow button {
+      min-width: 34px;
+    }
+    #housing-wireframe .hw-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 360px) minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+    }
+    #housing-wireframe .hw-side {
+      color: var(--muted-foreground);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #housing-wireframe .hw-side strong {
+      color: var(--foreground);
+      font-weight: 500;
+    }
+    #housing-wireframe .hw-phone {
+      border: 2px solid var(--border);
+      border-radius: 26px;
+      background: var(--card);
+      color: var(--card-foreground);
+      min-height: 610px;
+      padding: 14px;
+      box-shadow: 0 10px 30px color-mix(in srgb, var(--foreground) 10%, transparent);
+      display: flex;
+      flex-direction: column;
+    }
+    #housing-wireframe .hw-notch {
+      width: 34%;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--border);
+      margin: 2px auto 16px;
+    }
+    #housing-wireframe .hw-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    #housing-wireframe .hw-brand,
+    #housing-wireframe .hw-step-label,
+    #housing-wireframe .hw-section-title {
+      font-weight: 500;
+    }
+    #housing-wireframe .hw-progress {
+      height: 5px;
+      background: var(--muted);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+    #housing-wireframe .hw-progress > span {
+      display: block;
+      height: 100%;
+      width: var(--progress, 10%);
+      background: var(--viz-series-1);
+      transition: width .2s ease;
+    }
+    #housing-wireframe .hw-screen {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      gap: 14px;
+    }
+    #housing-wireframe .hw-screen.is-active { display: flex; }
+    #housing-wireframe .hw-kicker { color: var(--muted-foreground); }
+    #housing-wireframe .hw-question {
+      margin: 0;
+      font-weight: 500;
+    }
+    #housing-wireframe .hw-copy {
+      color: var(--muted-foreground);
+      margin: 0;
+    }
+    #housing-wireframe .hw-box,
+    #housing-wireframe .hw-item,
+    #housing-wireframe .hw-listing,
+    #housing-wireframe .hw-feed {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: color-mix(in srgb, var(--card) 94%, var(--muted));
+    }
+    #housing-wireframe .hw-hero {
+      min-height: 170px;
+      border: 1px dashed var(--border);
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 20px;
+      background: color-mix(in srgb, var(--viz-series-1) 8%, transparent);
+    }
+    #housing-wireframe .hw-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #housing-wireframe .hw-form label {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    #housing-wireframe input,
+    #housing-wireframe select {
+      width: 100%;
+    }
+    #housing-wireframe .hw-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #housing-wireframe .hw-chip[aria-pressed="true"] {
+      background: var(--primary);
+      color: var(--primary-foreground);
+      border-color: var(--primary);
+    }
+    #housing-wireframe .hw-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    #housing-wireframe .hw-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    #housing-wireframe .hw-muted { color: var(--muted-foreground); }
+    #housing-wireframe .hw-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: var(--muted);
+      color: var(--muted-foreground);
+      white-space: nowrap;
+    }
+    #housing-wireframe .hw-status.is-ok {
+      background: color-mix(in srgb, var(--green) 14%, transparent);
+      color: var(--foreground);
+    }
+    #housing-wireframe .hw-status.is-check {
+      background: color-mix(in srgb, var(--viz-series-2) 16%, transparent);
+      color: var(--foreground);
+    }
+    #housing-wireframe .hw-mini-map {
+      height: 92px;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: var(--muted-foreground);
+      background:
+        linear-gradient(25deg, transparent 47%, var(--border) 48%, var(--border) 50%, transparent 51%),
+        linear-gradient(-20deg, transparent 47%, var(--border) 48%, var(--border) 50%, transparent 51%);
+    }
+    #housing-wireframe .hw-rank {
+      width: 26px;
+      height: 26px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: var(--primary-foreground);
+      flex: 0 0 auto;
+    }
+    #housing-wireframe .hw-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 14px;
+    }
+    #housing-wireframe .hw-bottom .hw-wide { grid-column: 1 / -1; }
+    #housing-wireframe .hw-detail {
+      min-height: 48px;
+      margin-top: 14px;
+      text-align: center;
+      color: var(--muted-foreground);
+    }
+    #housing-wireframe .hw-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      border-left: 1px solid var(--border);
+      padding-left: 16px;
+    }
+    #housing-wireframe .hw-legend-row {
+      display: grid;
+      grid-template-columns: 14px 1fr;
+      align-items: start;
+      gap: 8px;
+    }
+    #housing-wireframe .hw-dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      margin-top: 5px;
+      background: var(--viz-series-1);
+    }
+    #housing-wireframe .hw-dot.is-two { background: var(--viz-series-2); }
+    #housing-wireframe .hw-dot.is-neutral { background: var(--border); }
+    @media (max-width: 680px) {
+      #housing-wireframe .hw-stage { grid-template-columns: 1fr; }
+      #housing-wireframe .hw-side:first-child { order: 2; text-align: center; }
+      #housing-wireframe .hw-phone { order: 1; min-height: 580px; }
+      #housing-wireframe .hw-legend { order: 3; border-left: 0; border-top: 1px solid var(--border); padding: 14px 0 0; }
+    }
+  </style>
+
+  <nav class="hw-flow" aria-label="와이어프레임 화면 이동">
+    <button type="button" class="btn btn-primary" data-jump="0" aria-pressed="true">01</button>
+    <button type="button" class="btn btn-secondary" data-jump="1" aria-pressed="false">02</button>
+    <button type="button" class="btn btn-secondary" data-jump="2" aria-pressed="false">03</button>
+    <button type="button" class="btn btn-secondary" data-jump="3" aria-pressed="false">04</button>
+    <button type="button" class="btn btn-secondary" data-jump="4" aria-pressed="false">05</button>
+    <button type="button" class="btn btn-secondary" data-jump="5" aria-pressed="false">06</button>
+    <button type="button" class="btn btn-secondary" data-jump="6" aria-pressed="false">07</button>
+    <button type="button" class="btn btn-secondary" data-jump="7" aria-pressed="false">08</button>
+    <button type="button" class="btn btn-secondary" data-jump="8" aria-pressed="false">09</button>
+  </nav>
+
+  <div class="hw-stage">
+    <div class="hw-side" aria-live="polite">
+      <strong id="hw-phase">시작 안내</strong>
+      <span id="hw-phase-copy">서비스 가치를 먼저 보여주고, 조건은 다음 단계에서 받습니다.</span>
+    </div>
+
+    <main class="hw-phone" aria-label="공동 집 찾기 모바일 와이어프레임">
+      <div class="hw-notch" aria-hidden="true"></div>
+      <div class="hw-top">
+        <span class="hw-brand">함께집</span>
+        <span class="hw-step-label" id="hw-step-label">1 / 9</span>
+      </div>
+      <div class="hw-progress" aria-hidden="true"><span id="hw-progress"></span></div>
+
+      <section class="hw-screen is-active" data-screen="0">
+        <span class="hw-kicker">혼자 찾는 집에서, 함께 결정하는 집으로</span>
+        <div class="hw-hero">
+          <div>
+            <h2 class="hw-question">서로의 조건을 놓치지 않고<br>방문할 집을 함께 골라요</h2>
+            <p class="hw-copy">찜한 매물의 조건·비용·확인할 점을 두 사람 기준으로 정리합니다.</p>
+          </div>
+        </div>
+        <div class="hw-stack">
+          <div class="hw-item">① 각자 중요한 조건 입력</div>
+          <div class="hw-item">② 매물마다 충족·미확인 상태 비교</div>
+          <div class="hw-item">③ 방문 후보를 함께 결정</div>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-primary hw-wide" data-next>내 조건부터 정하기</button>
+          <button type="button" class="btn btn-secondary hw-wide" data-jump="5">상대 초대 링크가 있어요</button>
+        </div>
+      </section>
+
+      <section class="hw-screen" data-screen="1">
+        <span class="hw-kicker">조건 설정 1</span>
+        <h2 class="hw-question">주로 오가는 곳이 있나요?</h2>
+        <p class="hw-copy">직장뿐 아니라 학교·가족 집·자주 가는 곳도 입력할 수 있어요. 건너뛰어도 됩니다.</p>
+        <div class="hw-form">
+          <label>주요 생활지<input type="text" value="성수역" aria-label="주요 생활지"></label>
+          <label>주로 이용하는 이동수단
+            <select aria-label="이동수단"><option>대중교통</option><option>자동차</option><option>도보·자전거</option></select>
+          </label>
+          <label>허용 통근 시간<select aria-label="허용 통근 시간"><option>편도 40분 이내</option><option>편도 30분 이내</option><option>상관없음</option></select></label>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-secondary" data-prev>이전</button>
+          <button type="button" class="btn btn-primary" data-next>다음</button>
+          <button type="button" class="btn btn-secondary hw-wide" data-next>건너뛰기</button>
+        </div>
+      </section>
+
+      <section class="hw-screen" data-screen="2">
+        <span class="hw-kicker">조건 설정 2</span>
+        <h2 class="hw-question">감당할 수 있는 예산을 나눠서 알려주세요</h2>
+        <p class="hw-copy">보증금과 매달 낼 수 있는 금액을 분리해야 실제 부담을 정확히 비교할 수 있어요.</p>
+        <div class="hw-form">
+          <label>사용 가능한 보증금<input type="text" value="최대 5,000만원" aria-label="보증금 한도"></label>
+          <label>월 납부 한도<input type="text" value="월세 + 관리비 90만원" aria-label="월 납부 한도"></label>
+        </div>
+        <div class="hw-box">
+          <div class="hw-section-title">비교 화면에서는</div>
+          <div class="hw-muted">실제 월 납부액과 월 환산 추정액을 따로 보여줍니다.</div>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-secondary" data-prev>이전</button>
+          <button type="button" class="btn btn-primary" data-next>다음</button>
+        </div>
+      </section>
+
+      <section class="hw-screen" data-screen="3">
+        <span class="hw-kicker">조건 설정 3</span>
+        <h2 class="hw-question">절대 포기하기 어려운 조건은?</h2>
+        <p class="hw-copy">최대 2개만 먼저 골라요. 정확히 2개를 채우지 않아도 됩니다.</p>
+        <div class="hw-chips" aria-label="필수 조건 선택">
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="must" aria-pressed="true">반려동물 가능</button>
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="must" aria-pressed="true">주차 가능</button>
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="must" aria-pressed="false">엘리베이터</button>
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="must" aria-pressed="false">방 2개 이상</button>
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="must" aria-pressed="false">역 도보 10분</button>
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="must" aria-pressed="false">전입 가능</button>
+        </div>
+        <div class="hw-box">
+          <div class="hw-row"><span>선택됨</span><strong id="hw-must-count">2 / 최대 2</strong></div>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-secondary" data-prev>이전</button>
+          <button type="button" class="btn btn-primary" data-next>다음</button>
+        </div>
+      </section>
+
+      <section class="hw-screen" data-screen="4">
+        <span class="hw-kicker">조건 설정 4 · 선택</span>
+        <h2 class="hw-question">있으면 더 좋은 조건도 골라볼까요?</h2>
+        <p class="hw-copy">선호 조건은 매물 순서를 정할 때 참고하며, 탈락 기준으로 쓰지 않습니다.</p>
+        <div class="hw-chips" aria-label="선호 조건 선택">
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="prefer" aria-pressed="true">채광이 좋아요</button>
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="prefer" aria-pressed="false">신축에 가까워요</button>
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="prefer" aria-pressed="true">발코니가 있어요</button>
+          <button type="button" class="btn btn-secondary hw-chip" data-kind="prefer" aria-pressed="false">조용한 동네</button>
+        </div>
+        <div class="hw-box">
+          <div class="hw-section-title">확인 필요 항목은 따로 고르지 않아요</div>
+          <div class="hw-muted">매물 정보가 부족하면 시스템이 자동으로 ‘중개사 확인 필요’로 표시합니다.</div>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-secondary" data-prev>이전</button>
+          <button type="button" class="btn btn-primary" data-next>조건 저장</button>
+          <button type="button" class="btn btn-secondary hw-wide" data-next>선호 조건 건너뛰기</button>
+        </div>
+      </section>
+
+      <section class="hw-screen" data-screen="5">
+        <span class="hw-kicker">함께 찾기</span>
+        <h2 class="hw-question">같이 집을 고를 사람을 초대하세요</h2>
+        <p class="hw-copy">상대는 링크에서 서비스 설명과 초대자를 확인한 뒤 참여합니다.</p>
+        <div class="hw-box">
+          <div class="hw-row"><span>초대자</span><strong>민수</strong></div>
+          <div class="hw-row"><span>공동 집 찾기</span><strong>서울 동북권</strong></div>
+        </div>
+        <div class="hw-form">
+          <label>초대 링크<input type="text" value="hamkke.zip/invite/4X7Q" readonly aria-label="초대 링크"></label>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-secondary" data-prev>나중에</button>
+          <button type="button" class="btn btn-primary" data-next>링크 공유</button>
+        </div>
+      </section>
+
+      <section class="hw-screen" data-screen="6">
+        <span class="hw-kicker">초대받은 사람 화면</span>
+        <h2 class="hw-question">민수님이 함께 집을 찾아요</h2>
+        <div class="hw-hero">
+          <div>
+            <div class="hw-section-title">각자 조건은 따로 입력해요</div>
+            <p class="hw-copy">상대의 답을 따라 쓰지 않도록, 완료 전에는 서로의 조건을 공개하지 않습니다.</p>
+          </div>
+        </div>
+        <div class="hw-box">
+          <div class="hw-row"><span>참여 범위</span><strong>조건 작성 · 후보 비교</strong></div>
+          <div class="hw-row"><span>알림</span><strong>참여 후 선택</strong></div>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-secondary" data-prev>거절</button>
+          <button type="button" class="btn btn-primary" data-next>함께하기</button>
+        </div>
+      </section>
+
+      <section class="hw-screen" data-screen="7">
+        <span class="hw-kicker">공동 후보</span>
+        <h2 class="hw-question">둘이 함께 볼 매물 3개</h2>
+        <div class="hw-mini-map" aria-label="매물 위치 지도 자리">지도 및 이동시간 영역</div>
+        <div class="hw-stack">
+          <article class="hw-listing">
+            <div class="hw-row"><span class="hw-rank">1</span><strong>성수동 투룸 · 월 80</strong></div>
+            <div class="hw-row"><span>필수 조건</span><span class="hw-status is-ok">두 사람 모두 충족</span></div>
+            <div class="hw-row"><span>확인</span><span class="hw-status is-check">반려동물 문의</span></div>
+          </article>
+          <article class="hw-listing">
+            <div class="hw-row"><span class="hw-rank">2</span><strong>건대입구 오피스텔 · 월 75</strong></div>
+            <div class="hw-row"><span>필수 조건</span><span class="hw-status">주차 조건 불일치</span></div>
+          </article>
+          <article class="hw-listing">
+            <div class="hw-row"><span class="hw-rank">3</span><strong>왕십리 원룸 · 월 68</strong></div>
+            <div class="hw-row"><span>필수 조건</span><span class="hw-status is-check">정보 2개 미확인</span></div>
+          </article>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-secondary" data-prev>이전</button>
+          <button type="button" class="btn btn-primary" data-next>1번 상세 보기</button>
+        </div>
+      </section>
+
+      <section class="hw-screen" data-screen="8">
+        <span class="hw-kicker">매물 비교 상세</span>
+        <h2 class="hw-question">성수동 투룸 · 월 80</h2>
+        <div class="hw-stack">
+          <div class="hw-box">
+            <div class="hw-section-title">비용</div>
+            <div class="hw-row"><span>실제 월 납부</span><strong>87만원</strong></div>
+            <div class="hw-row"><span>월 환산 추정</span><strong>96만원</strong></div>
+          </div>
+          <div class="hw-box">
+            <div class="hw-section-title">두 사람의 필수 조건</div>
+            <div class="hw-row"><span>민수 · 주차</span><span class="hw-status is-ok">확인</span></div>
+            <div class="hw-row"><span>지영 · 반려동물</span><span class="hw-status is-check">중개사 확인</span></div>
+          </div>
+          <div class="hw-box">
+            <div class="hw-section-title">서로 다른 선호</div>
+            <div class="hw-row"><span>민수는 통근 +12분</span><span>양보 지점</span></div>
+            <div class="hw-row"><span>지영은 발코니 충족</span><span>선호 충족</span></div>
+          </div>
+        </div>
+        <div class="hw-bottom">
+          <button type="button" class="btn btn-secondary" data-prev>후보 목록</button>
+          <button type="button" class="btn btn-primary" id="hw-confirm">방문 후보로 제안</button>
+        </div>
+      </section>
+    </main>
+
+    <aside class="hw-legend" aria-label="와이어프레임 설계 원칙">
+      <div class="hw-legend-row"><span class="hw-dot"></span><span><strong>우선순위</strong><br>필수와 선호를 구분</span></div>
+      <div class="hw-legend-row"><span class="hw-dot is-two"></span><span><strong>확인 상태</strong><br>충족·미확인·문의 필요를 별도 표시</span></div>
+      <div class="hw-legend-row"><span class="hw-dot is-neutral"></span><span><strong>공동 결정</strong><br>총점 대신 차이와 양보 지점을 노출</span></div>
+    </aside>
+  </div>
+
+  <div class="hw-detail" id="hw-detail" aria-live="polite">상단 번호나 화면의 다음 버튼을 눌러 전체 흐름을 확인할 수 있습니다.</div>
+
+  <script>
+    (function () {
+      var root = document.getElementById("housing-wireframe");
+      if (!root) return;
+
+      var screens = Array.from(root.querySelectorAll("[data-screen]"));
+      var jumps = Array.from(root.querySelectorAll("[data-jump]"));
+      var label = root.querySelector("#hw-step-label");
+      var progress = root.querySelector("#hw-progress");
+      var phase = root.querySelector("#hw-phase");
+      var phaseCopy = root.querySelector("#hw-phase-copy");
+      var detail = root.querySelector("#hw-detail");
+      var current = 0;
+
+      var meta = [
+        ["시작 안내", "서비스 가치를 먼저 보여주고, 조건은 다음 단계에서 받습니다."],
+        ["주요 생활지", "직장으로 한정하지 않고 다양한 생활 목적지를 받을 수 있습니다."],
+        ["예산 입력", "보증금과 월 납부 한도를 분리해 실제 부담을 왜곡하지 않습니다."],
+        ["필수 조건", "정확히 2개가 아니라 최대 2개로 부담을 낮춘 초기안입니다."],
+        ["선호 조건", "필수·선호와 데이터의 확인 상태를 서로 다른 축으로 다룹니다."],
+        ["상대 초대", "초대자와 참여 범위가 보이는 링크형 진입 화면입니다."],
+        ["초대 수락", "상대의 응답에 끌려가지 않도록 조건은 독립적으로 작성합니다."],
+        ["공동 후보", "총점 대신 필수 조건 충족과 미확인 사항을 바로 비교합니다."],
+        ["매물 상세", "비용·조건 차이·양보 지점을 확인하고 방문 후보를 제안합니다."]
+      ];
+
+      function show(index) {
+        current = Math.max(0, Math.min(index, screens.length - 1));
+        screens.forEach(function (screen, i) {
+          screen.classList.toggle("is-active", i === current);
+        });
+        jumps.forEach(function (button) {
+          var active = Number(button.getAttribute("data-jump")) === current;
+          button.setAttribute("aria-pressed", String(active));
+          button.classList.toggle("btn-primary", active);
+          button.classList.toggle("btn-secondary", !active);
+        });
+        label.textContent = String(current + 1) + " / " + String(screens.length);
+        progress.style.setProperty("--progress", String(((current + 1) / screens.length) * 100) + "%");
+        phase.textContent = meta[current][0];
+        phaseCopy.textContent = meta[current][1];
+        detail.textContent = meta[current][1];
+      }
+
+      jumps.forEach(function (button) {
+        button.addEventListener("click", function () {
+          show(Number(button.getAttribute("data-jump")));
+        });
+      });
+
+      root.querySelectorAll("[data-next]").forEach(function (button) {
+        button.addEventListener("click", function () { show(current + 1); });
+      });
+
+      root.querySelectorAll("[data-prev]").forEach(function (button) {
+        button.addEventListener("click", function () { show(current - 1); });
+      });
+
+      function updateMustCount() {
+        var selected = root.querySelectorAll('.hw-chip[data-kind="must"][aria-pressed="true"]').length;
+        root.querySelector("#hw-must-count").textContent = String(selected) + " / 최대 2";
+      }
+
+      root.querySelectorAll(".hw-chip").forEach(function (button) {
+        button.addEventListener("click", function () {
+          var pressed = button.getAttribute("aria-pressed") === "true";
+          if (!pressed && button.getAttribute("data-kind") === "must") {
+            var selected = root.querySelectorAll('.hw-chip[data-kind="must"][aria-pressed="true"]').length;
+            if (selected >= 2) {
+              detail.textContent = "필수 조건은 초기안 기준 최대 2개까지 선택할 수 있습니다.";
+              return;
+            }
+          }
+          button.setAttribute("aria-pressed", String(!pressed));
+          updateMustCount();
+        });
+      });
+
+      var confirmButton = root.querySelector("#hw-confirm");
+      confirmButton.addEventListener("click", function () {
+        confirmButton.textContent = "방문 후보로 제안됨";
+        confirmButton.disabled = true;
+        detail.textContent = "상대에게는 초대 수락·조건 완료·방문 후보 제안처럼 의미 있는 변화만 알려줍니다.";
+      });
+
+      show(0);
+      updateMustCount();
+    }());
+  </script>
+</div>
+
+
+
+
+<script id="codex-visualization-tooltip">/* oxlint-disable typescript/no-unsafe-argument, typescript/no-unsafe-call, typescript/no-unsafe-return */
+// Runs inside the visualization sandbox, not the host webview.
+(() => {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set(["top", "right", "bottom", "left"]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =>
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest("[data-tooltip]")
+      : null;
+  const containsTarget = (trigger, target) =>
+    target?.nodeType != null && trigger.contains(target);
+  const getContent = (trigger) =>
+    trigger.getAttribute("data-tooltip")?.trim() ?? "";
+  const getPlacement = (trigger) => {
+    const placement = trigger.getAttribute("data-tooltip-placement");
+    return tooltipPlacements.has(placement) ? placement : "top";
+  };
+  const getTooltip = () => {
+    if (tooltip == null) {
+      tooltip = document.createElement("div");
+      tooltip.id = tooltipId;
+      tooltip.className = "tooltip";
+      tooltip.setAttribute("role", "tooltip");
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) => {
+    const ids = new Set(
+      (trigger.getAttribute("aria-describedby") ?? "")
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute("aria-describedby");
+    } else {
+      trigger.setAttribute("aria-describedby", [...ids].join(" "));
+    }
+  };
+  const clearOpenTimeout = () => {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) => {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) => {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              "--tooltip-available-width",
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              "--tooltip-available-height",
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: "fixed",
+    })
+      .then(({ x, y }) => {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = "visible";
+      })
+      .catch(() => {
+        if (activeTrigger === trigger && request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) => {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = "hidden";
+    floating.style.transform = "translate(0, 0)";
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () => {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) => {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() < skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() => {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(":focus-visible")) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) => {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () => {
+    closeTooltip(false);
+    document.removeEventListener("pointerover", handlePointerOpen);
+    document.removeEventListener("pointerout", handleLeave);
+    document.removeEventListener("focusin", handleFocusIn);
+    document.removeEventListener("focusout", handleLeave);
+    document.removeEventListener("keydown", handleKeyDown);
+    document.removeEventListener("contextmenu", handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener("pointerover", handlePointerOpen);
+  document.addEventListener("pointerout", handleLeave);
+  document.addEventListener("focusin", handleFocusIn);
+  document.addEventListener("focusout", handleLeave);
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("contextmenu", handleContextMenu);
+  window.addEventListener("pagehide", destroy, { once: true });
+})();
+</script>
+<script id="codex-visualization-lucide-initialization">(() => {
+  const initialize = () => {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById("codex-visualization-lucide")
+    ?.addEventListener("load", initialize, { once: true });
+})();
+</script>
+</body>
+</html>
