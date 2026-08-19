@@ -8,6 +8,10 @@
   --a-bg:#E6F0EF; --b-bg:#F6E9EF; --focus-bg:#F6EDDF;
   --sans:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic","Noto Sans KR",sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,"Cascadia Mono",monospace;
+  /* 4pt 그리드 */
+  --sp-1:4px;  --sp-2:8px;  --sp-3:12px; --sp-4:16px; --sp-5:20px;
+  --sp-6:24px; --sp-8:32px; --sp-10:40px; --sp-12:48px; --sp-14:56px;
+  --sp-16:64px; --sp-20:80px; --sp-30:120px;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
@@ -37,9 +41,9 @@ body{
 a{color:var(--a); text-underline-offset:3px}
 a:focus-visible,button:focus-visible{outline:2px solid var(--focus); outline-offset:2px; border-radius:2px}
 
-.wrap{display:grid; grid-template-columns:1fr; max-width:1180px; margin:0 auto; padding:0 24px}
+.wrap{display:grid; grid-template-columns:1fr; max-width:1180px; margin:0 auto; padding:0 var(--sp-6)}
 @media (min-width:1000px){
-  .wrap{grid-template-columns:210px minmax(0,1fr); gap:56px; padding:0 40px}
+  .wrap{grid-template-columns:216px minmax(0,1fr); gap:var(--sp-14); padding:0 var(--sp-10)}
 }
 
 /* ── nav ── */
@@ -47,74 +51,80 @@ nav{display:none}
 @media (min-width:1000px){
   nav{
     display:block; position:sticky; top:0; align-self:start;
-    max-height:100vh; overflow-y:auto; padding:56px 0 40px;
+    max-height:100vh; overflow-y:auto; padding:var(--sp-14) 0 var(--sp-10);
     font-family:var(--mono); font-size:11.5px; line-height:1.5;
   }
-  nav .navgroup{margin-bottom:18px}
+  nav .navgroup{margin-bottom:var(--sp-5)}
   nav .navlabel{
     color:var(--ink-3); font-size:9.5px; letter-spacing:.14em;
-    text-transform:uppercase; margin-bottom:7px; display:block;
+    text-transform:uppercase; margin-bottom:var(--sp-2); display:block;
   }
   nav a{
     display:flex; gap:8px; color:var(--ink-2); text-decoration:none;
-    padding:2.5px 0; border-left:2px solid transparent; padding-left:9px; margin-left:-11px;
+    padding:var(--sp-1) 0; border-left:2px solid transparent; padding-left:var(--sp-3); margin-left:-14px;
   }
   nav a:hover{color:var(--ink); border-left-color:var(--line-2)}
-  nav a b{color:var(--ink-3); font-weight:400; min-width:16px}
+  nav a b{color:var(--ink-3); font-weight:400; min-width:16px; font-variant-numeric:tabular-nums}
   nav a.hot b{color:var(--focus)}
+  nav a[aria-current="true"]{
+    color:var(--ink); font-weight:650;
+    border-left-color:var(--a); background:var(--surface);
+  }
+  nav a[aria-current="true"] b{color:var(--a)}
+  nav .navgroup:has(a[aria-current="true"]) .navlabel{color:var(--ink-2)}
 }
 
-main{padding:56px 0 120px; min-width:0}
+main{padding:var(--sp-14) 0 var(--sp-30); min-width:0}
 
 /* ── masthead ── */
-.mast{border-bottom:1px solid var(--line); padding-bottom:40px; margin-bottom:56px}
+.mast{border-bottom:1px solid var(--line); padding-bottom:var(--sp-10); margin-bottom:var(--sp-14)}
 .eyebrow{
   font-family:var(--mono); font-size:11px; letter-spacing:.16em;
-  text-transform:uppercase; color:var(--ink-3); display:block; margin-bottom:20px;
+  text-transform:uppercase; color:var(--ink-3); display:block; margin-bottom:var(--sp-5);
 }
 h1{
   font-size:clamp(30px,5vw,44px); line-height:1.2; letter-spacing:-.025em;
-  font-weight:800; margin:0 0 6px; text-wrap:balance;
+  font-weight:800; margin:0 0 var(--sp-2); text-wrap:balance;
 }
-.sub{font-size:clamp(17px,2.4vw,20px); color:var(--ink-2); font-weight:500; margin:0 0 28px; letter-spacing:-.01em}
-.lede{font-size:17px; color:var(--ink-2); max-width:62ch; margin:0 0 28px}
+.sub{font-size:clamp(17px,2.4vw,20px); color:var(--ink-2); font-weight:500; margin:0 0 var(--sp-8); letter-spacing:-.01em}
+.lede{font-size:17px; color:var(--ink-2); max-width:62ch; margin:0 0 var(--sp-8)}
 .lede strong{color:var(--ink); font-weight:650}
 
 .facts{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:3px; overflow:hidden}
 @media (min-width:620px){.facts{grid-template-columns:1fr 1fr}}
-.fact{background:var(--ground); padding:13px 16px}
-.fact dt{font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin-bottom:3px}
+.fact{background:var(--ground); padding:var(--sp-3) var(--sp-4)}
+.fact dt{font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-3); margin-bottom:var(--sp-1)}
 .fact dd{margin:0; font-size:14.5px; font-weight:600; line-height:1.5}
 
 /* ── sections ── */
-section{margin-bottom:64px; scroll-margin-top:24px}
+section{margin-bottom:var(--sp-16); scroll-margin-top:var(--sp-6)}
 .snum{
   font-family:var(--mono); font-size:11px; letter-spacing:.14em; color:var(--ink-3);
-  display:block; margin-bottom:8px;
+  display:block; margin-bottom:var(--sp-2);
 }
 h2{
   font-size:clamp(21px,3vw,27px); line-height:1.3; letter-spacing:-.022em;
-  font-weight:750; margin:0 0 18px; text-wrap:balance;
-  padding-bottom:12px; border-bottom:1px solid var(--line);
+  font-weight:750; margin:0 0 var(--sp-5); text-wrap:balance;
+  padding-bottom:var(--sp-3); border-bottom:1px solid var(--line);
 }
 h3{
   font-size:16.5px; font-weight:700; letter-spacing:-.012em;
-  margin:34px 0 12px; text-wrap:balance;
+  margin:var(--sp-8) 0 var(--sp-3); text-wrap:balance;
 }
 h4{
   font-family:var(--mono); font-size:11px; letter-spacing:.13em; text-transform:uppercase;
-  color:var(--ink-3); font-weight:600; margin:26px 0 10px;
+  color:var(--ink-3); font-weight:600; margin:var(--sp-6) 0 var(--sp-2);
 }
-p{margin:0 0 15px; max-width:70ch}
-ul,ol{margin:0 0 15px; padding-left:20px; max-width:70ch}
-li{margin-bottom:6px}
+p{margin:0 0 var(--sp-4); max-width:70ch}
+ul,ol{margin:0 0 var(--sp-4); padding-left:var(--sp-5); max-width:70ch}
+li{margin-bottom:var(--sp-1)}
 strong{font-weight:670}
 em{font-style:normal; color:var(--focus); font-weight:600}
 
 /* ── callouts ── */
 .pull{
   border-left:2.5px solid var(--focus); background:var(--focus-bg);
-  padding:15px 18px; margin:22px 0; border-radius:0 3px 3px 0;
+  padding:var(--sp-4) var(--sp-5); margin:var(--sp-6) 0; border-radius:0 3px 3px 0;
   font-size:16px; max-width:70ch;
 }
 .pull p:last-child{margin-bottom:0}
@@ -123,26 +133,26 @@ em{font-style:normal; color:var(--focus); font-weight:600}
 
 .note{
   font-size:13.5px; color:var(--ink-2); background:var(--surface);
-  border:1px solid var(--line); border-radius:3px; padding:13px 16px;
-  margin:18px 0; max-width:70ch;
+  border:1px solid var(--line); border-radius:3px; padding:var(--sp-3) var(--sp-4);
+  margin:var(--sp-5) 0; max-width:70ch;
 }
 .note p:last-child{margin-bottom:0}
 .note .nlabel{
   font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase;
-  color:var(--ink-3); display:block; margin-bottom:5px;
+  color:var(--ink-3); display:block; margin-bottom:var(--sp-1);
 }
 
 /* diff block */
-.diff{margin:26px 0 0; border-top:1px solid var(--line); padding-top:16px}
+.diff{margin:var(--sp-6) 0 0; border-top:1px solid var(--line); padding-top:var(--sp-4)}
 .diff .nlabel{
   font-family:var(--mono); font-size:9.5px; letter-spacing:.13em; text-transform:uppercase;
-  color:var(--ink-3); display:block; margin-bottom:10px;
+  color:var(--ink-3); display:block; margin-bottom:var(--sp-2);
 }
 
 /* ── tables ── */
-.tw{overflow-x:auto; margin:18px 0; border:1px solid var(--line); border-radius:3px}
+.tw{overflow-x:auto; margin:var(--sp-5) 0; border:1px solid var(--line); border-radius:3px}
 table{border-collapse:collapse; width:100%; font-size:13.5px; line-height:1.6; min-width:460px}
-th,td{padding:9px 13px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
+th,td{padding:var(--sp-2) var(--sp-3); text-align:left; border-bottom:1px solid var(--line); vertical-align:top}
 th{
   font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
   color:var(--ink-3); font-weight:600; background:var(--surface); white-space:nowrap;
@@ -155,7 +165,7 @@ td.k{font-weight:640; white-space:nowrap}
 pre{
   font-family:var(--mono); font-size:12.5px; line-height:1.65;
   background:var(--surface); border:1px solid var(--line); border-radius:3px;
-  padding:16px 18px; overflow-x:auto; margin:20px 0; color:var(--ink-2);
+  padding:var(--sp-4) var(--sp-5); overflow-x:auto; margin:var(--sp-5) 0; color:var(--ink-2);
 }
 pre b{color:var(--ink); font-weight:700}
 pre i{color:var(--focus); font-style:normal; font-weight:700}
@@ -174,19 +184,19 @@ code{font-family:var(--mono); font-size:.88em; background:var(--surface-2); padd
 .p-off{background:var(--surface-2); color:var(--off)}
 
 /* ── two-col compare ── */
-.cmp{display:grid; gap:14px; margin:20px 0}
+.cmp{display:grid; gap:var(--sp-4); margin:var(--sp-5) 0}
 @media (min-width:620px){.cmp{grid-template-columns:1fr 1fr}}
-.cmp>div{border:1px solid var(--line); border-radius:3px; padding:14px 16px; background:var(--surface)}
+.cmp>div{border:1px solid var(--line); border-radius:3px; padding:var(--sp-4); background:var(--surface)}
 .cmp h5{
   font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
-  margin:0 0 8px; font-weight:650;
+  margin:0 0 var(--sp-2); font-weight:650;
 }
 .cmp .ca h5{color:var(--a)} .cmp .cb h5{color:var(--b)}
 .cmp p{font-size:14px; margin:0; color:var(--ink-2)}
-.cmp ul{margin:0; padding-left:17px; font-size:13.5px; color:var(--ink-2)}
+.cmp ul{margin:0; padding-left:var(--sp-5); font-size:13.5px; color:var(--ink-2)}
 
 footer{
-  border-top:1px solid var(--line); margin-top:72px; padding-top:22px;
+  border-top:1px solid var(--line); margin-top:var(--sp-20); padding-top:var(--sp-6);
   font-family:var(--mono); font-size:11px; color:var(--ink-3); line-height:1.7;
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
@@ -1595,3 +1605,63 @@ H2-b (문제 크기) ── 인터뷰라 <b>제품 없이 병행 가능</b></pre
 
 </main>
 </div>
+
+<script>
+(function () {
+  var links = Array.prototype.slice.call(document.querySelectorAll('nav a[href^="#"]'));
+  if (!links.length) return;
+
+  var byId = {};
+  var sections = [];
+  links.forEach(function (a) {
+    var el = document.getElementById(a.getAttribute('href').slice(1));
+    if (el) { byId[el.id] = a; sections.push(el); }
+  });
+  if (!sections.length) return;
+
+  var current = null;
+  function mark(id) {
+    if (id === current) return;
+    current = id;
+    links.forEach(function (a) { a.removeAttribute('aria-current'); });
+    var a = byId[id];
+    if (!a) return;
+    a.setAttribute('aria-current', 'true');
+    var nav = a.closest('nav');
+    if (nav && nav.scrollHeight > nav.clientHeight) {
+      var top = a.offsetTop, bottom = top + a.offsetHeight;
+      if (top < nav.scrollTop || bottom > nav.scrollTop + nav.clientHeight) {
+        nav.scrollTo({ top: top - nav.clientHeight / 2, behavior: 'smooth' });
+      }
+    }
+  }
+
+  // 화면 상단 25% 지점을 지난 마지막 섹션을 현재로 본다
+  function update() {
+    var line = window.innerHeight * 0.25;
+    var found = sections[0].id;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].getBoundingClientRect().top <= line) found = sections[i].id;
+      else break;
+    }
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 4) {
+      found = sections[sections.length - 1].id;
+    }
+    mark(found);
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  links.forEach(function (a) {
+    a.addEventListener('click', function () { mark(a.getAttribute('href').slice(1)); });
+  });
+  update();
+})();
+</script>
