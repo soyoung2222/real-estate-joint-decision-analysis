@@ -371,7 +371,7 @@ footer{
     <thead><tr><th>항목</th><th>타입</th><th class="num">입력 예</th><th>판정식</th><th class="num">미달 표현</th><th>출처</th></tr></thead>
     <tbody>
       <tr><td class="k">통근시간</td><td>상한</td><td class="num">40분</td><td>매물→출근지 ≤ 40</td><td class="num">+12분</td><td>계산</td></tr>
-      <tr><td class="k">역 도보</td><td>상한</td><td class="num">10분</td><td>최근접역 ≤ 10</td><td class="num">+3분</td><td>계산</td></tr>
+      <tr><td class="k">역 도보</td><td>상한</td><td class="num">10분</td><td>최근접역 ≤ 10</td><td class="num">+3분</td><td>매물 ✓</td></tr>
       <tr><td class="k">전용면적</td><td>하한</td><td class="num">66㎡</td><td>전용 ≥ 66</td><td class="num">−7㎡</td><td>매물</td></tr>
       <tr><td class="k">방 개수</td><td>하한</td><td class="num">2개</td><td>방 ≥ 2</td><td class="num">−1개</td><td>매물</td></tr>
       <tr><td class="k">건물 연식</td><td>상한</td><td class="num">15년</td><td>오늘−준공 ≤ 15</td><td class="num">+6년</td><td>매물</td></tr>
@@ -428,7 +428,14 @@ footer{
     </tbody>
   </table></div>
   <p><strong>B에게 매물을 담게 하지 않는다.</strong> A가 이미 5개를 담아놨으니 B는 조건 4개만 넣으면 결과가 나온다. B가 처음 얻는 값은 “내가 넣은 조건으로 이 집들이 나한테 맞는지 바로 보인다”이다.</p>
-  <p>관심매물 조회에는 <strong>로그인이 필요하다.</strong> 따라서 초대 링크는 앱이 아니라 <strong>모바일 웹</strong>으로 연다 — 앱 설치를 요구하는 순간 H1은 초대 수락률이 아니라 앱 설치 전환율을 재게 된다.</p>
+  <p>초대 링크는 앱이 아니라 <strong>모바일 웹</strong>으로 연다 — 앱 설치를 요구하는 순간 H1은 초대 수락률이 아니라 앱 설치 전환율을 재게 된다. 링크가 유실되거나 다른 채널로 전달할 때를 위해 <strong>초대 코드</strong>를 보조로 둔다(특별시 6자리 방식).</p>
+  <div class="pull">
+    <p><strong>로그인은 결과를 본 뒤로 미룬다.</strong> 로그인이 필요한 것은 <strong>A의 관심매물 목록</strong>(개인 데이터)이고, B가 보는 것은 <strong>A가 고른 후보 5개</strong>(공유 객체)다. 후보를 선택하는 순간 별도 객체가 만들어지면 B는 A의 계정 데이터에 접근하지 않는다.</p>
+  </div>
+  <pre>초대 진입 → 후보 미리보기 → 조건 입력 → 결과 확인 → [<b>저장하려면 로그인</b>]
+                                                        ↑
+                                        <i>B가 이미 값을 본 뒤에 요구한다</i></pre>
+  <p>지금까지 “우리가 못 고치는 구간”으로 뒀던 로그인 마찰이 <strong>깔때기 뒤로 밀린다.</strong> 다만 <strong>비로그인 페이지를 만들 수 있는지는 네이버 정책</strong>이라 우리가 정할 수 없고, B가 로그인하지 않았을 때 입력한 조건을 어디에 보관할지는 미정이다.</p>
 </section>
 
 <!-- 03 -->
@@ -662,7 +669,8 @@ footer{
     <thead><tr><th>기능</th><th>어디서 가져오나</th></tr></thead>
     <tbody>
       <tr><td>매물 데이터 · 주차 · 엘리베이터 · 면적 · 준공연도</td><td>네이버 관심매물</td></tr>
-      <tr><td>통근 시간 · 역 도보</td><td>지도 경로 계산</td></tr>
+      <tr><td>통근 시간</td><td>지도 경로 계산</td></tr>
+      <tr><td>역 도보 시간</td><td>매물 데이터 (2026-08-19 확인)</td></tr>
       <tr><td>실부담 6항목 환산</td><td>이미 있는 계산 로직 (<code>03-cost-model</code>)</td></tr>
       <tr><td>로그인 · 계정</td><td>네이버 계정</td></tr>
     </tbody>
@@ -1321,9 +1329,9 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
       <tr><td class="k">A 후보 담기</td><td>후보 5개 채운 비율</td><td>—</td><td><span class="p p-ok">가능</span></td></tr>
       <tr><td class="k">A 조건 입력 · 1단계</td><td><strong>2개(출근지·예산) 완료율</strong></td><td><strong>H3</strong> — 최소 입력조차 안 하는가</td><td><span class="p p-ok">가능</span></td></tr>
       <tr><td class="k">A 조건 입력 · 확장</td><td><strong>3개 / 4개까지 채운 비율</strong></td><td><strong>H3</strong> — <strong>어디까지 채우는지가 실제 답</strong></td><td><span class="p p-ok">가능</span></td></tr>
-      <tr><td class="k">B 링크 열람</td><td>열람률</td><td><strong>H1-a</strong> A의 권유가 통하나</td><td><span class="p p-ok">가능</span></td></tr>
-      <tr><td class="k">B 로그인 통과</td><td>통과율</td><td><strong>H1-b</strong> — <strong>우리가 못 고치는 구간</strong></td><td><span class="p p-f">출시 후</span></td></tr>
-      <tr><td class="k">B 조건 입력 완료</td><td><strong>완료율 ★</strong></td><td><strong>H1-c — H1의 급소</strong></td><td><span class="p p-ok">가능</span></td></tr>
+      <tr><td class="k">B 링크·코드 진입</td><td>열람률</td><td><strong>H1-a</strong> A의 권유가 통하나</td><td><span class="p p-ok">가능</span></td></tr>
+      <tr><td class="k">B 조건 입력 완료</td><td><strong>완료율 ★</strong></td><td><strong>H1-b — H1의 급소</strong></td><td><span class="p p-ok">가능</span></td></tr>
+      <tr><td class="k">B 로그인 통과</td><td>통과율</td><td><strong>H1-c</strong> — <strong>결과를 본 뒤로 밀림</strong></td><td><span class="p p-f">출시 후</span></td></tr>
       <tr><td class="k">조건 완화</td><td><strong>실제로 실행한 비율</strong></td><td><strong>H2-b</strong></td><td><span class="p p-ok">가능</span></td></tr>
       <tr><td class="k">후보 확정</td><td><strong>North Star</strong></td><td>전체</td><td><span class="p p-ok">가능</span></td></tr>
     </tbody>
