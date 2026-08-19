@@ -1033,7 +1033,7 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
  ────────────────────────────────────      ──────────────────────────────
  ①같이 고르기 시작 (후보 5개 담기)
         │
- ②내 조건 입력  ← 4단계 ─────────────────  ③초대 진입 → ②같은 화면
+ ②내 조건 입력  ← <i>2단계 + 확장</i> ────────  ③초대 진입 → ②같은 화면
         │                                          │
  ③초대 발송 ────────────── 링크 ──────────────────┘
         │                                          │
@@ -1050,21 +1050,36 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
                               │
                      ⑧방문 후 기록 (단계 2)</pre>
 
-  <h3>② 내 조건 입력 — “4번”의 실체</h3>
-  <pre>┌──────────────────────────────┐   ┌──────────────────────────────┐
-│  내 조건              1 / 4  │   │  내 조건              3 / 4  │
-│                              │   │                              │
-│  어디로 출근하세요?           │   │  꼭 지켜야 할 조건 하나       │
-│  ┌────────────────────────┐  │   │  ● 통근 시간    [ 40 ] 분 이하│
-│  │ 🔍 강남역               │  │   │  ○ 역 도보      [    ] 분 이하│
-│  └────────────────────────┘  │   │  ○ 전용 면적    [    ] ㎡ 이상│
-│                              │   │  ○ 방 개수      [    ] 개 이상│
-│  ● 대중교통    ○ 자차        │   │  ○ 건물 연식    [    ] 년 이하│
-│                              │   │  ○ 주차 가능                 │
-│                     [다음]   │   │  ○ 엘리베이터                │
-└──────────────────────────────┘   │                     [다음]   │
-                                   └──────────────────────────────┘</pre>
-  <p><strong>한 화면에 하나씩 받는 이유가 둘이다.</strong> 이탈 지점을 측정할 수 있고(4개를 한 화면에 몰면 어느 항목에서 포기했는지 모른다), 4개를 한 번에 보여주면 부담이 커 보인다. <strong>B에게는 이 화면이 전부다.</strong></p>
+  <h3>② 내 조건 입력 — 2개만 받고 결과를 먼저 보여준다</h3>
+  <p>위밋플레이스는 <strong>2~3번</strong>의 조작으로 결과가 나오고 우리는 <strong>7~10번</strong>이 필요하다. 이 격차가 H1의 실제 마찰이라, <strong>첫 결과까지의 거리</strong>를 줄인다.</p>
+  <pre>┌──────────────────────────────┐   ┌──────────────────────────────┐   ┌──────────────────────────────┐
+│  내 조건              1 / 2  │   │  내 조건              2 / 2  │   │  <b>후보 5개, 지금 이렇습니다</b>   │
+│                              │   │                              │   │                              │
+│  어디로 출근하세요?           │   │  예산은 어느 정도인가요?      │   │  상도동   통근 28분 · 121만  │
+│  ┌────────────────────────┐  │   │                              │   │  흑석동   통근 34분 · 128만  │
+│  │ 🔍 강남역               │  │   │  보증금 ──────●───  3.0억    │   │  신길동   통근 52분 · 119만  │
+│  └────────────────────────┘  │   │  월세   ●─────────    0만    │   │  ...                         │
+│                              │   │                              │   │                              │
+│  ● 대중교통    ○ 자차        │   │  월 실부담 <b>약 128만원</b>       │   │  <i>더 좁히시겠어요?</i>            │
+│  ▓▓▓ 40분 범위 표시          │   │  <span style="opacity:.7">(전제 보기)</span>                  │   │  [ 조건 추가 ]   [ 이대로 ]  │
+│                     [다음]   │   │                     [다음]   │   │                              │
+└──────────────────────────────┘   └──────────────────────────────┘   └──────────────────────────────┘
+      출근지 · 아이소크론              예산 · 실부담 환산                <b>입력 2개로 첫 결과 ★</b></pre>
+
+  <div class="pull">
+    <p><strong>입력 2개만으로도 Hero Feature가 작동한다.</strong> 예산은 A·B의 상한이 다르고 통근은 출근지가 다르므로, 필수 조건이 없어도 <code>한쪽만 충족</code>이 나온다. 이게 점진적 공개를 채택할 수 있는 진짜 이유다.</p>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th>단계</th><th>통근 표시</th><th>왜</th></tr></thead>
+    <tbody>
+      <tr><td class="k">1단계 (임계값 없음)</td><td><code>A 34분 · B 22분</code> — <strong>값만</strong></td><td>기준을 안 받았으므로 충족·미충족을 말할 수 없다</td></tr>
+      <tr><td class="k">2단계 이후 (임계값 있음)</td><td><code>A 34분 ≤ 40분 ✓</code> — <strong>판정</strong></td><td>기준이 생기면 판정으로 전환</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><strong>한 화면에 하나씩 받는 이유는 그대로다.</strong> 이탈 지점을 측정할 수 있고(한 화면에 몰면 어느 항목에서 포기했는지 모른다), 여러 개를 한 번에 보여주면 부담이 커 보인다. <strong>B에게는 이 흐름이 전부다</strong> — 매물을 담지도, 후보를 고르지도 않는다.</p>
+  <p>필수 슬롯 2개(G8)는 <strong>상한이지 처음부터 채우라는 뜻이 아니다.</strong> 결과를 본 뒤 “더 좁히시겠어요?”로 하나씩 추가한다 — <code>01-hypotheses</code> H3의 완화 설계(<em>“온보딩에서 한꺼번에 묻지 않는다”</em>)와 같은 지점이다.</p>
 
   <h3>④ 후보 목록 — 정상 + 예외 3종</h3>
   <pre><b>정상</b>                           <b>B 대기 중</b>                     <b>전부 불충족</b>
@@ -1102,7 +1117,7 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
       <thead><tr><th>원문</th><th>판정</th></tr></thead>
       <tbody>
         <tr><td class="k">화면1 공동 집찾기 생성</td><td><strong>삭제</strong> → ①에 흡수. 별도 생성 단계는 마찰</td></tr>
-        <tr><td class="k">화면2 나의 주거조건 (중요도)</td><td>② — 중요도 3단계 → 필수/선호 2단계, 4단계 순차</td></tr>
+        <tr><td class="k">화면2 나의 주거조건 (중요도)</td><td>② — 중요도 3단계 → 필수/선호 2단계, <strong>2단계 입력 + 확장</strong></td></tr>
         <tr><td class="k">화면3 두 사람의 공동 조건</td><td><strong>④에 흡수</strong> — 조건만 나란히 보는 화면은 판단을 못 만듦</td></tr>
         <tr><td class="k">화면4 매물 탐색</td><td><strong>삭제</strong> — 범위 밖</td></tr>
         <tr><td class="k">화면5 공동 관심매물 (A/B 평가)</td><td>④ — 평가 → 자동 판정</td></tr>
@@ -1112,6 +1127,46 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
       </tbody>
     </table></div>
   </div>
+
+  <h3>정상 경로 8개는 전체의 17%다</h3>
+  <p>와이어프레임 전에 화면을 빠짐없이 세어봤다. 빈 상태·예외·전이·알림을 포함하면 <strong>47개</strong>이고, 그중 MVP 단계 1이 <strong>35개</strong>다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>구분</th><th class="num">개수</th></tr></thead>
+    <tbody>
+      <tr><td class="k">정상 경로</td><td class="num">8</td></tr>
+      <tr><td class="k">빈 상태 · 예외</td><td class="num">21</td></tr>
+      <tr><td class="k">전이 · 알림</td><td class="num">8</td></tr>
+      <tr><td class="k">B 전용</td><td class="num">10</td></tr>
+      <tr><td class="k"><strong>합계</strong></td><td class="num"><strong>47</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>세어보니 설계 공백이 둘 나왔다</h4>
+  <div class="pull warn">
+    <p><strong>① 방문 후보 합의 메커니즘이 없다.</strong> 종료점이 “방문 후보 2개 <em>합의</em>”인데, A가 1·3번을 고르고 B가 2·3번을 골랐을 때의 화면이 없었다. <strong>North Star 달성 화면 자체가 미설계였다.</strong></p>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>안</th><th>방식</th><th>판단</th></tr></thead>
+    <tbody>
+      <tr><td class="k">교집합 자동</td><td>겹치는 것만 확정</td><td>1개만 남거나 0개가 됨</td></tr>
+      <tr><td class="k">합집합</td><td>4개 전부 방문</td><td>2개로 좁힌다는 목적과 충돌</td></tr>
+      <tr><td class="k"><strong>차이를 보여주고 다시 고르게</strong></td><td>“3번은 합의됐고 나머지 하나를 정하세요”</td><td><strong>유력</strong> — 판정 3분류와 논리가 같다</td></tr>
+      <tr><td class="k">투표 · 랜덤</td><td>—</td><td>결정을 대신하게 됨 (G1 위반)</td></tr>
+    </tbody>
+  </table></div>
+  <p>세 번째가 이 제품의 논리와 맞는다. <strong>선택에서도 “둘 다 / 한쪽만 / 둘 다 아님”이 그대로 나온다.</strong></p>
+
+  <div class="pull warn">
+    <p><strong>② 상대 조건을 누가 바꾸나.</strong> 완화안을 양쪽 다 보여주기로 했는데(G1), <strong>B의 조건을 A가 직접 바꿀 수는 없다.</strong> 자기 조건은 자기만 바꾸고 상대 것은 <strong>제안</strong>만 한다 — 그러지 않으면 “네가 양보해”를 시스템이 대신 실행하는 것이 된다.</p>
+  </div>
+  <p>이 밖에 확인 항목 답변이 판정으로 되돌아오는 경로, 조건 변경 시 상대 알림, 초대 거절 경로, 한 명만 방문한 경우가 빠져 있었다. 전체 목록은 <code>docs/13-screen-inventory.md</code>에 있다.</p>
+
+  <h4>와이어프레임 순서</h4>
+  <pre><b>B-01</b> 초대 진입 → <b>B-02</b> 후보 미리보기 → <b>B-05</b> 첫 결과      ← H1 전체가 여기 달림
+   → <b>A-14b</b> 한쪽만 충족 (Hero)
+        → <b>A-15a·b</b> 완화 시뮬레이션 · 후보 증가
+             → <b>A-13b·c</b> 막다른 길 · 조건 모순
+                  → <b>A-16d</b> 합의</pre>
 </section>
 
 <!-- 15 -->
@@ -1128,7 +1183,8 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
     <thead><tr><th>단계</th><th>지표</th><th>검증하는 가설</th><th>측정</th></tr></thead>
     <tbody>
       <tr><td class="k">A 후보 담기</td><td>후보 5개 채운 비율</td><td>—</td><td><span class="p p-ok">가능</span></td></tr>
-      <tr><td class="k">A 조건 입력</td><td><strong>4단계 완주율</strong> · 단계별 이탈</td><td><strong>H3</strong></td><td><span class="p p-ok">가능</span></td></tr>
+      <tr><td class="k">A 조건 입력 · 1단계</td><td><strong>2개(출근지·예산) 완료율</strong></td><td><strong>H3</strong> — 최소 입력조차 안 하는가</td><td><span class="p p-ok">가능</span></td></tr>
+      <tr><td class="k">A 조건 입력 · 확장</td><td><strong>3개 / 4개까지 채운 비율</strong></td><td><strong>H3</strong> — <strong>어디까지 채우는지가 실제 답</strong></td><td><span class="p p-ok">가능</span></td></tr>
       <tr><td class="k">B 링크 열람</td><td>열람률</td><td><strong>H1-a</strong> A의 권유가 통하나</td><td><span class="p p-ok">가능</span></td></tr>
       <tr><td class="k">B 로그인 통과</td><td>통과율</td><td><strong>H1-b</strong> — <strong>우리가 못 고치는 구간</strong></td><td><span class="p p-f">출시 후</span></td></tr>
       <tr><td class="k">B 조건 입력 완료</td><td><strong>완료율 ★</strong></td><td><strong>H1-c — H1의 급소</strong></td><td><span class="p p-ok">가능</span></td></tr>
@@ -1142,7 +1198,7 @@ F6 출력:   "A가 역 도보를 13분까지 허용하면 이 집은 둘 다 충
   <div class="tw"><table>
     <thead><tr><th>구분</th><th>지표</th></tr></thead>
     <tbody>
-      <tr><td class="k"><span class="p p-ok">프로토타입으로 가능</span></td><td>조건 입력 완주율 · 단계별 이탈 · 링크 열람률 · <strong>B 조건 입력 완료율</strong> · 완화 실행률 · 후보 확정률 · 소요 시간</td></tr>
+      <tr><td class="k"><span class="p p-ok">프로토타입으로 가능</span></td><td>조건 입력 완료율(2개/3개/4개) · 단계별 이탈 · 링크 열람률 · <strong>B 조건 입력 완료율</strong> · 완화 실행률 · 후보 확정률 · 소요 시간</td></tr>
       <tr><td class="k"><span class="p p-f">출시 후에만</span></td><td>로그인 통과율 · 7일 리텐션 · 방문 후 유지·보류·제외 비율</td></tr>
       <tr><td class="k"><span class="p p-off">내부 데이터 · 불가</span></td><td>관심매물 30일+ 방치 비중 · 관심매물→문의 전환율 · 반복 탐색 횟수 · 방문예약 전환율</td></tr>
     </tbody>
