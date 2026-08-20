@@ -1,0 +1,885 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>같이 고르는 집 — Master Deck</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --ink:#1a2420; --sub:#5c6b63; --sub2:#7c8a83;
+  --bg:#f4f5f1; --card:#ffffff; --line:#dfe4dd; --line2:#eceee9;
+  --naver:#03c75a; --naver-deep:#027a38; --naver-tint:#e6f9ee;
+  --ok:#03c75a; --ok-tint:#e6f9ee;
+  --warn:#b8863a; --warn-tint:#faf1e2;
+  --off:#a24b46; --off-tint:#f7e9e7;
+  --info:#5a6ba8; --info-tint:#eaecf6;
+  --tag-fact:#0d6b3a; --tag-fact-bg:#e1f4e8;
+  --tag-inf:#8a5a12; --tag-inf-bg:#f8ecd8;
+  --tag-ass:#6b6f76; --tag-ass-bg:#eceeec;
+  --tag-tbd:#8a3a4a; --tag-tbd-bg:#f6e6e9;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo',-apple-system,BlinkMacSystemFont,sans-serif;
+  line-height:1.5;
+}
+.deck{max-width:1180px;margin:0 auto;padding:32px 20px 80px;}
+.page{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:44px 52px 40px; margin-bottom:28px; position:relative;
+  box-shadow:0 1px 2px rgba(20,30,25,.04);
+}
+.page-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:22px; border-bottom:2px solid var(--naver); padding-bottom:12px;}
+.eyebrow{font-size:12.5px; font-weight:800; letter-spacing:.09em; color:var(--naver-deep); text-transform:uppercase;}
+.pageno{font-size:12px; color:var(--sub2); font-variant-numeric:tabular-nums;}
+h1.pt{font-size:26px; margin:0 0 4px; letter-spacing:-.01em;}
+h2.st{font-size:14.5px; color:var(--sub); margin:0 0 22px; font-weight:500;}
+h3.sec{font-size:15px; font-weight:800; margin:22px 0 10px; color:var(--ink); display:flex; align-items:center; gap:8px;}
+h3.sec::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--naver);}
+p{margin:0 0 10px; font-size:13.7px; color:#2b332e;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+table{width:100%; border-collapse:collapse; font-size:13px; margin:10px 0 18px;}
+th,td{border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+th{background:#eef2ed; font-weight:700; font-size:12.3px;}
+tr:nth-child(even) td{background:#fbfbf9;}
+.small{font-size:12px; color:var(--sub);}
+.tag{display:inline-block; font-size:10.5px; font-weight:800; padding:2px 7px; border-radius:5px; letter-spacing:.02em;}
+.t-fact{background:var(--tag-fact-bg); color:var(--tag-fact);}
+.t-inf{background:var(--tag-inf-bg); color:var(--tag-inf);}
+.t-ass{background:var(--tag-ass-bg); color:var(--tag-ass);}
+.t-tbd{background:var(--tag-tbd-bg); color:var(--tag-tbd);}
+.card{background:#fbfbf9; border:1px solid var(--line2); border-radius:10px; padding:14px 16px;}
+.callout{border-left:4px solid var(--naver); background:var(--naver-tint); padding:12px 16px; border-radius:0 8px 8px 0; margin:14px 0; font-size:13px;}
+.callout.warn{border-left-color:var(--warn); background:var(--warn-tint);}
+.callout.fix{border-left-color:var(--info); background:var(--info-tint);}
+.badge{display:inline-flex; align-items:center; gap:5px; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:20px;}
+.b-ok{background:var(--ok-tint); color:var(--naver-deep);}
+.b-warn{background:var(--warn-tint); color:var(--warn);}
+.b-off{background:var(--off-tint); color:var(--off);}
+.b-info{background:var(--info-tint); color:var(--info);}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+.d-ok{background:var(--ok);} .d-warn{background:var(--warn);} .d-off{background:var(--off);} .d-info{background:var(--info);}
+ul,ol{margin:0 0 12px; padding-left:20px; font-size:13.5px;}
+li{margin-bottom:5px;}
+.kicker{font-size:12px; font-weight:800; color:var(--sub2); letter-spacing:.06em; text-transform:uppercase;}
+.num-badge{width:26px;height:26px;border-radius:50%;background:var(--naver);color:#fff;font-weight:800;font-size:12.5px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+.flow{display:flex; align-items:stretch; gap:0; flex-wrap:wrap;}
+.flow .fstep{background:#fbfbf9;border:1px solid var(--line2);border-radius:8px;padding:10px 14px;font-size:12.5px;flex:1;min-width:110px;text-align:center;}
+.flow .arrow{display:flex;align-items:center;justify-content:center;color:var(--sub2);font-size:16px;padding:0 4px;}
+.cover{text-align:center; padding:70px 40px 50px;}
+.cover .kicker2{font-size:14px; color:var(--naver-deep); font-weight:800; letter-spacing:.14em; margin-bottom:22px;}
+.cover h1{font-size:52px; margin:0 0 14px; letter-spacing:-.02em;}
+.cover .sub{font-size:17px; color:var(--sub); margin-bottom:38px;}
+.cover .vp-line{font-size:19px; font-weight:700; color:var(--ink); max-width:640px; margin:0 auto 38px; line-height:1.6; padding:20px 26px; background:var(--naver-tint); border-radius:12px;}
+.meta-row{display:flex; justify-content:center; gap:36px; margin-top:20px; font-size:13px; color:var(--sub);}
+.meta-row b{color:var(--ink); display:block; font-size:13.5px; margin-bottom:2px;}
+.foot-src{margin-top:24px; padding-top:14px; border-top:1px solid var(--line2); font-size:11px; color:var(--sub2);}
+.quadrant{display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:2px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; height:320px;}
+.qcell{background:#fff; padding:16px; font-size:12.5px; position:relative;}
+.qcell.excl{background:#f7f2f0; color:var(--sub2);}
+.qcell h4{margin:0 0 6px; font-size:13px;}
+.axis-label{position:absolute; font-size:11px; color:var(--sub2); font-weight:700;}
+.emo{font-family:'Segoe UI Emoji','Apple Color Emoji',sans-serif;}
+.legend-strip{display:flex; gap:14px; flex-wrap:wrap; font-size:12px; margin-bottom:14px;}
+@media print{
+  body{background:#fff;}
+  .page{box-shadow:none; border:none; margin:0; page-break-after:always; border-radius:0;}
+  .deck{max-width:none; padding:0;}
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<!-- ============ 01 표지 ============ -->
+<section class="page cover">
+  <div class="kicker2">네이버 부동산 · 서비스 역기획 Master Deck</div>
+  <h1>같이 고르는 집</h1>
+  <div class="sub">함께 살 집을 구하는 두 사람을 위한 공동 주거 의사결정 기능 — 관심매물 저장 이후 구간</div>
+  <div class="vp-line">“각자의 조건과 양보 지점을 보고,<br>함께 보러 갈 집을 정합니다.”</div>
+  <div class="meta-row">
+    <div><b>팀 4</b>강서윤 · 박수빈 · 이소영 · 이희재</div>
+    <div><b>작성일</b>2026-08-20</div>
+    <div><b>기준 commit</b>10b6455...b01ed9</div>
+    <div><b>문서 상태</b>구현 전 v0.1 · Master Deck 초안</div>
+  </div>
+  <div class="foot-src">본 문서는 <code>real-estate-joint-decision-analysis</code> 저장소(soyoung2222 브랜치)의 11개 docs·4개 decisions, 팀 PRD v0.1, Value Proposition 20260820을 기준으로 작성되었다. 각 페이지 하단에 근거 상태(FACT/INFERENCE/ASSUMPTION/TBD)를 표기한다.</div>
+</section>
+
+<!-- ============ 02 Executive Summary ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">Executive Summary</span><span class="pageno">02 / 30</span></div>
+  <h1 class="pt">한 장 요약</h1>
+  <h2 class="st">시장 기회부터 핵심 KPI까지</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3 class="sec">시장 기회</h3>
+      <p><b>TAM</b> 약 500만~700만 명 (국내 공동 주거 탐색 잠재군) · <b>SAM</b> 약 54.6만 쌍(하한, 당근부동산 거래완료자 조사 기반) · <b>SOM</b> 시나리오 6.7만~20.1만 명</p>
+      <p class="small">네이버부동산은 검색 축 MAU 3위(24.7%, 직방 42.3%·호갱노노 33.0%)다. 그러나 이 제품이 겨루는 축은 검색이 아니라 <b>저장 이후 공동 결정</b> 축이며, 이 축에서는 3사 모두 공백이다.</p>
+    </div>
+    <div class="card">
+      <h3 class="sec">고객 문제</h3>
+      <p>이 프로젝트가 푸는 것은 <b>부동산 탐색 문제가 아니라 공동 결정 문제</b>다. 상대가 무엇을 원하는지 데이터로 알 수 없고, 조건이 충돌하는 지점을 설명할 방법이 없어 "그냥 별로"에서 대화가 멈춘다.</p>
+      <p class="small"><span class="tag t-fact">FACT</span> Zillow(2020) 조사: 파트너와 집을 산 응답자의 77%가 다툼 경험. <span class="tag t-inf">INFERENCE</span> 그 충돌이 실제 결정을 지연시키는지는 미검증(별도 가설로 추후 검증 예정).</p>
+    </div>
+    <div class="card">
+      <h3 class="sec">개선안 한 줄</h3>
+      <p>AI가 집을 <b>추천하지 않는다.</b> 두 사람의 조건을 합산해 총점을 만드는 대신, 관심매물마다 <b>조건 충돌과 양보 지점을 문장으로</b> 설명해 "이번에 보러 갈 집 2개"를 스스로 정하도록 돕는다.</p>
+    </div>
+    <div class="card">
+      <h3 class="sec">기대 가치 (Gain)</h3>
+      <ul style="margin:0;">
+        <li>각자의 조건·선호를 매물별 4분류(둘다충족/한쪽만충족/둘다불충족/확인필요)로 확인</li>
+        <li>한쪽만 충족일 때 누가 무엇을 얼마나 양보하는지 문장으로 확인</li>
+        <li>조건을 사람에 저장해 매물이 바뀌는 2~3개월 여정에서도 기준 유지</li>
+      </ul>
+      <p class="small">경쟁 기준선은 다른 부동산 앱이 아니라 <b>카카오톡(3초) + 지도 앱 + 메모장</b>이다.</p>
+    </div>
+  </div>
+  <h3 class="sec">핵심 KPI — North Star</h3>
+  <div class="callout"><b>초대 발송 건 중 7일 안에 "방문 후보 2개"가 정해진 비율.</b> 7일이 적정한지는 1차 측정 후 조정한다. 수치 목표는 1차 측정 전에는 세우지 않는다 — 근거 없는 숫자는 지어내지 않는다는 원칙을 지킨다.</div>
+  <div class="foot-src">근거: <code>docs/04-benchmarks.md</code>, <code>docs/01-team-brief.md</code>, <code>docs/02-hypotheses.md</code>, <code>value-proposition_20260820.md</code></div>
+</section>
+
+<!-- ============ 03 Five Forces ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">시장 · 경쟁 — Five Forces</span><span class="pageno">03 / 30</span></div>
+  <h1 class="pt">Five Forces 분석</h1>
+  <h2 class="st">진짜 경쟁자는 다른 부동산 앱이 아니다</h2>
+  <table>
+    <tr><th style="width:22%">힘</th><th style="width:14%">강도</th><th>근거</th></tr>
+    <tr><td>기존 경쟁자 간 경쟁</td><td><span class="badge b-warn">중간</span></td><td><span class="tag t-fact">FACT</span> 검색 MAU 기준 직방 42.3% &gt; 호갱노노 33.0% &gt; 네이버부동산 24.7%. 다만 이 기능은 검색 경쟁이 아니라 저장 이후 경쟁이라 이 수치는 참고선이다.</td></tr>
+    <tr><td><b>대체재 위협</b></td><td><span class="badge b-off">매우 높음</span></td><td><span class="tag t-fact">FACT</span> 실제 대체재는 <b>카카오톡</b>(링크 공유·의견 교환, 3초), <b>노션/엑셀 템플릿</b>(매물 비교표), <b>지도 앱+메모장</b>(통근·장단점 기록). "경쟁 상대는 다른 부동산 앱이 아니다"가 벤치마크 조사의 결론이다(Tier 0).</td></tr>
+    <tr><td>신규 진입자 위협</td><td><span class="badge b-warn">중~높음</span></td><td><span class="tag t-fact">FACT</span> 결혼준비 앱 3종(특별시·웨딩노트·MarryNote)이 이미 관계 형성이 끝난 두 사람을 확보한 채 신혼집 예산 영역에 진입 중. 단 매물 대조 로직은 아직 없음 — "금액을 담는 그릇은 있으나 매물을 대조하는 로직은 없다."</td></tr>
+    <tr><td>구매자(사용자) 교섭력</td><td><span class="badge b-off">높음</span></td><td>전환 비용이 거의 0에 가깝고 대체재(카톡 등)가 이미 무료로 작동 중이라 사용자가 이 기능을 쓸 이유를 스스로 증명해야 한다.</td></tr>
+    <tr><td>공급자(매물 데이터) 교섭력</td><td><span class="badge b-ok">낮음</span></td><td>네이버는 매물 데이터를 자체 보유하며, 이 기능은 신규 매물 DB·검색·지도를 만들지 않는다(원칙: 기존 매물 검색·지도 기능을 새로 만들지 않는다) — 공급자 의존이 발생하지 않는 설계.</td></tr>
+  </table>
+  <div class="callout">결론: 이 서비스가 이겨야 할 대상은 "직방·호갱노노"가 아니라 <b>"카톡+노션+지도앱" 조합</b>이다. 이 조합 대비 초대에서 첫 반응까지 걸리는 시간(3초 기준)과 조건 대조의 구조화 여부가 핵심 승부처다.</div>
+  <div class="foot-src">근거: <code>docs/04-benchmarks.md</code>, <code>docs/01-team-brief.md</code></div>
+</section>
+
+<!-- ============ 04 TAM SAM SOM ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">시장 · 경쟁 — TAM · SAM · SOM</span><span class="pageno">04 / 30</span></div>
+  <h1 class="pt">시장 규모 추정</h1>
+  <h2 class="st">1차 시장 범위는 전·월세 공동 주거 탐색자 2인</h2>
+  <div class="grid3">
+    <div class="card">
+      <h3 class="sec">TAM</h3>
+      <p style="font-size:22px;font-weight:800;margin:0 0 6px;">약 500만~700만 명</p>
+      <p class="small">국내 공동 주거(신혼·동거·룸메이트) 탐색 잠재군. <span class="tag t-inf">INFERENCE</span> 국가데이터처 신혼부부 통계 및 부동산 앱 MAU 교차 추정.</p>
+    </div>
+    <div class="card">
+      <h3 class="sec">SAM</h3>
+      <p style="font-size:22px;font-weight:800;margin:0 0 6px;">약 54.6만 쌍 (하한)</p>
+      <p class="small"><span class="tag t-fact">FACT</span> 당근부동산 거래완료자 조사 기반 전·월세 2인 공동 탐색 추정 하한.</p>
+    </div>
+    <div class="card">
+      <h3 class="sec">SOM (시나리오)</h3>
+      <p style="font-size:22px;font-weight:800;margin:0 0 6px;">6.7만~20.1만 명</p>
+      <p class="small"><span class="tag t-ass">ASSUMPTION</span> 채택률 시나리오 가정. SOM 자체가 가정 시나리오이며 예측이 아니라 "자릿수 감각"이다.</p>
+    </div>
+  </div>
+  <h3 class="sec">1차 · 2차 검증 집단 (Primary Customer 아님 — 검증 설계상 구분)</h3>
+  <table>
+    <tr><th style="width:20%">구분</th><th style="width:26%">집단</th><th>목적</th></tr>
+    <tr><td>1차 검증 집단</td><td><b>예비부부 · 신혼부부</b></td><td>초대 수락률의 <b>상한</b>을 볼 집단. 국내 유일 비교군(결혼준비 앱 3종)이 존재.</td></tr>
+    <tr><td>2차 검증 집단</td><td><b>친구 · 룸메이트</b></td><td>초대 수락률의 <b>하한</b>을 비교할 대조군.</td></tr>
+    <tr><td>범위 밖</td><td>3인 이상 · 부모–자녀 · 주도–승인형 관계</td><td>대칭적 조건 대조 구조가 성립하지 않음.</td></tr>
+  </table>
+  <div class="callout warn"><b>방법론 주의</b> — 직방·호갱노노·네이버 MAU 수치는 모바일/PC 집계 기준이 상이해 직접 비교 시 caveat가 필요하다. SOM 수치는 확정 예측치가 아닌 시나리오임을 발표 시 명시한다.</div>
+  <div class="foot-src">근거: 팀 Day2 시장분석(당근부동산·국가데이터처 교차) · <code>docs/01-team-brief.md</code> §5</div>
+</section>
+
+<!-- ============ 05 Segment Map ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">시장 · 경쟁 — Segment Map</span><span class="pageno">05 / 30</span></div>
+  <h1 class="pt">고객 세그먼트 맵</h1>
+  <h2 class="st">축: 관계 유형 × 의사결정 관여 방식</h2>
+  <div class="quadrant">
+    <div class="qcell" style="border-bottom:2px solid var(--naver);border-right:2px solid var(--naver);">
+      <h4>완전공동형 × 예비부부·신혼부부</h4>
+      <p><span class="badge b-ok">1차 검증 대상</span></p>
+      <p>각자 조건을 내고 대칭적으로 고르는 구조 성립. 초대 수락률의 상한을 볼 관찰군. 결혼준비 앱 3종이 이미 이 관계 형성을 확보 — 침투 경고 신호이자 초대 메커니즘의 존재 증명.</p>
+    </div>
+    <div class="qcell" style="border-bottom:2px solid var(--naver);">
+      <h4>완전공동형 × 친구·룸메이트</h4>
+      <p><span class="badge b-info">2차 검증(대조군)</span></p>
+      <p>관계 형성 강도가 낮아 초대 수락률의 하한을 보여줄 대조군. 확장 타깃이 아니라 검증 설계상 비교 대상.</p>
+    </div>
+    <div class="qcell excl">
+      <h4>주도–승인형 × 전 관계 유형</h4>
+      <p><span class="badge b-off">범위 밖 (제외)</span></p>
+      <p>한 명이 고르고 다른 사람은 승인만 하는 구조. 대칭적 조건 대조가 성립하지 않아 판정 로직 자체가 작동하지 않음.</p>
+    </div>
+    <div class="qcell excl">
+      <h4>3인 이상 · 부모–자녀</h4>
+      <p><span class="badge b-off">범위 밖 (제외)</span></p>
+      <p>판정 조합이 지수적으로 폭발하거나 관계의 비대칭이 커 별도 제품 설계가 필요.</p>
+    </div>
+  </div>
+  <div class="callout warn"><b>이전 초안 대비 변경</b> — 과거 세그먼트맵 초안에 있던 "주도-승인형" 사분면은 <b>범위에서 명시적으로 제외</b>되었다(<code>docs/11-decision-status.md</code> 범위 표, 2026-08 확정). 판정 로직이 두 사람의 대칭적 조건 대조를 전제하기 때문이다.</div>
+  <div class="foot-src">근거: <code>assets/reverse-planning.html</code> §02, <code>docs/11-decision-status.md</code></div>
+</section>
+
+<!-- ============ 06 Value Chain ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">기업 · 성공 구조 — Value Chain</span><span class="pageno">06 / 30</span></div>
+  <h1 class="pt">가치사슬 분석</h1>
+  <h2 class="st">"저장 이후, 계약 이전" 구간이 공백이다</h2>
+  <div class="flow">
+    <div class="fstep">매물 확보<br><span class="small">중개사·등록</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep">검색 · 지도<br><span class="small">네이버 기존 자산</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep">관심매물 저장<br><span class="small">네이버 기존 자산</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep" style="background:var(--naver-tint);border:2px solid var(--naver);font-weight:800;">공유 · 비교 · 공동 결정<br><span class="small" style="color:var(--naver-deep);">Opportunity Zone — 이 제품 범위</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep">문의 · 방문 · 계약<br><span class="small">중개사 연결</span></div>
+  </div>
+  <p style="margin-top:16px;">기존 가치사슬에서 매물 확보~관심매물 저장까지는 네이버가 이미 최고 수준의 자산을 보유한다. 반면 <b>저장 이후 두 사람이 비교하고 합의하는 구간</b>은 카카오톡·지도앱·메모장으로 흩어져 있고, 그 결과가 서비스 안에 하나의 구조로 남지 않는다. 이 공백이 이 제품의 Opportunity Zone이다.</p>
+  <div class="callout">이 제품은 <b>매물 확보·검색·지도를 새로 만들지 않는다</b>(원칙: 기존 검색·지도 기능을 새로 만들지 않는다). 기존 자산 위에 저장 이후 구간 하나만 추가한다.</div>
+  <div class="foot-src">근거: <code>assets/reverse-planning.html</code> §01, PRD v0.1 §3.2</div>
+</section>
+
+<!-- ============ 07 KSF ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">기업 · 성공 구조 — KSF</span><span class="pageno">07 / 30</span></div>
+  <h1 class="pt">Key Success Factors</h1>
+  <table>
+    <tr><th style="width:26%">KSF</th><th style="width:14%">유형</th><th>내용</th></tr>
+    <tr><td><b>① 초대 마찰 최소화</b></td><td><span class="badge b-off">신규 · 최우선</span></td><td>"상대가 실제로 들어와 조건을 입력하는가"가 이 제품의 급소. 링크 하나로 최소 반응까지 도달하는 마찰이 성패를 가른다. 위밋플레이스류의 "링크 하나, 가입 없음" 패턴을 참조.</td></tr>
+    <tr><td><b>② 관심매물 이후 후보 관리 구조</b></td><td><span class="badge b-off">신규</span></td><td>조건을 매물이 아니라 사람에 저장해, 매물이 회전하는 2~3개월 여정 동안에도 같은 기준을 유지하는 구조.</td></tr>
+    <tr><td>③ 총점 없이 설명하는 신뢰 설계</td><td><span class="badge b-warn">신규 · 차별화</span></td><td>IPDAS·Option Grid가 지지하는 "균형 있는 비편향 정보 제시"를 조건 충돌 설명에 적용. 시장 관행(집노트·LoopCV 등 대부분 총점)에 역행하는 결정이므로 신뢰 확보가 핵심 과제.</td></tr>
+    <tr><td>④ 매물 데이터 풍부성·탐색 속도</td><td><span class="badge b-ok">기존 유지</span></td><td>네이버가 이미 보유한 자산. 이 기능의 차별화 요소가 아니라 전제 조건.</td></tr>
+  </table>
+  <div class="callout">우선순위는 <b>① 초대 참여 → ② 후보 관리 구조 → ③ 신뢰</b> 순이며, ④는 네이버 자산으로 이미 확보되어 있어 신규 투자가 필요하지 않다.</div>
+  <div class="foot-src">근거: <code>assets/reverse-planning.html</code> §01·§12, <code>docs/02-hypotheses.md</code></div>
+</section>
+
+<!-- ============ 08 페르소나 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">고객 맥락 — 페르소나 · 스펙트럼</span><span class="pageno">08 / 30</span></div>
+  <h1 class="pt">페르소나 & 페르소나 스펙트럼</h1>
+  <h2 class="st">구체적인 한 쌍의 예시부터, 어디까지가 이 제품이 작동하는 범위인가</h2>
+  <h3 class="sec">핵심 페르소나 — 맞벌이 예비신혼부부 (일러스트레이션)</h3>
+  <table>
+    <tr><th style="width:16%"></th><th>A 사용자</th><th>B 사용자</th></tr>
+    <tr><td>출퇴근</td><td>강남역, 40분 이내</td><td>여의도역, 40분 이내</td></tr>
+    <tr><td>필수 조건(예산 제외 최대 4개 중 일부)</td><td>역 도보 10분 이내</td><td>전용 20평 이상 · 주차 필수</td></tr>
+    <tr><td>예산 · 매물 유형 선호</td><td>보증금 3억 이하, 구축 가능</td><td>준공 15년 이내 건물 선호</td></tr>
+  </table>
+  <p class="small">두 사람의 출근지가 달라 통근 조건에서 트레이드오프(한쪽이 이득을 보면 다른 쪽이 손해를 보는 관계)가 구조적으로 발생하고, 매물 유형·연식 선호도 서로 다르다 — 이것이 <b>한쪽만 충족</b> 판정과 "무엇을 양보하는지 보여주는" 문장이 실제로 발생하는 지점이다. 위 항목 배분은 필수조건 0~4개·선호 0~3개 구조 안에서의 예시이며 고정값이 아니다.</p>
+  <h3 class="sec">페르소나 스펙트럼</h3>
+  <p class="small">세로축은 "의사결정 관여 방식" — 세그먼트 맵(p.05)의 축을 그대로 스펙트럼으로 편다.</p>
+  <div class="flow">
+    <div class="fstep" style="background:var(--off-tint);border-color:var(--off);"><b>주도–승인형</b><br><span class="small">한 명이 검색 도맡고 상대는 O/X만</span><br><span class="badge b-off" style="margin-top:4px;">범위 밖 · 제외</span></div>
+    <div class="arrow">—</div>
+    <div class="fstep" style="background:var(--naver-tint);border:2px solid var(--naver);"><b>★ 완전공동형 · 예비부부·신혼부부</b><br><span class="small">1차 검증 대상 — 조건 다르고 계약 부담 커서 둘 다 적극 관여</span></div>
+    <div class="arrow">—</div>
+    <div class="fstep"><b>완전공동형 · 친구·룸메이트</b><br><span class="small">2차 검증(대조군)</span></div>
+    <div class="arrow">—</div>
+    <div class="fstep" style="background:var(--off-tint);border-color:var(--off);"><b>3인 이상 · 주 결정자 있는 다인 가족</b><br><span class="badge b-off" style="margin-top:4px;">범위 밖 · 제외</span></div>
+  </div>
+  <div class="callout">가치가 가장 크게 체감되는 지점은 <b>완전공동형 극단</b>이다 — 맞벌이로 조건이 다르고 계약 부담이 커서 둘 다 적극적으로 관여하므로, 조건 충돌·양보 지점 설명이 가장 큰 가치를 만든다. 반대로 주도–승인형 극단은 한쪽만 O/X 하므로 판정 구조 자체가 성립하지 않는다.</div>
+  <div class="callout warn"><b>이전 초안 대비 변경</b> — 과거 Day3 스펙트럼은 "다인 가족(주 결정자 존재)"을 스펙트럼 우측 끝의 후순위 확장 대상으로 뒀다. 최신 범위 결정(<code>docs/11-decision-status.md</code>)은 이를 <b>3인 이상과 함께 명시적으로 제외</b>한다 — 판정 조합이 두 사람의 대칭 대조를 전제로 하기 때문이다.</div>
+  <h3 class="sec">고객 정의 (Customer) 요약</h3>
+  <table style="font-size:12px;">
+    <tr><th style="width:18%">구분</th><th style="width:22%">현재 확정 내용</th><th>해석 시 주의</th></tr>
+    <tr><td>제품 사용자</td><td><b>함께 살 집을 구하는 두 사람</b></td><td>혼자 쓰는 제품이 아니라 2인 전제. 1인 화면은 상대가 아직 들어오지 않은 <b>빈 경로</b>다.</td></tr>
+    <tr><td>1차/2차 검증 집단</td><td>예비부부·신혼부부 / 친구·룸메이트</td><td>주 타깃 확정이 아니라 초대 수락률의 상한/하한을 볼 집단이다.</td></tr>
+    <tr><td>현재 제외</td><td>3인 이상 · 부모–자녀 · 주도–승인형 관계</td><td>두 사람이 각자 조건을 내고 대칭적으로 고르는 구조가 성립하지 않는 범위.</td></tr>
+  </table>
+  <p class="small"><b>기기 전제</b> — A(초대자)는 PC 웹 우선(정보 밀도 높은 화면 중심), B(수신자)는 모바일 우선(카카오톡 링크 진입). 제품 형태는 별도 앱이 아니라 <b>네이버 앱 안의 기능</b>이다.</p>
+  <div class="foot-src">근거: <code>Day3_01_Persona_Spectrum_CJM.md</code>, <code>value-proposition_20260820.md</code> §1, PRD v0.1 §4·§17.1, <code>docs/11-decision-status.md</code></div>
+</section>
+
+<!-- ============ 09 CJM ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">고객 맥락 — Customer Journey Map</span><span class="pageno">09 / 30</span></div>
+  <h1 class="pt">CJM (AS-IS) — 2레인 구조</h1>
+  <h2 class="st">보통 CJM은 1인을 그리지만, 이 여정은 A·B 두 레인이 필요하다</h2>
+  <table style="font-size:11.8px;">
+    <tr><th></th><th>① 저장</th><th>② 공유</th><th>③ 열람</th><th>④ 통근확인</th><th>⑤ 비용계산</th><th style="background:var(--warn-tint);">⑥ 의견교환 ★</th><th>⑦ 메모</th><th>⑧ 재탐색</th></tr>
+    <tr><td><b>접점</b></td><td>네이버</td><td>카카오톡</td><td>네이버</td><td>지도 앱</td><td>계산기·엑셀</td><td style="background:var(--warn-tint);">카카오톡</td><td>메모장</td><td>네이버</td></tr>
+    <tr><td><b>A 감정</b></td><td class="emo">🙂 기대</td><td class="emo">🙂 기대</td><td>—</td><td class="emo">😐</td><td class="emo">😐</td><td class="emo" style="background:var(--warn-tint);">😣 답답함</td><td class="emo">😐 지침</td><td class="emo">😞 지침</td></tr>
+    <tr><td><b>B 감정</b></td><td>—</td><td class="emo">😕 부담</td><td class="emo">😖 피로</td><td>—</td><td>—</td><td class="emo" style="background:var(--warn-tint);">😑 회피</td><td>—</td><td>—</td></tr>
+    <tr><td><b>Pain</b></td><td>—</td><td>링크만 가고 맥락은 안 감</td><td>매물마다 처음부터</td><td>각자 따로</td><td>다음에 또</td><td style="background:var(--warn-tint);"><b>여기서 멈춤</b></td><td>한 사람 폰에만</td><td>①로 회귀</td></tr>
+  </table>
+  <div class="grid2">
+    <div class="card">
+      <h3 class="sec">읽히는 것 셋</h3>
+      <p><b>① B의 감정은 시작부터 낮다.</b> A는 자기가 찾은 집이라 기대가 있지만, B는 부탁받아 들어온 사람이라 첫 접점(②)부터 부담이다.</p>
+      <p><b>② ③에서 B의 피로가 누적되고 ⑥에서 회피로 바뀐다.</b> 판단 기준을 말로 설명할 방법이 없어 가장 비용이 낮은 답 "그냥 별로"를 고른다 — 회피는 성격이 아니라 구조의 결과다.</p>
+    </div>
+    <div class="card">
+      <h3 class="sec">TO-BE 핵심 전환</h3>
+      <p><b>⑥ "그냥 별로" → 조건 입력 → 판정이 대신 말함.</b> B가 얻는 진짜 값은 "좋은 집을 찾는 것"이 아니라 <b>"설명하지 않아도 되는 것"</b>이다. ③ 하나씩 열람은 자동 판정으로 사라진다.</p>
+    </div>
+  </div>
+  <div class="callout warn"><b>이전 초안 대비 변경</b> — 기존 Day3 CJM은 단일 레인이었다. 실제로는 A/B 감정 격차 자체가 문제의 핵심이라 <b>2레인 CJM</b>으로 대체한다.</div>
+  <div class="foot-src">근거: <code>docs/07-cjm-opportunity-score.md</code> §1</div>
+</section>
+
+<!-- ============ 10 JTBD & Problem ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">고객 맥락 — JTBD</span><span class="pageno">10 / 30</span></div>
+  <h1 class="pt">Jobs-To-Be-Done</h1>
+  <table>
+    <tr><th style="width:18%">Job 유형</th><th>내용</th></tr>
+    <tr><td><b>Functional Job</b></td><td>이미 저장한 관심매물들 중에서 두 사람의 조건을 함께 대조하고, <b>이번에 보러 갈 집 두 곳을 정한다.</b></td></tr>
+    <tr><td><b>Decision Job</b></td><td>각 후보를 선택할 때 <b>누구의 어떤 조건이 맞고 어긋나는지, 무엇을 얼마나 양보하는지</b>를 파악한 상태에서 선택한다.</td></tr>
+    <tr><td><b>Relational Job</b></td><td>상대의 조건과 선호를 추측하거나 한쪽이 대신 결정하지 않고, <b>각자의 기준을 같은 비중으로 드러내며 둘이 납득할 수 있는 선택</b>을 만든다.</td></tr>
+  </table>
+  <div class="callout">여기서 "납득"은 모든 조건을 다 만족하는 정답 매물이 아니라, <b>이 집을 고르면 내가 또는 상대가 무엇을 감수하는지 알고도 방문 후보로 받아들일 수 있는 상태</b>다. 따라서 "한쪽만 충족"인 매물도 최종 방문 후보가 될 수 있다.</div>
+  <h3 class="sec">함정 질문 vs 우리가 푸는 질문</h3>
+  <div class="grid2">
+    <div class="card" style="border-color:var(--off);"><b>❌ 함정</b> — "가장 좋은 집은 어디인가?" → 총점이 필요해지고, 결국 한쪽 기준으로 수렴한다.</div>
+    <div class="card" style="border-color:var(--naver);"><b>✅ 우리가 푸는 것</b> — "우리 둘이 납득할 수 있는 집은 어디인가?" → 총점 없이 각자의 기준을 나란히 보여준다.</div>
+  </div>
+  <div class="foot-src">근거: <code>value-proposition_20260820.md</code> §2, <code>assets/reverse-planning.html</code> §05</div>
+</section>
+
+<!-- ============ 11 Opportunity Score ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">시장 기회 — Opportunity Score</span><span class="pageno">11 / 30</span></div>
+  <h1 class="pt">기회 점수 (Opportunity Score)</h1>
+  <p style="font-size:12.5px;"><b>공식(Ulwick ODI)</b> — OS = 중요도 + max(중요도 − 만족도, 0) · 각 10점 척도. OS≥12 과소서비스(기회) / 10~12 적정 / &lt;10 과잉서비스</p>
+  <div class="callout warn"><span class="tag t-tbd">TBD</span> <b>지금 점수를 매기지 않는다.</b> 중요도·만족도 실측이 없다. 여기에 숫자를 채우면 "근거 없는 숫자는 지어내지 않는다"는 원칙을 어기게 된다. 대신 <b>대리 지표로 상대 위치를 논증</b>한다.</div>
+  <table style="font-size:12px;">
+    <tr><th>단계</th><th>대체재</th><th>실패 시</th><th>만족도(대리)</th><th>중요도(대리)</th><th>OS 상대 위치</th></tr>
+    <tr><td>① 저장</td><td>네이버가 직접</td><td>후보를 못 모음</td><td>높음</td><td>높음</td><td>낮음</td></tr>
+    <tr><td>② 공유</td><td>카카오톡(3초)</td><td>상대가 못 봄</td><td>높음</td><td>중간</td><td>낮음</td></tr>
+    <tr><td>③ 열람</td><td>네이버(따로)</td><td>판단 못함</td><td>중간</td><td>중간</td><td>중간</td></tr>
+    <tr><td>④ 통근확인</td><td>지도 앱</td><td>대략 감으로</td><td>중간</td><td>중간</td><td>중간</td></tr>
+    <tr><td>⑤ 비용계산</td><td>계산기 5종+무료</td><td>대략 감으로</td><td>중간</td><td>중간</td><td>중간</td></tr>
+    <tr style="background:var(--warn-tint);"><td><b>⑥ 의견 교환</b></td><td><b>없음</b></td><td><b>전체 무효화 → ⑧ 회귀</b></td><td><b>최저</b></td><td><b>최고</b></td><td><b>최고 ★</b></td></tr>
+    <tr><td>⑦ 메모</td><td>메모장·노션</td><td>기억 의존</td><td>중간</td><td>낮음</td><td>낮음</td></tr>
+  </table>
+  <p>대리 지표 근거 — <b>만족도 최저</b>: 국내 부동산에 대응 수단 없음(충돌 표현 참조군도 의료에서 찾아야 했음). <b>중요도 최고</b>: ⑥에서 멈추면 ③④⑤의 결과가 전부 버려지고 ⑧로 회귀.</p>
+  <h3 class="sec">실측 설계 & 반증 조건</h3>
+  <p>"충돌이 결정을 지연시키는가" 인터뷰와 <b>같은 표본에서 동시 수집</b>. 문항: "이 일이 잘 되는 게 얼마나 중요했나요(1~10)" / "실제로 얼마나 잘 됐나요(1~10)". <b>반증 조건</b> — ⑥보다 ④⑤(통근·비용)의 OS가 높게 나오면 <b>지금 계획한 핵심 기능(무엇을 양보하는지 보여주는 화면)을 재검토</b>한다. 반증 조건을 미리 적는 것이 이 분석의 핵심이다.</p>
+  <div class="foot-src">근거: <code>docs/07-cjm-opportunity-score.md</code> §2</div>
+</section>
+
+<!-- ============ 12 관찰 근거 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">관찰 근거 · 문제 구조</span><span class="pageno">12 / 30</span></div>
+  <h1 class="pt">관찰 근거 (Evidence)</h1>
+  <table>
+    <tr><th style="width:22%">근거</th><th style="width:12%">상태</th><th>내용</th></tr>
+    <tr><td>반복 비교 실재</td><td><span class="tag t-fact">FACT</span></td><td>당근부동산 조사(2026-05, 971명) — 전세 계약자 평균 2.5개월·4.1곳, <b>30대(주 타깃) 2.7개월·4.1곳</b>. 매매 3.6개월·4.3곳, 월세 1.8개월·3.5곳, 20대 1.4개월(최단).</td></tr>
+    <tr><td>2인 조건 충돌 실재</td><td><span class="tag t-fact">FACT</span></td><td>Zillow(2020) — 파트너와 집을 산 응답자의 <b>77%가 다툼</b>. 원인: 크기·스타일 54% · must-have/dealbreaker 47% · 위치 42% · 예산 37% · 수리 29%. 60%는 사후 "결국 상관없었다"고 답했으나, 이는 회고이지 그 시점에 충돌이 없었다는 뜻이 아니다.</td></tr>
+    <tr><td>그 충돌이 결정을 지연시키는가</td><td><span class="tag t-tbd">미검증 · 급소</span></td><td>당근부동산 조사는 1인 기준 탐색만 보여준다. 2인 탐색 기간을 1인과 비교한 통계는 국내외 어디에도 없다. <b>이 가설이 거짓이면 문제 정의 문장을 재작성</b>해야 한다.</td></tr>
+    <tr><td>총점 없는 균형 비교 표준</td><td><span class="tag t-fact">FACT (참조 근거)</span></td><td>IPDAS(국제 환자 의사결정보조자료 표준) — "어떤 옵션도 다른 옵션보다 선호하지 않는 방식"이 정의 자체. Option Grid가 이를 구현한 1페이지 표 형식.</td></tr>
+    <tr><td>매물이 비교 속도보다 빨리 사라지는가</td><td><span class="tag t-fact">FACT (부분)</span></td><td>같은 조사 — "최대 5개" 상한이 실측 상단(3.5~4.3개)과 일치. 단 "수명은 며칠"이라는 서술은 <b>반박됨</b> — 전체 탐색 여정은 1.8~3.6개월이다.</td></tr>
+  </table>
+  <div class="callout warn"><b>한계</b> — 당근부동산 표본(971명)은 직거래 성향 이용자 과대표집 가능성. Zillow는 미국·2020년·매매 기준으로 국내 전월세 크기·빈도로 일반화 불가.</div>
+  <div class="foot-src">근거: <code>docs/02-hypotheses.md</code>, <code>docs/03-evidence-log.md</code>, <code>value-proposition_20260820.md</code> §3</div>
+</section>
+
+<!-- ============ 13 문제 구조 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">관찰 근거 · 문제 구조</span><span class="pageno">13 / 30</span></div>
+  <h1 class="pt">문제 구조 (AS-IS)</h1>
+  <h2 class="st">⑥ 의견 교환 지점에서 모든 노력이 무효화된다</h2>
+  <div class="flow">
+    <div class="fstep">① 저장<br><span class="small emo">🙂 기대</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep">② 공유<br><span class="small">링크만 가고 맥락 안 감</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep">③ 열람<br><span class="small">매물마다 처음부터</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep">④⑤ 통근·비용<br><span class="small">각자 따로 계산</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep" style="background:var(--off-tint);border:2px solid var(--off);font-weight:800;">⑥ 의견 교환<br><span class="small" style="color:var(--off);">"그냥 별로" — 여기서 멈춤</span></div>
+    <div class="arrow">→</div>
+    <div class="fstep">⑧ 재탐색<br><span class="small">①로 순환 회귀</span></div>
+  </div>
+  <p style="margin-top:18px;">②③④⑤⑦은 <i>시간이 드는</i> 단계이고 ⑥은 <i>멈추는</i> 단계다. ⑥에서 막히면 ③④⑤에 쓴 노력이 전부 무효가 되고 ⑧로 간다. 이 병목의 원인은 <b>B가 자기 기준을 말로 설명할 방법이 없다</b>는 구조적 문제이지 성격 문제가 아니다.</p>
+  <div class="callout">TO-BE에서는 ⑥이 "조건 4번 이하 입력 → 판정이 대신 말함" 구조로 대체되어, B의 설명 부담이 제거된다. 그 결과가 실제로 재탐색(⑧) 회귀를 줄이는지는 <b>"충돌이 결정을 지연시키는가" 가설의 검증 대상</b>이다.</div>
+  <div class="foot-src">근거: <code>docs/07-cjm-opportunity-score.md</code> §1</div>
+</section>
+
+<!-- ============ 14 Problem Statement ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">관찰 근거 · 문제 구조</span><span class="pageno">14 / 30</span></div>
+  <h1 class="pt">Problem Statement</h1>
+  <div class="callout" style="font-size:15px;font-weight:700;line-height:1.7;">
+    <span class="tag t-inf" style="margin-right:6px;">검증 가설</span>
+    함께 살 집을 구하는 두 사람은 관심매물마다 각자의 조건과 판단을 수동으로 맞춰야 하며, 특정 후보를 선택할 때 <b>누구의 어떤 조건이 어긋나고 무엇을 양보해야 하는지</b> 명확히 보기 어려워 방문 후보를 공동으로 정하는 과정의 부담이 커진다.
+  </div>
+  <p class="small">이 문장은 현재 제품 방향을 정하는 문제 정의이며, <b>"결정 지연"의 인과와 크기는 별도의 심층 인터뷰로 검증</b>한다. "갈등 존재"와 "갈등으로 인한 지연"은 분리된 주장이다.</p>
+  <h3 class="sec">근거 등급별 분해</h3>
+  <table>
+    <tr><th style="width:60%">문제 문장</th><th style="width:14%">근거 상태</th><th>한계</th></tr>
+    <tr><td>집 탐색에는 반복 비교가 발생한다</td><td><span class="tag t-fact">FACT</span></td><td>2인만 분리한 조사 아님</td></tr>
+    <tr><td>2인이 집을 고를 때 조건 충돌이 존재한다</td><td><span class="tag t-fact">FACT</span></td><td>미국·2020·매매 기준</td></tr>
+    <tr><td>기존 도구는 개인 평가·공동 저장·공유에 치우쳐 있다</td><td><span class="tag t-fact">FACT (선행사례)</span></td><td>국내 사용자가 실제로 원하는지는 미확정</td></tr>
+    <tr><td>두 사람의 조건·판단이 흩어져 충돌·양보 지점을 한 구조에서 보기 어렵다</td><td><span class="tag t-inf">INFERENCE</span></td><td>팀의 채택된 문제 정의, 직접 검증 전</td></tr>
+    <tr><td>그 결과 최종 후보 합의 비용이 커진다</td><td><span class="tag t-inf">INFERENCE</span></td><td>별도의 심층 인터뷰로 검증 예정</td></tr>
+  </table>
+  <div class="foot-src">근거: <code>value-proposition_20260820.md</code> §3, PRD v0.1 §6</div>
+</section>
+
+<!-- ============ 15 벤치마크 1 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">교차산업 사례 — 기준 서비스</span><span class="pageno">15 / 30</span></div>
+  <h1 class="pt">벤치마크 ① 기준 서비스</h1>
+  <h2 class="st">사용자가 우리 대신 쓸 수 있는 것 — 측정 대상</h2>
+  <table style="font-size:12.3px;">
+    <tr><th style="width:11%">Tier</th><th style="width:20%">서비스</th><th>겹치는 것 / 기준으로 삼을 것</th></tr>
+    <tr><td rowspan="3"><b>0<br>진짜 대체재</b></td><td>카카오톡</td><td>매물 링크 공유·의견 교환. 기준: <b>초대→첫 반응 시간(3초)</b></td></tr>
+    <tr><td>노션 · 엑셀 템플릿</td><td>매물 비교표. 기준: 6개 항목 입력 소요 시간</td></tr>
+    <tr><td>지도 앱 + 메모장</td><td>통근 확인·기록. 기준: 매물당 앱 간 왕복 전환 횟수</td></tr>
+    <tr><td rowspan="3">1<br>기능 직접 겹침</td><td>집노트</td><td>8항목 5점척도·총점 0~100. <b>"총점 안 만든다"(0001) 결정의 반대 사례</b></td></tr>
+    <tr><td>손품노트</td><td>예산·출퇴근 동선·선호 입력→추천. <b>"조건 입력 의향"의 국내 유일 선행 사례</b></td></tr>
+    <tr><td>LoopCV · AIApply (채용 오퍼 비교)</td><td>100점 스코어 / best-option 하이라이트. 채용 오퍼조차 대부분 총점 사용 — 총점 미사용이 시장 관행에 역행함을 재확인</td></tr>
+    <tr><td rowspan="2">2<br>진입 위협</td><td>결혼준비 앱 (특별시·웨딩노트·MarryNote)</td><td>6자리 코드 초대, "신혼집도 함께 정하고" 명시. <b>초대 수락률의 사실상 유일한 국내 비교군</b>(수치는 비공개)</td></tr>
+    <tr><td>직방 · 호갱노노 · 아실</td><td>AI 매물 추천 준비 중 / 가격 차트 병렬 비교(축이 가격 하나)</td></tr>
+    <tr><td>3<br>해외 선행</td><td>TwoKeys (밴쿠버)</td><td>커플·룸메이트 공유 공간, 항목별 협업 스코어링. <b>가장 가까운 해외 선행 사례</b> — 단 평가 구조는 총합 평점(F27, 우리가 기각한 방식)</td></tr>
+  </table>
+  <div class="callout">먼저 볼 셋: ① 위밋플레이스(구조 동형) ② 웨딩노트/특별시(초대 수락에 이미 성공한 사례) ③ 집노트("총점을 만들지 않는다"는 우리 결정의 반대 사례 — 써보고도 총점이 불필요하다고 판단되면 그 결정이 단단해짐)</div>
+  <div class="foot-src">근거: <code>docs/04-benchmarks.md</code></div>
+</section>
+
+<!-- ============ 16 벤치마크 2 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">교차산업 사례 — 참조 서비스 · 메커니즘</span><span class="pageno">16 / 30</span></div>
+  <h1 class="pt">벤치마크 ② 참조 서비스</h1>
+  <h2 class="st">경쟁자가 아니라 패턴 공급처 — 설계 대상</h2>
+  <table style="font-size:12.3px;">
+    <tr><th style="width:24%">문제 영역</th><th style="width:22%">서비스</th><th>빌려올 것</th></tr>
+    <tr><td>두 번째 사용자 들여보내기</td><td>위밋플레이스 · 모이삼</td><td><b>링크 하나로 상대가 출발지만 입력하고 끝. 가입 없음.</b> 초대 플로우가 따라야 할 형태</td></tr>
+    <tr><td>개인 조건 N개→하나의 해로 수렴</td><td>위밋플레이스 · 모이삼</td><td><b>구조가 동형.</b> 각자 출발지(=개인 조건)→최적 지점 계산→후보 제시. 출발지가 출근지로, 중간지점이 매물로 바뀔 뿐. <b>가장 중요한 참조 항목</b></td></tr>
+    <tr><td>조건 입력 부담 낮추기</td><td>cozymate · 한집친구 · 폴잇</td><td>24개 항목을 이탈 없이 받는 방식, 가치관 입력을 재미로 프레이밍</td></tr>
+    <tr><td>충돌·트레이드오프 표현 ✅해소</td><td><b>IPDAS · Option Grid</b> ★</td><td>총점 없이 옵션을 균형 있게 제시하는 국제 표준·화면 형식. 1페이지 표, 점수·순위·추천 없음. 우리 열은 "선택지"가 아니라 "사람"이라는 점이 다름</td></tr>
+    <tr><td>전제 공개 · 추정치 신뢰</td><td>핀다 전세 vs 월세 계산기 · 한국부동산원</td><td>대출 조건 추정치에 붙이는 고지 문구, 공적 기관의 보수적 기준선 표기</td></tr>
+    <tr><td>실질 주거비 환산</td><td>바로계산 · EZB 부동산계산기</td><td>매매·전세·월세 2년/4년 총비용(이자·세금·기회비용) 환산. 우리가 추가하는 건 교통비·초기비용 두 항목뿐</td></tr>
+  </table>
+  <div class="foot-src">근거: <code>docs/04-benchmarks.md</code>, <code>docs/05-tradeoff-patterns.md</code></div>
+</section>
+
+<!-- ============ 17 전이가능성 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">전이 가능성</span><span class="pageno">17 / 30</span></div>
+  <h1 class="pt">전이 가능성 — 유지 · 변형 · 제외</h1>
+  <table style="font-size:12.3px;">
+    <tr><th style="width:20%">벤치마크 요소</th><th style="width:26%">유지</th><th style="width:26%">변형</th><th>제외</th></tr>
+    <tr><td>위밋플레이스 계산 구조</td><td>동형 계산 구조 자체</td><td>출발지→출근지, 중간지점→매물</td><td>—</td></tr>
+    <tr><td>Option Grid</td><td>1페이지 표, 총점·순위·추천 없음</td><td>열을 "선택지"에서 "사람"으로</td><td>—</td></tr>
+    <tr><td>IPDAS 균형 원칙</td><td>손실·이득 순서 A/B 동일, 시각 비중 동일</td><td>의료 도메인 문구 → 부동산 조건 문구로 번역</td><td>사회적 증거(인기순) 조작 요소</td></tr>
+    <tr><td>집노트 8항목 채점</td><td>항목별 실제값 비교 아이디어</td><td>—</td><td><b>총점화 방식 전체 제외</b> (팀 결정: 총점을 만들지 않는다)</td></tr>
+    <tr><td>TwoKeys 평가 구조</td><td>2인 공유 공간 개념</td><td>—</td><td><b>총합 평점(F27) 제외</b> — 우리가 기각한 정확히 그 방식</td></tr>
+    <tr><td>결혼준비 앱 초대 메커니즘</td><td>6자리 코드+링크 병행</td><td>—</td><td>예산 관리 기능(우리 범위 아님)</td></tr>
+    <tr><td>바로계산 비용모델</td><td>보증금·이자·월세·관리비 산식</td><td>교통비·초기비용 항목 신규 추가</td><td>—</td></tr>
+    <tr><td>손품노트 조건 입력</td><td>예산·출퇴근 동선 입력 개념</td><td>필수 개수를 0~4개로 완화, 점진적 공개</td><td>—</td></tr>
+  </table>
+  <div class="callout">핵심 원칙: 형식(1페이지 표, 균형 제시, 동형 계산 구조)은 빌리되, <b>집계 방식(총점·평점·순위)은 예외 없이 제외</b>한다 — "총점을 만들지 않는다"는 우리 팀의 결정과 정확히 같은 자리에 있는 판단이다.</div>
+  <div class="foot-src">근거: <code>docs/05-tradeoff-patterns.md</code> §6 반영 사항, <code>decisions/0001</code></div>
+</section>
+
+<!-- ============ 18 Value Proposition Sheet ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">Value Proposition Sheet</span><span class="pageno">18 / 30</span></div>
+  <h1 class="pt">Value Proposition Sheet</h1>
+  <h2 class="st">Customer · Job · Pain · Gain · Mechanism · VP 후보 평가 · 최종 선택 · 자가진단</h2>
+
+  <h3 class="sec">Pain (근거 등급별)</h3>
+  <table style="font-size:11.8px;">
+    <tr><th style="width:44%">Pain</th><th style="width:12%">근거 상태</th><th>실제로 말할 수 있는 범위 / 말하면 안 되는 확장</th></tr>
+    <tr><td>집 탐색에는 반복 비교가 발생한다</td><td><span class="tag t-fact">확인</span></td><td>당근부동산: 전세계약자 평균 2.5개월·4.1곳, 30대 2.7개월·4.1곳. <b>단</b> "둘이 구하면 더 오래 걸린다"는 말할 수 없음</td></tr>
+    <tr><td>두 사람이 집을 고를 때 조건 충돌이 존재한다</td><td><span class="tag t-fact">확인</span></td><td>Zillow 2020: 파트너와 집을 산 응답자 77% 다툼 경험. <b>단</b> 미국·2020·매매 자료라 국내 전월세로 일반화 불가</td></tr>
+    <tr><td>기존 도구는 개인 평가·공동 저장·공유에 치우쳐 있다</td><td><span class="tag t-fact">확인/선행사례</span></td><td>국내 매물기록 앱은 개인점수 중심, 공동서비스는 위시리스트·공유 중심. <b>단</b> 사용자가 실제로 '조건 충돌 설명'을 원하는지는 미확정</td></tr>
+    <tr><td>총점 없는 균형 비교 방식은 타 분야에 존재한다</td><td><span class="tag t-fact">참조 근거</span></td><td>IPDAS·Option Grid가 지지. <b>단</b> 의료 의사결정 효과가 공동 주거 선택에도 재현된다고 말할 수 없음</td></tr>
+    <tr><td>두 사람의 조건·판단이 흩어져 매물별 충돌·양보 지점을 한 구조에서 보기 어렵다</td><td><span class="tag t-inf">강한 추론</span></td><td>팀이 채택한 문제 정의 — 보편 사실로 확정된 것은 아님</td></tr>
+    <tr><td style="color:var(--off);"><b>의견 충돌이 실제 선택·방문·계약 결정을 지연시키는가</b></td><td><span class="tag t-tbd">미검증·급소</span></td><td>이 항목이 검증 전이기 때문에 VP에 "결정 시간 단축·갈등 감소"를 확정 효과로 넣지 않는다</td></tr>
+  </table>
+
+  <h3 class="sec">Gain — 현재 설계가 제공하도록 의도된 가치</h3>
+  <ol style="font-size:12.5px;margin:0 0 10px;">
+    <li>각자의 조건과 자유 문장 선호를 따로 표현하고 상대에게 전달한다.</li>
+    <li>관심매물마다 <b>둘 다 충족 / 한쪽만 충족 / 둘 다 불충족 / 확인 필요</b>를 구분해 본다.</li>
+    <li>한쪽만 충족하는 후보에서 누가 무엇을 얼마나 양보하는지 확인한다.</li>
+    <li>조건을 실제 미달량만큼 완화할 때 후보 상태가 어떻게 달라지는지 양쪽 안을 같은 비중으로 본다.</li>
+    <li>자동 판정할 수 없는 항목을 중개사 질문이나 현장 확인 항목으로 분리한다.</li>
+    <li>점수나 AI의 정답 대신, 두 사람이 판단할 수 있는 비교 근거를 얻고 이번에 보러 갈 두 집을 정한다.</li>
+    <li>조건을 사람에게 저장해 매물이 바뀌는 반복 탐색에서도 같은 기준을 다시 적용한다.</li>
+  </ol>
+  <p class="small">이 Gain은 현재의 <b>제품 약속과 설계 목표</b>다. 실제로 갈등·시간·방문 횟수를 얼마나 줄이는지는 아직 효과 검증 전이다.</p>
+
+  <h3 class="sec">Solution Mechanism</h3>
+  <table style="font-size:12.2px;">
+    <tr><td style="width:20%"><b>조건 귀속</b></td><td>매물이 아니라 사람에게 저장. 관심매물에 반복 적용</td></tr>
+    <tr><td><b>첫 입력</b></td><td>예산은 항상 입력. 출근지·이동수단은 출퇴근하는 경우만</td></tr>
+    <tr><td><b>추가 조건</b></td><td>필수 0~4개(사용자 선택) + 자유 문장 선호 0~3개(자동 판정 안 함)</td></tr>
+    <tr><td><b>후보 범위</b></td><td>기존 관심매물 최대 5개. 신규 매물DB·검색·지도 안 만듦</td></tr>
+    <tr><td><b>판정</b></td><td>둘다충족/한쪽만충족/둘다불충족 + 확인필요(별도 분리)</td></tr>
+    <tr><td><b>양보 지점 설명</b></td><td>한쪽만 충족 후보에서 양보 주체·조건·미달량 + 상대적 이점을 문장으로</td></tr>
+    <tr><td><b>조건 완화</b></td><td>미달량만큼 완화 시 상태 변화, A/B안 동시 제시, 상대 조건은 제안만</td></tr>
+    <tr><td><b>방문 후보 결정</b></td><td>각자 2개→겹치면 확정→일부 겹치면 1회 재선택→끝까지 안 겹치면 분할</td></tr>
+    <tr><td><b>AI 역할</b></td><td>조건 구조화·충돌/양보 설명·질문 정리. <b>추천·순위·최종 결정은 하지 않음</b></td></tr>
+    <tr><td><b>금지</b></td><td>종합점수, 공동 적합도 %, 자동 최적 매물, 한쪽만 양보시키는 표현, AI 최종 선택</td></tr>
+  </table>
+
+  <h3 class="sec">VP 후보 3안 평가</h3>
+  <table style="font-size:11.8px;">
+    <tr><th style="width:8%">안</th><th style="width:30%">문장</th><th style="width:12%">강점</th><th style="width:12%">약점</th><th style="width:14%">근거 정합성</th><th>과장 위험</th></tr>
+    <tr><td><b>A</b><br><span class="small">사용자 가치 중심</span></td><td>함께 살 집을 구하는 두 사람이, 각자의 조건과 양보 지점을 이해하고 서로 납득할 수 있는 방문 후보를 정하도록 돕는 공동 의사결정 기능</td><td>최종 행동·관계적 가치("납득")가 한 문장에 드러남</td><td>일반 협업 기능과의 차이가 한 번에 강하게 안 보임</td><td><span class="badge b-ok">높음</span></td><td>낮음 — "돕는다"로 표현, 갈등감소·시간단축 보장 안 함</td></tr>
+    <tr><td><b>B</b><br><span class="small">문제 해결 중심</span></td><td>관심매물 저장 뒤 따로 놓인 두 사람의 조건을 매물별 충돌·양보량으로 풀어, 말로만 맞추던 방문 후보 선택을 구조화하는 기능</td><td>기존 과정의 문제와 "무엇을 양보하는지 보여주는" 핵심 메커니즘이 가장 선명</td><td>"따로 놓인"·"말로만 맞추던"은 추론인데 사실처럼 읽힐 위험, 기능설명형 문장</td><td><span class="badge b-warn">중상</span></td><td>중간 — 발표 시 "인터뷰 검증 중" 단서 필요</td></tr>
+    <tr><td><b>C</b><br><span class="small">서비스 차별점 중심</span></td><td>공동 찜이나 AI 추천처럼 후보를 모으거나 정답을 고르는 대신, 조건을 합산하지 않고 충돌·양보 지점을 설명해 스스로 방문 후보를 정하게 하는 공동 결정 레이어</td><td>공동찜·개인점수·AI추천과의 차이를 가장 빠르게 전달, "집계 안 함" 판단이 살아있음</td><td>"공동 결정 레이어"가 제품 용어처럼 느껴짐, 경쟁 방식 설명이 사용자 가치보다 앞섬</td><td><span class="badge b-ok">매우 높음</span></td><td>낮음 — 단 "AI 추천 대신"이 AI 미사용 오해를 만들 수 있어 AI의 설명 역할을 보조설명에 명시 필요</td></tr>
+  </table>
+  <p class="small">A의 사용자 가치에 B의 구체적 메커니즘을 한 번만 보강한 문장을 최종 채택(→ Primary VP). C는 차별점 설명용 보조 메시지로 사용한다.</p>
+
+  <div class="callout" style="font-size:15px;font-weight:700;">Primary VP (A 채택) — 함께 살 집을 구하는 두 사람이, 관심매물별 조건 충돌과 양보 지점을 나란히 확인해 서로 납득할 수 있는 방문 후보를 정하도록 돕는 네이버 부동산의 공동 의사결정 기능.</div>
+  <table style="font-size:12px;margin-top:0;">
+    <tr><td style="width:16%">[누구에게]</td><td>함께 살 집을 구하는 두 사람</td></tr>
+    <tr><td>[어떤 문제를]</td><td>관심매물별로 드러나는 조건 충돌</td></tr>
+    <tr><td>[어떤 방식으로]</td><td>양보 지점을 합산 없이 나란히 설명</td></tr>
+    <tr><td>[어떤 가치를]</td><td>서로 납득 가능한 방문 후보 선택 지원</td></tr>
+  </table>
+  <p><b>Short VP</b> — "각자의 조건과 양보 지점을 보고, 함께 보러 갈 집을 정합니다." · <b>Supporting Message</b> — 두 사람의 조건을 합산해 정답 매물을 고르지 않습니다. 매물마다 누구의 어떤 조건이 맞고 어긋나는지, 무엇을 양보하면 후보가 어떻게 달라지는지를 같은 비중으로 보여줍니다.</p>
+  <p><b>Tagline 후보</b> — ① 고르는 건 둘이, 차이는 한눈에. ② 점수 대신, 서로의 조건을. ③ 함께 볼 집, 납득하고 정하기.</p>
+
+  <h3 class="sec">자가진단 (9문항)</h3>
+  <table style="font-size:11.8px;">
+    <tr><th style="width:72%">검수 항목</th><th>결과</th></tr>
+    <tr><td>네이버 부동산 기준 서비스와 맞는가</td><td><span class="badge b-ok">예</span></td></tr>
+    <tr><td>공동 주거 의사결정 문제가 살아 있는가</td><td><span class="badge b-ok">예</span></td></tr>
+    <tr><td>단순 공동 찜처럼 보이지 않는가</td><td><span class="badge b-ok">예</span></td></tr>
+    <tr><td>단순 AI 집 추천처럼 보이지 않는가</td><td><span class="badge b-ok">예</span></td></tr>
+    <tr><td>AI가 최종 결정을 대신하는가</td><td><span class="badge b-off">아니오</span></td></tr>
+    <tr><td>총점 하나로 정답 매물을 고르는가</td><td><span class="badge b-off">아니오</span></td></tr>
+    <tr><td>조건 충돌과 양보 지점이 살아 있는가</td><td><span class="badge b-ok">예</span></td></tr>
+    <tr><td>최신 출근지 결정(예산만 항상 필수)과 충돌하는가</td><td><span class="badge b-off">아니오</span></td></tr>
+    <tr><td>미검증 효과(시간단축·갈등감소·방문감소)를 Fact로 썼는가</td><td><span class="badge b-off">아니오</span></td></tr>
+  </table>
+
+  <h3 class="sec">확정 가능 VP vs 추가 검증 후 강화할 영역</h3>
+  <div class="grid2">
+    <div class="card"><b>확정 가능</b> — 대상(2인)·맥락(저장 이후)·핵심 문제(조건 충돌·양보 지점을 함께 보기 어려움)·핵심 방식(합산 없는 균형 설명)·사용자 가치(납득 가능한 방문 후보 2곳)·경계(공동찜·총점·AI추천/최종결정 아님)</div>
+    <div class="card"><b>추가 검증 후 강화</b> — 결정 지연 인과, 결정 시간 단축 효과, 갈등 빈도·강도 감소, 헛방문 감소, 초대 참여·조건입력 완료, 양보 지점 설명의 공정성 체감, 예비부부 vs 룸메이트 수락률 차이</div>
+  </div>
+  <div class="foot-src">근거: <code>value-proposition_20260820.md</code> 전체(§1~§9)</div>
+</section>
+
+<!-- ============ 19 To-Be Concept ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">To-Be Concept — 사용자 흐름</span><span class="pageno">19 / 30</span></div>
+  <h1 class="pt">To-Be 사용자 흐름</h1>
+  <h2 class="st">A(초대자, PC 웹) · B(수신자, 모바일)</h2>
+  <h3 class="sec">A 경로</h3>
+  <div class="flow" style="flex-wrap:wrap;">
+    <div class="fstep">후보 1~5개 선택</div><div class="arrow">→</div>
+    <div class="fstep">출퇴근 분기</div><div class="arrow">→</div>
+    <div class="fstep">예산 입력</div><div class="arrow">→</div>
+    <div class="fstep" style="background:var(--naver-tint);">1단계 결과 미리보기</div><div class="arrow">→</div>
+    <div class="fstep">필수0~4·선호0~3·확인항목</div><div class="arrow">→</div>
+    <div class="fstep">관계선택+초대링크</div><div class="arrow">→</div>
+    <div class="fstep">B 대기</div>
+  </div>
+  <div class="flow" style="flex-wrap:wrap;margin-top:8px;">
+    <div class="fstep">후보 목록(3분류)</div><div class="arrow">→</div>
+    <div class="fstep" style="background:var(--warn-tint);">매물 상세 비교<br><span class="small">(무엇을 양보하는지 보여줌)</span></div><div class="arrow">→</div>
+    <div class="fstep">조건 완화 시뮬레이션</div><div class="arrow">→</div>
+    <div class="fstep" style="background:var(--naver-tint);font-weight:800;">방문후보 결정</div><div class="arrow">→</div>
+    <div class="fstep">중개사 질문</div><div class="arrow">→</div>
+    <div class="fstep">방문기록·유지/보류/제외</div>
+  </div>
+  <h3 class="sec">B 경로</h3>
+  <div class="flow" style="flex-wrap:wrap;">
+    <div class="fstep">카톡링크/6자리코드 진입</div><div class="arrow">→</div>
+    <div class="fstep" style="background:var(--naver-tint);">후보 미리보기 (조건입력 전)</div><div class="arrow">→</div>
+    <div class="fstep">출근지 분기·예산</div><div class="arrow">→</div>
+    <div class="fstep" style="background:var(--naver-tint);">B의 첫 결과 확인<br><span class="small">(상대방 참여 측정 종료 지점)</span></div><div class="arrow">→</div>
+    <div class="fstep">결과 확인 후 로그인</div><div class="arrow">→</div>
+    <div class="fstep">추가조건 입력</div>
+  </div>
+  <div class="callout">핵심 차이: B는 <b>조건을 입력하기 전에</b> A가 고른 후보 5개와 A의 선호 카드를 먼저 본다 — "이 5개 집을 같이 볼까요?" 이는 B의 진입 마찰을 낮추기 위한 설계다.</div>
+  <div class="foot-src">근거: PRD v0.1 §10·§11, <code>docs/08-screen-design.md</code></div>
+</section>
+
+<!-- ============ 20 핵심화면 양보설명 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">To-Be Concept — 핵심 화면</span><span class="pageno">20 / 30</span></div>
+  <h1 class="pt">핵심 화면 ① — 무엇을 양보하는지 보여주는 화면 · 조건 완화</h1>
+  <h3 class="sec">한쪽 조건만 맞을 때 — 양보 지점 설명 화면</h3>
+  <div class="card">
+    <p class="small" style="margin-bottom:6px;">조건 대조표 (실제값 vs 기준값)</p>
+    <table style="font-size:12.5px;margin-bottom:8px;"><tr><th>조건</th><th>A</th><th>B</th></tr><tr><td>역 도보</td><td><span class="badge b-off">13분 &gt; 10분 ✗ +3분</span></td><td><span class="badge b-ok">8분 ✓</span></td></tr></table>
+    <p style="font-weight:700;">"A가 역 도보 3분을 더 걷습니다. 대신 이 집은 B가 원하는 면적보다 7㎡ 더 넓습니다."</p>
+    <p class="small">누가 무엇을 양보하고 대신 무엇을 얻는지를 항상 나란히 서술한다. 어느 한쪽 편을 들듯 순위를 매기거나 색을 다르게 쓰지 않는다. 얻는 것이 없으면 "대신" 절을 지운다.</p>
+  </div>
+  <h3 class="sec">조건을 살짝 낮춰보는 화면 (완화 시뮬레이션)</h3>
+  <div class="card">
+    <p>A·B의 조절 막대를 <b>동시에</b> 보여주고 조작한다(어느 한쪽 편을 들지 않는다는 원칙). 드래그 중 실시간 등급 변화 미리보기. 그래프로 "둘다충족 1→3(+2)" 같은 이동을 표현. <b>완화폭은 실제 미달량에서 그대로</b> — 임의 제안 없음. 상대 조건은 직접 못 바꾸고 "제안"만 가능하며 수락은 본인이 한다.</p>
+  </div>
+  <h3 class="sec">상대방이 처음 들어왔을 때 보여주는 화면 (조건 입력 전 미리보기)</h3>
+  <div class="card"><p>매물 카드 5개 + A의 선호 문장 + "계속 진행" / "아니요". B가 조건을 아무것도 입력하지 않은 상태에서 먼저 <b>맥락</b>을 보여줘 진입 마찰을 낮춘다.</p></div>
+  <div class="callout">시각화 원칙 — 레이더·게이지·순위리스트·별점·누적막대·이중축 <b>금지</b>. A/B 구분은 색이 아니라 <b>위치와 라벨</b>로 한다. 색은 충족 상태(충족/미충족/확인 필요)를 나타낼 때만 쓰고, 미충족은 <b>경고색(주황)</b>으로 표시하지 <b>위험색(빨강)</b>으로 표시하지 않는다.</div>
+  <div class="foot-src">근거: <code>docs/08-screen-design.md</code>, <code>docs/11-decision-status.md</code> 시각화</div>
+</section>
+
+<!-- ============ 21 핵심화면 방문후보 결정 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">To-Be Concept — 핵심 화면</span><span class="pageno">21 / 30</span></div>
+  <h1 class="pt">핵심 화면 ② — 방문 후보 결정 · 0건 처리</h1>
+  <h3 class="sec">"이번에 보러 갈 집 정하기" — 방문 후보 2곳을 정하는 규칙</h3>
+  <div class="card">
+<pre style="font-size:12px;white-space:pre-wrap;margin:0;font-family:inherit;">1라운드   각자 2개 선택
+   ├─ 일치 2개  →  확정 ✓ (North Star 달성)
+   ├─ 일치 1개  →  그 하나는 확정. 남은 한 자리를 놓고 차이를 보여준 뒤 1회 재선택
+   │                    ├─ 일치  →  확정 ✓
+   │                    └─ 불일치 → 각자 첫 선택으로 분할 ✓
+   └─ 일치 0개  →  각자 1순위를 하나씩 = 2개 ✓ (분할이지 협상이 아님)</pre>
+    <p class="small" style="margin-top:8px;">기각한 방식: 제안-수락(비대칭 권력 구조 생성 — "이 제품이 풀려는 문제가 정확히 그것"이라 기각) · 순위매기기(Borda count, 총점 금지 위반) · 투표 · 자동 선택. 화면 용어는 "합의"가 아니라 <b>"이번에 보러 갈 집 정하기"</b>.</p>
+  </div>
+  <h3 class="sec">0건 처리 — 남는 후보가 하나도 없을 때</h3>
+  <div class="grid2">
+    <div class="card"><b>완화 시뮬레이션</b> — 한 조건만 풀어 살아나는 매물이 있을 때 제시. 2개 동시 완화는 제안하지 않음.</div>
+    <div class="card"><span class="tag t-tbd">TBD</span> <b>재탐색 필터 제안</b> — 어떤 조건을 풀어도 안 살아날 때. 네이버 검색 필터 제안 + 결과 수 미리보기("이 조건으로 매물 34개"). 자동으로 적용하지 않고 사용자가 눌러야 적용됨. 통근 조건은 필터로 못 넘기지만 "저장돼 있어 새 매물에 바로 적용"됨을 안내. <b>0건 분기의 절반이 아직 미설계</b> — 가장 먼저 그릴 화면.</div>
+  </div>
+  <div class="foot-src">근거: <code>decisions/0004-agreement-by-split.md</code>, <code>docs/11-decision-status.md</code> 후보0건처리, PRD v0.1 §17.2</div>
+</section>
+
+<!-- ============ 22 필요 데이터 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">필요 데이터 · 시스템 기능</span><span class="pageno">22 / 30</span></div>
+  <h1 class="pt">필요 데이터</h1>
+  <h3 class="sec">매물 상세 — 판정에 쓰는 필드만</h3>
+  <table style="font-size:12.3px;">
+    <tr><th style="width:32%">필드</th><th>쓰는 곳</th></tr>
+    <tr><td>주소 · 좌표</td><td>통근·역도보 계산, 식별</td></tr>
+    <tr><td>보증금 · 월세 · 관리비</td><td>실부담 환산</td></tr>
+    <tr><td><b>전용면적</b></td><td>하한형 판정 항목</td></tr>
+    <tr><td><b>매물 유형</b>(아파트·빌라·오피스텔 등)</td><td>일치형 판정 항목</td></tr>
+    <tr><td><b>주차 유무</b> / 세대당 주차대수</td><td>유무형 판정 / 화면에 괄호로 병기(판정엔 미사용)</td></tr>
+    <tr><td><b>역 도보 시간 · 최근접역</b></td><td>상한형 조건</td></tr>
+    <tr><td>방 개수 · 준공연도 · 층수 · 방향 · 엘리베이터</td><td>판정 미사용 — 선호 카드 입력 보조·재탐색 필터 맥락</td></tr>
+    <tr><td>거래 상태</td><td>매물 소진 감지</td></tr>
+    <tr><td style="color:var(--off);"><b>사진 · 설명 · 중개사 정보</b></td><td style="color:var(--off);"><b>받지 않음</b> — 판정에 미사용, 사진을 보여주면 어느 한쪽 매물이 더 좋아 보이게 유도할 위험이 있음</td></tr>
+  </table>
+  <h3 class="sec">우리가 저장하는 것 (매물 데이터는 저장하지 않음)</h3>
+  <table style="font-size:12.3px;">
+    <tr><td style="width:26%">예산·출근지·필수조건·선호·확인항목</td><td>사람 — 팀 결정: 조건은 매물이 아니라 사람에 저장한다</td></tr>
+    <tr><td>공유 객체 (매물ID 최대5개+연결상태)</td><td>프로젝트 — B가 보는 공유 공간(A의 개인데이터 아님)</td></tr>
+    <tr><td>B의 비로그인 조건</td><td>초대 코드에 임시 저장, 마지막 접근 +30일 삭제, 로그인 시 계정 이관</td></tr>
+    <tr><td>판정 결과·미달량·양보 문장</td><td>계산 결과, 필요 시 캐시</td></tr>
+    <tr><td>현장 확인 기록·유지/보류/제외</td><td>매물 귀속 (단계 2)</td></tr>
+  </table>
+  <div class="foot-src">근거: <code>docs/10-data-integration.md</code> §2·§3, PRD v0.1 §20</div>
+</section>
+
+<!-- ============ 23 시스템 기능 정책 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">시스템 기능 · 정책</span><span class="pageno">23 / 30</span></div>
+  <h1 class="pt">시스템 기능 · 정책</h1>
+  <h3 class="sec">데이터 연동 원칙 — 읽고, 판정하고, 파라미터로 돌려보낸다 (쓰지 않음)</h3>
+  <table style="font-size:12.3px;">
+    <tr><th style="width:30%">필요 API</th><th>용도</th><th style="width:14%">상태</th></tr>
+    <tr><td>① 관심매물 목록 조회</td><td>A가 "같이 고르기" 시작 시 (로그인 필요)</td><td><span class="tag t-tbd">TBD·제품전제</span></td></tr>
+    <tr><td>② 매물 상세(필드 한정)</td><td>판정용 필드만 — 링크 파싱 방식 폐기</td><td><span class="tag t-fact">FACT</span></td></tr>
+    <tr><td>③ 검색 결과 수 조회</td><td>재탐색 필터 제안 시 근사치 미리보기</td><td><span class="tag t-tbd">TBD</span></td></tr>
+    <tr><td>④ 필터 파라미터 전달</td><td>사용자가 눌러야 적용(자동 적용 금지 — 필터를 적용하는 것도 사용자의 결정이라는 원칙)</td><td><span class="tag t-tbd">TBD</span></td></tr>
+  </table>
+  <div class="callout warn"><span class="tag t-fact">FACT (2026-08-19 확인)</span> 네이버 부동산은 공식 오픈 API를 제공하지 않는다. 따라서 "네이버 안 기능"은 선택이 아니라 필수 전제다 — 별도 앱 안을 검토했다가 접은 판단이 사후에 근거를 얻었다.</div>
+  <h3 class="sec">정책 요약</h3>
+  <table style="font-size:12.3px;">
+    <tr><td style="width:24%">로그인 시점</td><td>B는 <b>결과를 본 뒤</b>(저장·재방문 시)</td></tr>
+    <tr><td>관계 수집</td><td>A가 초대 링크 만들 때 고름(예비부부/동거/친구·룸메이트). B에게는 안 물음</td></tr>
+    <tr><td>초대 수단</td><td>링크 기본 + 코드 보조</td></tr>
+    <tr><td>선택 유효기간</td><td>두지 않음 — 매물 소진이 진짜 만료</td></tr>
+    <tr><td>통근 API 호출</td><td>조건 완화는 0회(임계값만 변경, 경로 불변) — 재진입·화면이동도 캐시로 0회</td></tr>
+    <tr><td>대중교통 경로(프로토타입)</td><td>ODsay LAB Basic(일 1,000회 무료) → 하루 25쌍 분량, 사용자 테스트에 충분</td></tr>
+  </table>
+  <div class="foot-src">근거: <code>docs/10-data-integration.md</code>, PRD v0.1 §20.6~20.8</div>
+</section>
+
+<!-- ============ 24 판정 로직 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">판정 로직 · 예외</span><span class="pageno">24 / 30</span></div>
+  <h1 class="pt">판정 로직 · 상태 분류 · 예외 처리</h1>
+  <h3 class="sec">4분류 판정 + 3분류 원인 구분</h3>
+  <div class="legend-strip">
+    <span class="badge b-ok"><span class="dot d-ok"></span>둘 다 충족</span>
+    <span class="badge b-warn"><span class="dot d-warn"></span>한쪽만 충족</span>
+    <span class="badge b-off"><span class="dot d-off"></span>둘 다 불충족</span>
+    <span class="badge b-info"><span class="dot d-info"></span>확인 필요</span>
+  </div>
+  <table style="font-size:12.5px;">
+    <tr><th style="width:16%"></th><th style="width:34%">뜻</th><th>화면 표현</th></tr>
+    <tr><td><b>미충족</b></td><td>재봤더니 기준에 못 미침</td><td><code>13분 &gt; 10분 ✗ +3분</code></td></tr>
+    <tr><td><b>계산 불가</b></td><td>재려 했는데 실패함(경로 없음·데이터 누락)</td><td><code>계산 못 했습니다</code></td></tr>
+    <tr><td><b>해당 없음</b></td><td>잴 대상이 애초에 없음(출근지 없는 사람의 통근)</td><td><b>행을 안 그린다</b></td></tr>
+  </table>
+  <div class="callout">원칙 하나 — <b>계산 못 하는 것과 조건에 미달하는 것은 다르다.</b> 없는 걸 "안 됨"으로 판정하면 후보가 잘못 탈락한다. "계산 불가"로 뭉뚱그리면 정상 상태가 오류처럼 보인다.</div>
+  <h3 class="sec">MVP 필수 예외 6가지</h3>
+  <table style="font-size:12px;">
+    <tr><th style="width:24%">상황</th><th style="width:34%">처리</th><th>왜 필수인가</th></tr>
+    <tr><td>B가 초대에 안 들어옴</td><td>1인 빈 경로 — A 혼자 판정·1인분 비용 표시</td><td>"상대방 참여" 가설 — 가장 먼저 검증해야 할 항목, 가장 흔한 경로일 수 있음</td></tr>
+    <tr><td>B가 입력 중 이탈</td><td>넣은 것만으로 부분 판정</td><td>상대방 참여 여정의 측정 지점</td></tr>
+    <tr><td>매물이 나감(거래완료·삭제)</td><td>후보에서 빠지되 조건은 남음</td><td>매물 회전 속도, 조건 지속 구조를 사용자가 실제로 보는 지점</td></tr>
+    <tr><td>5개 전부 불충족</td><td>조건 완화로 연결</td><td>필수 조건이 많을수록 자주 발생 — 완화가 유일한 출구</td></tr>
+    <tr><td>조건이 물리적으로 모순</td><td>모순 안내 + 완화 제안</td><td>원인 모르면 "왜 아무것도 안 나오지"로 끝남</td></tr>
+    <tr><td>출근지가 없음(재택·무직 등)</td><td>정상 경로 — 통근 행 자체를 뺌</td><td>첫 화면에서 막히면 "상대방 참여" 실패로 잘못 집계됨</td></tr>
+  </table>
+  <div class="foot-src">근거: <code>docs/09-edge-cases.md</code>, PRD v0.1 §18</div>
+</section>
+
+<!-- ============ 25 PRD 1 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">PRD ① 목적 · 범위 · 시나리오</span><span class="pageno">25 / 30</span></div>
+  <h1 class="pt">PRD ① — 목적 · 범위 · 사용자 시나리오</h1>
+  <h3 class="sec">Product Summary</h3>
+  <p>네이버 부동산의 기존 매물 탐색·관심매물 저장 흐름 위에 추가되는 <b>2인 공동 주거 의사결정 기능</b>. 각자 조건을 한 번씩 입력하면 관심매물별로 누구의 어떤 조건이 충족·어긋나는지와 양보 지점을 나란히 보여준다. 정답 매물 추천·총점 없이 두 사람이 스스로 <b>이번에 보러 갈 집 2개</b>를 정하도록 비교 근거를 구조화한다.</p>
+  <h3 class="sec">범위</h3>
+  <p><b>확정 범위</b> — 네이버 부동산 관심매물 저장 이후, 두 사람의 조건 입력·비교·충돌/양보 설명·방문 후보 2개 결정(단계1) + 방문 전후 기록(단계2). <b>1단계(최소 기능 제품)</b>: 핵심 기능 7가지(검증 코어). <b>2단계</b>: 나머지 2가지 기능(종료점 완성).</p>
+  <h3 class="sec">대표 사용자 시나리오 — A와 B가 전·월세 집을 함께 구하는 경우</h3>
+  <ol style="font-size:12.8px;">
+    <li>A는 관심매물을 저장한 뒤 "같이 고르기"에 진입, 최대 5개를 이번 비교 후보로 선택한다.</li>
+    <li>A는 예산 상한을 입력한다. 출퇴근한다고 답한 경우에만 출근지·이동수단을 받는다.</li>
+    <li>A는 필요하면 필수 조건 최대 4개, 자유 문장 선호 0~3개, 확인 필요 항목을 추가한다.</li>
+    <li>A는 관계 유형을 선택하고 초대 링크를 B에게 보낸다(링크 기본, 코드 보조).</li>
+    <li>B는 모바일에서 링크를 열어 <b>A가 고른 후보와 선호 맥락을 먼저 본다.</b></li>
+    <li>B도 예산을 입력하고 출퇴근 여부에 따라 출근지를 입력하거나 "출근 안 함"을 선택한다.</li>
+    <li>시스템은 각자 조건을 관심매물에 적용해 4분류 판정을 보여준다.</li>
+    <li>한쪽만 충족하는 매물에서는 누가 무엇을 얼마나 감수하는지와 상대적으로 나은 점을 설명한다.</li>
+    <li>필요하면 양쪽 조건 완화안을 동시에 살펴본다. 상대 조건에는 제안만 가능하다.</li>
+    <li>자동 판정 불가 항목은 방문 전 중개사 질문으로 분리한다.</li>
+    <li>두 사람은 각자 방문하고 싶은 후보 2개를 고른다 — 겹치면 확정, 일부 겹치면 1회 재비교, 끝까지 안 겹치면 분할.</li>
+    <li>단계 2에서는 방문 후 공통 체크리스트를 기록하고 유지·보류·제외한다.</li>
+  </ol>
+  <p class="small"><span class="tag t-inf">검증 가설</span> 이 흐름이 실제 갈등 또는 의사결정 시간을 줄이는지는 본 시나리오의 확정 결과가 아니다.</p>
+  <div class="foot-src">근거: <code>prd_v0.1_20260820.md</code> §2·§10</div>
+</section>
+
+<!-- ============ 26 PRD 2 기능요구사항 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">PRD ② 기능 요구사항</span><span class="pageno">26 / 30</span></div>
+  <h1 class="pt">PRD ② — 기능 요구사항 (핵심 기능 9가지)</h1>
+  <table style="font-size:12px;">
+    <tr><th style="width:7%">번호</th><th style="width:24%">기능</th><th style="width:35%">완료 조건 (Acceptance Criteria)</th><th style="width:10%">단계</th></tr>
+    <tr><td>1</td><td>관심매물 후보 담기</td><td>최대 5개 제한, 0개/1~2개/6개째 시 안내 분기</td><td>1</td></tr>
+    <tr><td>2</td><td>기본 조건 입력</td><td>예산 항상 필수. 출퇴근 여부 응답 후 해당자만 출근지·이동수단 요청. 필수 0~4개, 선호 0~3개는 점진 입력</td><td>1</td></tr>
+    <tr><td>3</td><td>2인 초대</td><td>링크 기본·코드 보조 발급, 비로그인 B 조건은 코드에 임시저장(+30일)</td><td>1</td></tr>
+    <tr><td>4</td><td>자동 판정</td><td>조건·후보 변경 시 충족/미충족/미달량/확인필요 산출. 미충족≠계산불가≠해당없음 구분</td><td>1</td></tr>
+    <tr><td>5</td><td>양보 지점 설명 문장</td><td>[누가][무엇을][얼마나] 잃고, [대신][상대순위]. A/B 동일 형식(손실·이득 순서 동일), 얻는 것 없으면 "대신" 절 삭제</td><td>1</td></tr>
+    <tr><td>6</td><td>조건 완화 · 0건 분기</td><td>조절 막대는 기준값 범위만, 완화폭=실제 미달량. A/B안 동시 제시. 전부 불충족 시 완화 또는 재탐색 필터 제안</td><td>1</td></tr>
+    <tr><td>7</td><td>방문 후보 2개 결정</td><td>"보러 갈 집 정하기" 절차(2라운드 상한) 정확히 구현, 화면 문구 "합의" 미사용</td><td>1</td></tr>
+    <tr><td>8</td><td>방문 전 중개사 질문 카드</td><td>확인필요 항목 목록화, 답변 기록 시 판정 갱신</td><td>2</td></tr>
+    <tr><td>9</td><td>방문 후 기록</td><td>공통 체크리스트(고르지 않고 전부 표시) + 유지/보류/제외 저장</td><td>2</td></tr>
+  </table>
+  <h3 class="sec">우선순위 원칙</h3>
+  <p>새로운 우선순위 점수를 만들지 않고 원본 자료의 <b>1단계 / 2단계 / 후순위</b> 구분을 그대로 사용한다. 1단계는 상대방 참여·충돌→지연 인과·조건 입력 의향을 측정하는 검증 코어, 2단계는 방문 이후 종료점을 완성한다.</p>
+  <div class="foot-src">근거: <code>prd_v0.1_20260820.md</code> §16, §21</div>
+</section>
+
+<!-- ============ 27 PRD 3 비기능 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">PRD ③ 비기능 정책 · 지표 검증</span><span class="pageno">27 / 30</span></div>
+  <h1 class="pt">PRD ③ — 비기능 정책 · 지표 검증</h1>
+  <h3 class="sec">비기능 정책</h3>
+  <table style="font-size:12.3px;">
+    <tr><td style="width:26%">균형 제시</td><td>모든 판정·양보설명·비교 화면에서 A/B 동일 비중, 총점·추천배지·복합순위 금지</td></tr>
+    <tr><td>숫자 전제 공개</td><td>실부담·교통비·금리 기반 수치 옆에 예외 없이 기준시점·가정·한계 표시. "월 92만원입니다" 금지 → "월 약 92만원으로 추정됩니다 · 전제 보기"</td></tr>
+    <tr><td>데이터 보존</td><td>B 비로그인 조건: 마지막 접근 +30일 삭제. 관계 종료 시 조건·공유객체·현장기록 처리 정책은 <span class="tag t-tbd">TBD·출시전 필수</span></td></tr>
+    <tr><td>필터 자동 적용 금지</td><td>재탐색 필터는 사용자가 "이 필터로 찾아보기"를 눌러야 적용(필터를 적용하는 것도 사용자의 결정이라는 원칙)</td></tr>
+  </table>
+  <h3 class="sec">지표 검증 계획</h3>
+  <table style="font-size:12.3px;">
+    <tr><th style="width:18%">가설 이름</th><th>내용</th><th style="width:16%">현재 상태</th></tr>
+    <tr><td><b>상대방 참여</b></td><td>초대받은 상대가 실제로 들어와 조건을 입력한다</td><td><span class="tag t-tbd">미검증·최우선</span></td></tr>
+    <tr><td>반복 비교</td><td>집을 구할 때 여러 매물을 반복 비교한다</td><td><span class="tag t-fact">확인됨</span></td></tr>
+    <tr><td>조건 충돌 실재</td><td>2인이 집을 고를 때 조건 충돌이 실재한다</td><td><span class="tag t-fact">확인됨</span></td></tr>
+    <tr><td><b>충돌→지연 인과</b></td><td>그 충돌이 실제 결정을 지연시킨다</td><td><span class="tag t-tbd">미검증·핵심</span></td></tr>
+    <tr><td>조건 입력 의향</td><td>사용자가 조건 입력을 감수한다</td><td>설계로 완화 가능, 측정 필요</td></tr>
+    <tr><td>비용 신뢰</td><td>보유 데이터로 의미 있는 비용 비교 가능</td><td>부분적으로 불가</td></tr>
+    <tr><td>매물 회전 속도</td><td>매물 회전이 비교 주기보다 느리다</td><td>부분 확인</td></tr>
+  </table>
+  <p><b>실행 순서</b> — ① 상대방 참여 선행 측정(조건 대조 없이 목록공유+O/X 반응) → ② 충돌→지연 인과 인터뷰(병행 가능) → ③ 상대방 참여가 확인되면 단계1 프로토타입 → ④ 조건 입력 의향(완료율) 측정 → ⑤ 비용 신뢰·매물 회전 속도 병행 측정.</p>
+  <div class="foot-src">근거: <code>prd_v0.1_20260820.md</code> §23·§24</div>
+</section>
+
+<!-- ============ 28 KPI Guardrail ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">KPI · Guardrail</span><span class="pageno">28 / 30</span></div>
+  <h1 class="pt">KPI · Guardrail</h1>
+  <div class="callout" style="font-size:15px;font-weight:700;">North Star — 초대 발송 건 중 <b>7일 안에 "방문 후보 2개"</b>가 정해진 비율. 수치 목표는 1차 측정 전에는 세우지 않는다.</div>
+  <h3 class="sec">검증 퍼널</h3>
+  <div class="flow" style="flex-wrap:wrap;">
+    <div class="fstep">A 후보담기</div><div class="arrow">→</div>
+    <div class="fstep">A 조건 1단계</div><div class="arrow">→</div>
+    <div class="fstep">A 조건확장</div><div class="arrow">→</div>
+    <div class="fstep">B 링크진입</div><div class="arrow">→</div>
+    <div class="fstep" style="background:var(--off-tint);font-weight:800;">B 조건입력완료★<br><span class="small">(가장 중요한 관문)</span></div><div class="arrow">→</div>
+    <div class="fstep">B 로그인</div><div class="arrow">→</div>
+    <div class="fstep">조건완화</div><div class="arrow">→</div>
+    <div class="fstep" style="background:var(--naver-tint);font-weight:800;">후보확정(North Star)</div>
+  </div>
+  <h3 class="sec">반드시 지킬 원칙 — 10가지</h3>
+  <table style="font-size:12px;">
+    <tr><th style="width:6%">번호</th><th>원칙</th></tr>
+    <tr><td>1</td><td>AI가 대신 고르지 않는다 · 완화안은 A/B 항상 동시 제시</td></tr>
+    <tr><td>2</td><td>총점 금지 · 조건별 결과만 보여주고 합산하지 않음</td></tr>
+    <tr><td>3</td><td>계약·금융 판단으로 범위를 넓히지 않음</td></tr>
+    <tr><td>4</td><td>단순 공유가 아니라 함께 입력해야 결과가 나온다 — B가 조건을 입력하기 전에는 판정하지 않음</td></tr>
+    <tr><td>5</td><td>매물DB·지도·검색 기능을 새로 만들지 않음</td></tr>
+    <tr><td>6</td><td>못 재는 숫자를 지어내지 않음</td></tr>
+    <tr><td>7</td><td>"경쟁자 없음"을 강점처럼 쓰지 않음</td></tr>
+    <tr><td>8</td><td>입력을 4번 넘게 요구하지 않음 (점진적으로 나눠 받는 원칙)</td></tr>
+    <tr><td>9</td><td>혼자 쓰는 앱으로 퇴화하지 않도록 방지</td></tr>
+    <tr><td>10</td><td>균형 있게 제시 — 시각 비중 동일, 손실·이득 프레임 동일</td></tr>
+  </table>
+  <div class="callout warn"><b>참고 지표(확정 KPI 아님)</b> — 완화 실행률, 중개사 연락 비율(방향만 ↑), 방문 후 제외 비율(방향만 ↓), 전월세대출 비교 이동 비율. <b>결정 시간 단축·갈등 감소·계약 전환율 상승은 현재 성공 효과로 확정하지 않는다.</b></div>
+  <div class="foot-src">근거: <code>assets/reverse-planning.html</code> §15·§17, <code>prd_v0.1_20260820.md</code> §23</div>
+</section>
+
+<!-- ============ 29 도메인 리스크 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">도메인 리스크</span><span class="pageno">29 / 30</span></div>
+  <h1 class="pt">도메인 리스크</h1>
+  <table style="font-size:12.3px;">
+    <tr><th style="width:24%">리스크</th><th style="width:12%">영향</th><th>대응 방향 / 상태</th></tr>
+    <tr><td><b>유사 금융자문 소지</b></td><td><span class="badge b-off">치명적</span></td><td>대출 가능액·금리를 단정 표현하면 법적 소지 발생. 모든 숫자 옆 전제 공개, "확정 한도"·"더 저렴합니다" 금지 표현 원칙 유지 — 이 설계가 정확히 그 방어선이다.</td></tr>
+    <tr><td>관계 종료 시 데이터 처리 불명확</td><td><span class="badge b-off">개인정보 리스크</span></td><td>조건은 누구 것인가, 공유객체·현장기록은 남는가 — <span class="tag t-tbd">TBD·출시 전 필수 결정</span></td></tr>
+    <tr><td>네이버 내부 의존 (미확인 4종)</td><td><span class="badge b-warn">제품 전제 리스크</span></td><td>관심매물 조회 API 권한, 공유객체 비로그인 열람, 검색 count 조회, 필터 파라미터 규격 — 전부 네이버 내부 사정이라 팀이 결정 불가. 불가 시 로그인 시점·재탐색 기능 축소 재조정 필요.</td></tr>
+    <tr><td>충돌 화면이 갈등을 키움</td><td><span class="badge b-warn">중간</span></td><td>IPDAS 위반 시(주의 조작, 평가적 조건화) 특정 옵션 유도 가능. A/B 시각 비중 동일, 매물 사진 강조 금지로 대응.</td></tr>
+    <tr><td>예산·직장 정보 노출 부담</td><td><span class="badge b-warn">중간</span></td><td>상대에게 공개되는 항목 범위 정책 필요 — <span class="tag t-tbd">TBD</span></td></tr>
+    <tr><td>분할 결과가 실제 합의로 안 느껴짐</td><td><span class="badge b-warn">중간</span></td><td>"이번에 보러 갈 집 정하기" 규칙의 되돌림 조건 — 반복 관찰 시 재선택에 상대 이유를 함께 보여주는 방향으로 전환</td></tr>
+  </table>
+  <div class="foot-src">근거: <code>docs/06-cost-model.md</code> §3, <code>prd_v0.1_20260820.md</code> §25</div>
+</section>
+
+<!-- ============ 30 한계 및 최종 제안 ============ -->
+<section class="page">
+  <div class="page-head"><span class="eyebrow">한계 · 추가 검증 과제 · 최종 제안</span><span class="pageno">30 / 30</span></div>
+  <h1 class="pt">한계 · 추가 검증 과제 · 최종 제안</h1>
+  <h3 class="sec">한계</h3>
+  <ul>
+    <li>당근부동산 표본(971명)은 직거래 성향 이용자 과대표집 가능성. Zillow는 미국·2020·매매 기준으로 국내 전월세에 직접 일반화 불가.</li>
+    <li>SOM(6.7만~20.1만)은 확정 예측치가 아니라 시나리오 — "자릿수 감각"으로만 사용.</li>
+    <li>기회 점수(OS)의 절대 수치는 여전히 측정 필요 — 현재는 대리 지표 논증까지만 확정.</li>
+  </ul>
+  <h3 class="sec">추가 검증 과제 (우선순위 순)</h3>
+  <ol>
+    <li><b>"상대방 참여" 선행 측정</b> — 조건 대조 없이 목록 공유 + O/X 반응만으로 초대 참여율 측정 (최우선, 제작보다 먼저)</li>
+    <li><b>"충돌→지연 인과" 인터뷰</b> — 완전공동형 표본, 최근 6개월 내 2인 탐색자. "지연 경험 과반 + 원인에서 조건충돌 &gt; 일정조율" 통과 기준</li>
+    <li><b>기회 점수 실측</b> — 위 인터뷰와 같은 표본에서 동시 수집, 반증 조건(④⑤가 ⑥보다 높으면 핵심 기능(양보 지점 설명) 재검토) 명시</li>
+    <li>조건 입력 의향(입력 완료율) · 비용 신뢰 · 매물 회전 속도(매물 수명) 병행 측정</li>
+    <li>네이버 내부 API 4종 확인 (관심매물 조회 권한, 비로그인 열람, 검색 결과 수 조회, 필터 파라미터)</li>
+  </ol>
+  <h3 class="sec">최종 제안</h3>
+  <div class="callout" style="font-size:14px;">
+    <b>실행 순서</b>: "상대방 참여" 선행 측정 → 성공 시 1단계 프로토타입 제작(핵심 기능 7가지) → 조건 입력 의향·비용 신뢰·매물 회전 속도 병행 측정 → 2단계(나머지 2가지 기능) 완성.<br><br>
+    이 제품의 차별화는 "더 똑똑한 추천"이 아니라 <b>"집계를 거부하고 그 자리에 설명을 넣는다"</b>는 결정에 있다(우리 팀의 초기 결정이며, IPDAS 국제 표준과 일치). 성공 기준은 초대 수락률과 조건 충돌의 지연 효과 두 가설의 검증에 달려 있으며, 이 둘이 이 제안의 급소다.
+  </div>
+  <div class="foot-src">근거: <code>docs/02-hypotheses.md</code> 측정순서, <code>prd_v0.1_20260820.md</code> §24·§26, <code>value-proposition_20260820.md</code> §9</div>
+</section>
+
+</div>
+</body>
+</html>
