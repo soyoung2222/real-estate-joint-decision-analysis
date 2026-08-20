@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>같이 고르기 · 04 공동비교 (최종본 — 평소 · 안 좁혀질 때 통합)</title>
+<style>
+:root{
+  --naver:#03c75a; --naver-dark:#00a94f; --text:#202124; --sub:#6b7280;
+  --line:#e5e7eb; --line2:#d9dde3; --bg:#f5f6f8; --soft:#f7f9fa;
+  --warn:#fff8e6; --warn-line:#efc05d; --ok:#eaf8f0; --ok-text:#0b7b43;
+  --blue:#edf5ff; --blue-text:#3467a7; --red:#fff0f1; --red-text:#b93846;
+}
+*{box-sizing:border-box}
+body{ margin:0; font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Noto Sans KR","Malgun Gothic",sans-serif; color:var(--text); background:var(--bg); min-width:1180px; }
+button,input{font:inherit;cursor:pointer}
+.wrap{ max-width:1180px; margin:0 auto; padding:28px; }
+.intro{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px 24px; margin-bottom:20px; }
+.intro .eyebrow{ font-size:11px; color:#078246; font-weight:900; margin-bottom:6px; }
+.intro h1{ margin:0 0 8px; font-size:20px; letter-spacing:-.02em; }
+.intro p{ margin:0; font-size:13px; color:var(--sub); line-height:1.7; }
+.intro .diff{ margin-top:12px; background:#f0fbf5; border:1px solid #c9edd8; border-radius:9px; padding:10px 13px; font-size:12.5px; color:#0b6b3a; line-height:1.7; }
+.demo-toggle{ display:flex; gap:8px; margin-top:14px; }
+.demo-toggle button{ border:1px solid var(--line2); background:#fff; padding:9px 14px; border-radius:7px; font-size:12px; font-weight:700; color:#555; }
+.demo-toggle button.on{ background:var(--naver); border-color:var(--naver); color:#fff; }
+
+.stage{ display:grid; grid-template-columns:1fr 430px; gap:20px; align-items:start; }
+.center{ background:#fff; border:1px solid var(--line); border-radius:12px; padding:20px; }
+.center h3{ margin:0 0 4px; font-size:15px; }
+.center p.sub{ margin:0 0 14px; font-size:12px; color:var(--sub); }
+.property-list{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.property{ background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; position:relative; transition:.15s; }
+.p-title{ font-size:14px; font-weight:800; margin-bottom:3px; }
+.price{ font-size:14px; font-weight:900; margin:3px 0 6px; }
+.meta{ font-size:11.5px; color:var(--sub); line-height:1.6; }
+.badge2{ position:absolute; top:12px; right:12px; font-size:10.5px; font-weight:800; padding:3px 7px; border-radius:999px; }
+.badge2.off{ background:var(--red); color:var(--red-text); }
+.badge2.warn{ background:var(--warn); color:#946100; }
+.badge2.ok{ background:var(--ok); color:var(--ok-text); }
+
+.right{ border:1px solid var(--line); border-radius:12px; background:#fff; display:flex; flex-direction:column; overflow:hidden; }
+.panel-head{ padding:16px 18px 12px; border-bottom:1px solid var(--line); }
+.panel-head .eyebrow{ font-size:11px; color:#078246; font-weight:900; margin-bottom:4px; }
+.panel-head h2{ margin:0; font-size:18px; letter-spacing:-.02em; }
+.panel-tabs{ display:flex; border-bottom:1px solid var(--line); }
+.panel-tabs button{ flex:1; border:0; background:#fff; padding:11px 6px; font-size:12px; font-weight:700; color:#777; border-bottom:2px solid transparent; }
+.panel-tabs button.active{ color:#087a3d; border-bottom-color:var(--naver); }
+.panel-body{ padding:16px 18px 20px; }
+
+.summary{ display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:14px; }
+.summary>div{ border:1px solid var(--line); border-radius:8px; padding:10px; background:#fff; text-align:center; transition:.15s; }
+.summary small{ display:block; color:#818892; font-size:10px; }
+.summary strong{ font-size:18px; display:block; margin-top:3px; }
+.summary .s-ok{ background:#f2fbf6; border-color:#cdebd9; }
+.summary .s-warn{ background:#fffaf0; border-color:#eed9a7; }
+.summary .s-off{ background:#fafafa; border-color:var(--line); }
+.summary.zero .s-ok strong, .summary.zero .s-warn strong{ color:#c3c8ce; }
+.summary.zero .s-off{ border-color:#e3c9c9; }
+.summary.zero .s-off strong{ color:#b93846; }
+
+/* 카드류 (평소 상태 논의 카드) */
+.card{ border:1px solid var(--line); border-radius:10px; padding:13px 14px; background:#fff; margin-bottom:9px; }
+.row{ display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:12px; }
+.tag{ font-size:11px; border-radius:999px; background:#f2f4f5; padding:4px 7px; color:#5f6670; }
+.tag.green{background:var(--ok);color:var(--ok-text)}
+.tag.yellow{background:var(--warn);color:#946100}
+.member{ display:flex;align-items:center;gap:7px; font-size:12px; margin-top:7px; }
+.ok{color:#087a3d;font-weight:800}
+.no{color:#c13b48;font-weight:800}
+
+.status-card{ border:1px solid var(--line2); background:var(--soft); border-radius:10px; padding:14px 15px; margin-bottom:16px; }
+.status-card h4{ margin:0 0 6px; font-size:14px; line-height:1.5; }
+.status-card p{ margin:0; font-size:12px; color:var(--sub); line-height:1.6; }
+
+.section-label{ font-size:12px; font-weight:900; margin:18px 0 8px; }
+.bottleneck{ border:1px solid var(--line); border-radius:10px; padding:12px 13px; margin-bottom:8px; background:#fff; }
+.bottleneck .top{ display:flex; justify-content:space-between; align-items:center; font-size:12.5px; margin-bottom:7px; }
+.bottleneck .who{ display:inline-flex; align-items:center; gap:5px; font-weight:800; }
+.rank{ font-size:10px; font-weight:900; padding:2px 6px; border-radius:5px; margin-right:5px; }
+.rank.r1{ background:#b93846; color:#fff; }
+.rank.r2{ background:#e0a94a; color:#fff; }
+.avatar{ width:20px;height:20px;border-radius:50%; display:inline-grid; place-items:center; font-size:10px; font-weight:900; }
+.a{background:#dff4ea;color:#087a3d}
+.b{background:#e6efff;color:#2f5fa4}
+.bar-track{ height:8px; border-radius:99px; background:#eef0f2; overflow:hidden; }
+.bar-fill{ height:100%; background:var(--red-text); border-radius:99px; }
+.bottleneck .count{ font-size:11.5px; color:var(--sub); margin-top:5px; }
+
+.suggest{ border:1.5px solid var(--line); background:#fff; border-radius:10px; padding:13px 14px; margin-bottom:10px; }
+.suggest.enabled{ border-color:#cddff6; background:var(--blue); }
+.suggest .headrow{ display:flex; align-items:center; gap:8px; margin-bottom:4px; }
+.suggest .toggle{
+  width:18px; height:18px; border:1.5px solid #b9cdec; border-radius:5px; display:inline-flex;
+  align-items:center; justify-content:center; font-size:12px; color:#fff; background:#fff; flex:none;
+}
+.suggest.enabled .toggle{ background:var(--blue-text); border-color:var(--blue-text); }
+.suggest .head{ font-size:12.5px; font-weight:800; color:#333; }
+.suggest.enabled .head{ color:#1f3a63; }
+.suggest p.desc{ margin:0 0 10px; font-size:12px; color:var(--sub); line-height:1.6; }
+.suggest.enabled p.desc{ color:#33507c; }
+.control{ display:none; }
+.suggest.enabled .control{ display:block; }
+.chiprow{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:9px; }
+.chip{ position:relative; border:1.5px solid #b9cdec; background:#fff; color:#1f3a63; border-radius:8px; padding:8px 10px; font-size:12px; font-weight:700; text-align:left; line-height:1.4; }
+.chip .chip-sub{ display:block; font-size:10.5px; font-weight:700; color:var(--blue-text); margin-top:2px; }
+.chip.active{ background:var(--blue-text); border-color:var(--blue-text); color:#fff; }
+.chip.active .chip-sub{ color:#dbe9ff; }
+.chip .rec-badge{ position:absolute; top:-8px; right:-6px; background:#0b7b43; color:#fff; font-size:9px; font-weight:900; padding:2px 5px; border-radius:999px; }
+.chip.custom{ border-style:dashed; }
+.custom-input{ display:none; align-items:center; gap:6px; margin:-2px 0 9px; }
+.custom-input input{ width:90px; border:1px solid var(--line2); border-radius:7px; padding:7px 9px; font-size:12px; }
+.custom-input span{ font-size:12px; color:#33507c; }
+
+.preview-table{ border:1px solid var(--line); border-radius:10px; overflow:hidden; margin:12px 0 14px; }
+.preview-table .r{ display:flex; align-items:center; justify-content:space-between; padding:9px 12px; font-size:12px; border-top:1px solid var(--line); background:#fff; }
+.preview-table .r:first-child{ border-top:0; }
+.preview-table .r span.st{ font-size:10.5px; font-weight:800; padding:3px 7px; border-radius:999px; }
+.st-ok{ background:var(--ok); color:var(--ok-text); }
+.st-warn{ background:var(--warn); color:#946100; }
+.st-off{ background:var(--red); color:var(--red-text); }
+
+.apply-all{ border:0; background:var(--naver); color:#fff; font-size:13px; font-weight:800; padding:11px 12px; border-radius:8px; width:100%; margin-bottom:6px; }
+.apply-all:disabled{ background:#d7dbe0; }
+
+.num{
+  display:inline-grid; place-items:center; width:20px; height:20px; border-radius:50%;
+  background:var(--blue-text); color:#fff; font-size:11px; font-weight:900; margin-right:6px;
+}
+.suggest.alt{ background:#fff; }
+.suggest.alt .head{ display:flex; align-items:center; color:#333; }
+.suggest.alt p.desc{ color:var(--sub); margin:0 0 10px; }
+.suggest.alt .apply{
+  border:1px solid var(--line2); background:#fff; color:#444; font-size:12px; font-weight:800;
+  padding:8px 12px; border-radius:7px; width:100%;
+}
+.quick{ border:1.5px solid #cddff6; background:var(--blue); border-radius:10px; padding:13px 14px; margin-bottom:10px; }
+.quick .head{ font-size:12.5px; font-weight:800; color:#1f3a63; margin-bottom:5px; }
+.quick p.desc{ margin:0 0 9px; font-size:12px; color:#33507c; line-height:1.6; }
+.quick .preview{ font-size:11.5px; font-weight:800; color:var(--blue-text); background:#fff; display:inline-block; padding:4px 8px; border-radius:6px; margin-bottom:9px; }
+.quick .apply{ border:0; background:var(--blue-text); color:#fff; font-size:12px; font-weight:800; padding:8px 12px; border-radius:7px; width:100%; }
+.expand-link{ text-align:center; margin:2px 0 16px; }
+.expand-link button{ border:0; background:transparent; color:#3467a7; font-size:12px; font-weight:700; text-decoration:underline; padding:6px; }
+.advanced{ display:none; border-top:1px dashed var(--line); padding-top:14px; margin-top:2px; }
+.advanced.open{ display:block; }
+.escape{ text-align:center; margin-top:2px; }
+.escape button{ border:0; background:transparent; color:var(--sub); font-size:11.5px; text-decoration:underline; padding:6px; }
+.footnote{ font-size:11px; color:#9197a0; line-height:1.6; margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); }
+
+/* 적용 결과 화면 (팝업 대신 실제 화면 전환) */
+.result-panel{ border:1.5px solid #8edcac; background:#f7fdf9; border-radius:10px; padding:14px 15px; margin-bottom:16px; }
+.result-panel h4{ margin:0 0 6px; font-size:14px; color:#0b7b43; }
+.applied-line{ font-size:12px; color:#0b7b43; font-weight:700; margin:0 0 12px; }
+.back-btn{ border:1px solid var(--line2); background:#fff; color:#444; font-size:12px; font-weight:700; padding:8px 12px; border-radius:7px; width:100%; margin-top:10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="intro">
+    <div class="eyebrow">최종본 · 04 공동비교 — 평소 상태 + 후보가 안 좁혀질 때</div>
+    <h1>04 공동비교, 두 상황을 한 화면에서 토글로 비교</h1>
+    <p>지금까지의 반복(v1~v3)을 하나로 합쳤습니다. "평소"는 원래 프로토타입의 매칭 결과 화면이고, "후보가 하나도 안 겹칠 때"는 1순위·2순위 병목을 진단하고, 원래 멘트("가장 많이 걸린 조건 하나만 살짝 낮춰봐요")를 기본값으로 두되 마음에 안 들면 각자 조건을 직접 고르거나 입력할 수 있는 구조입니다.</p>
+    <div class="diff">구성 순서(안 좁혀질 때) — ① 사실 확인 → ② 1·2순위 병목 진단(랭킹) → ③ 기본 원탭 제안(원문 그대로) → ④ "부족하면" 펼쳐지는 상세 선택(1순위·2순위 중 무엇을 포함할지 체크 + 각자 값 선택/직접입력 + 실시간 미리보기) → ⑤ 조정 없이 진행하는 탈출구</div>
+    <div class="demo-toggle">
+      <button id="btnNormal" onclick="showState('normal')">평소 (겹치는 후보 있음)</button>
+      <button id="btnZero" class="on" onclick="showState('zero')">후보가 하나도 안 겹칠 때</button>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="center">
+
+      <!-- 평소 상태 후보 리스트 -->
+      <div id="centerNormal" style="display:none">
+        <h3>선택한 후보 4곳</h3>
+        <p class="sub">관심매물 중 같이 비교할 후보를 선택하세요.</p>
+        <div class="property-list">
+          <article class="property">
+            <span class="badge2 warn">한쪽만 충족</span>
+            <div class="p-title">흑석동 A아파트</div>
+            <div class="price">전세 3억 2,000</div>
+            <div class="meta">68㎡ · 역 도보 13분 · 주차 가능<br>강남역 34분 · 여의도역 22분</div>
+          </article>
+          <article class="property">
+            <span class="badge2 warn">한쪽만 충족</span>
+            <div class="p-title">상도동 B아파트</div>
+            <div class="price">전세 3억 4,000</div>
+            <div class="meta">66㎡ · 역 도보 8분 · 주차 가능<br>강남역 38분 · 여의도역 29분</div>
+          </article>
+          <article class="property">
+            <span class="badge2 off">둘 다 불충족</span>
+            <div class="p-title">신길동 C아파트</div>
+            <div class="price">전세 2억 9,000</div>
+            <div class="meta">59㎡ · 역 도보 6분 · 주차 가능<br>강남역 43분 · 여의도역 18분</div>
+          </article>
+          <article class="property">
+            <span class="badge2 ok">둘 다 충족</span>
+            <div class="p-title">당산동 D아파트</div>
+            <div class="price">전세 3억 6,000</div>
+            <div class="meta">72㎡ · 역 도보 5분 · 주차 가능<br>강남역 47분 · 여의도역 16분</div>
+          </article>
+        </div>
+      </div>
+
+      <!-- 안 좁혀질 때 후보 리스트 -->
+      <div id="centerZero">
+        <h3>선택한 후보 4곳</h3>
+        <p class="sub">오른쪽에서 조건을 조정하면 아래 상태 배지가 실시간으로 바뀝니다.</p>
+        <div class="property-list">
+          <article class="property">
+            <span class="badge2 off" id="badge-흑석동">둘 다 불충족</span>
+            <div class="p-title">흑석동 A아파트</div>
+            <div class="price">전세 3억 2,000</div>
+            <div class="meta">64㎡ · 역 도보 13분 · 주차 불가<br>강남역 34분</div>
+          </article>
+          <article class="property">
+            <span class="badge2 off" id="badge-상도동">둘 다 불충족</span>
+            <div class="p-title">상도동 B아파트</div>
+            <div class="price">전세 3억 4,000</div>
+            <div class="meta">63㎡ · 역 도보 8분 · 주차 가능<br>강남역 42분</div>
+          </article>
+          <article class="property">
+            <span class="badge2 off" id="badge-신길동">둘 다 불충족</span>
+            <div class="p-title">신길동 C아파트</div>
+            <div class="price">전세 2억 9,000</div>
+            <div class="meta">59㎡ · 역 도보 6분 · 주차 가능<br>월 실부담 135만</div>
+          </article>
+          <article class="property">
+            <span class="badge2 off" id="badge-당산동">둘 다 불충족</span>
+            <div class="p-title">당산동 D아파트</div>
+            <div class="price">전세 3억 6,000</div>
+            <div class="meta">72㎡ · 역 도보 5분 · 주차 가능<br>강남역 47분 · 월 실부담 160만</div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <aside class="right">
+      <div class="panel-head">
+        <div class="eyebrow">같이 고르기 · 04</div>
+        <h2>공동 비교</h2>
+      </div>
+      <div class="panel-tabs"><button>후보</button><button>조건</button><button class="active">비교</button><button>합의</button></div>
+      <div class="panel-body">
+
+        <div class="summary" id="summary">
+          <div class="s-ok"><small>둘 다 충족</small><strong id="cntOk">0</strong></div>
+          <div class="s-warn"><small>한쪽만 충족</small><strong id="cntWarn">0</strong></div>
+          <div class="s-off"><small>둘 다 불충족</small><strong id="cntOff">4</strong></div>
+        </div>
+
+        <!-- 평소 상태 오른쪽 패널 -->
+        <div id="rightNormal" style="display:none">
+          <div class="section-label">논의가 필요한 후보</div>
+          <div class="card">
+            <div class="row"><strong>흑석동 A아파트</strong><span class="tag yellow">A 미충족</span></div>
+            <div class="member"><span class="avatar a">A</span><span>역 도보 13분</span><span class="no" style="margin-left:auto">+3분</span></div>
+            <div class="member"><span class="avatar b">B</span><span>면적·주차 충족</span><span class="ok" style="margin-left:auto">충족</span></div>
+          </div>
+          <div class="card">
+            <div class="row"><strong>당산동 D아파트</strong><span class="tag green">둘 다 충족</span></div>
+            <div class="member"><span class="avatar a">A</span><span>통근·역 도보 충족</span><span class="ok" style="margin-left:auto">충족</span></div>
+            <div class="member"><span class="avatar b">B</span><span>면적·주차 충족</span><span class="ok" style="margin-left:auto">충족</span></div>
+          </div>
+        </div>
+
+        <!-- 안 좁혀질 때 오른쪽 패널 -->
+        <div id="rightZero">
+
+          <!-- 적용 결과 화면 (조건 적용 후에만 표시) -->
+          <div class="result-panel" id="resultPanel" style="display:none">
+            <h4>✅ 조건을 조정해서 다시 계산했어요</h4>
+            <p class="applied-line" id="resultApplied"></p>
+            <div id="resultCards"></div>
+            <button class="back-btn" onclick="goBackToAdjust()">다시 조정하기</button>
+          </div>
+
+          <div id="adjustSection">
+
+          <div class="status-card">
+            <h4>지금 고른 4곳 중에는 두 분 모두에게 맞는 곳이 아직 없어요</h4>
+            <p>어디서 갈렸는지 순위로 보여드릴게요. 1순위만 조정할지, 2순위까지 같이 볼지는 두 분이 정하세요.</p>
+          </div>
+
+          <div class="section-label">어떤 조건에서 갈렸는지 (순위)</div>
+          <div class="bottleneck">
+            <div class="top"><span class="who"><span class="rank r1">1순위</span><span class="avatar b">B</span>준호 · 전용면적 66㎡ 이상</span><span>3/4곳에서 걸림</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
+            <div class="count">흑석동(64㎡) · 상도동(63㎡) · 신길동(59㎡)에서 기준 미달</div>
+          </div>
+          <div class="bottleneck">
+            <div class="top"><span class="who"><span class="rank r2">2순위</span><span class="avatar a">A</span>민지 · 통근 40분 이하</span><span>2/4곳에서 걸림</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:50%;background:#e0a94a"></div></div>
+            <div class="count">상도동(42분) · 당산동(47분)에서 기준 초과</div>
+          </div>
+
+          <!-- Tier 1: 기본 원탭 제안 -->
+          <div class="quick">
+            <div class="head">가장 많이 걸린 조건 하나만 살짝 낮춰봐요.</div>
+            <p class="desc">1순위 병목인 준호님의 전용면적 조건(66㎡ → 59㎡)만 AI 추천값으로 바로 적용해요.</p>
+            <div class="preview">적용하면 → 2곳이 새로 비교 대상에 들어와요</div>
+            <button class="apply" onclick="quickApply()">이 조건으로 다시 보기</button>
+          </div>
+
+          <div class="expand-link">
+            <button onclick="toggleAdvanced()" id="expandBtn">이 정도로는 부족하다면? 1·2순위를 직접 골라보기</button>
+          </div>
+
+          <div class="advanced" id="advancedBox">
+            <div class="section-label">1순위·2순위 중 무엇을 조정에 포함할까요</div>
+
+            <div class="suggest" id="card-area">
+              <div class="headrow">
+                <button class="toggle" id="toggle-area" onclick="toggleCond('area')">✓</button>
+                <span class="head"><span class="rank r1" style="margin-right:6px">1순위</span>준호님 조건 — 전용면적 (지금 66㎡ 이상)</span>
+              </div>
+              <p class="desc">체크하면 이 조건을 조정 대상에 포함합니다. 체크 안 하면 원래 기준(66㎡)을 그대로 유지해요.</p>
+              <div class="control">
+                <div class="chiprow" id="chips-area">
+                  <button class="chip" data-val="63" onclick="pickChip('area',63,this)">63㎡ 이상<span class="chip-sub">단독 +2곳</span></button>
+                  <button class="chip" data-val="59" onclick="pickChip('area',59,this)">59㎡ 이상<span class="chip-sub">단독 +3곳</span><span class="rec-badge">AI 추천</span></button>
+                  <button class="chip custom" onclick="toggleCustom('area')">직접 입력</button>
+                </div>
+                <div class="custom-input" id="custom-area"><input type="number" id="input-area" placeholder="예: 61" oninput="onCustomInput('area')"><span>㎡ 이상</span></div>
+              </div>
+            </div>
+
+            <div class="suggest" id="card-commute">
+              <div class="headrow">
+                <button class="toggle" id="toggle-commute" onclick="toggleCond('commute')">✓</button>
+                <span class="head"><span class="rank r2" style="margin-right:6px">2순위</span>민지님 조건 — 통근시간 (지금 40분 이하)</span>
+              </div>
+              <p class="desc">체크하면 이 조건을 조정 대상에 포함합니다. 체크 안 하면 원래 기준(40분)을 그대로 유지해요.</p>
+              <div class="control">
+                <div class="chiprow" id="chips-commute">
+                  <button class="chip" data-val="42" onclick="pickChip('commute',42,this)">42분 이하<span class="chip-sub">단독 +1곳</span></button>
+                  <button class="chip" data-val="47" onclick="pickChip('commute',47,this)">47분 이하<span class="chip-sub">단독 +2곳</span><span class="rec-badge">AI 추천</span></button>
+                  <button class="chip custom" onclick="toggleCustom('commute')">직접 입력</button>
+                </div>
+                <div class="custom-input" id="custom-commute"><input type="number" id="input-commute" placeholder="예: 44" oninput="onCustomInput('commute')"><span>분 이하</span></div>
+              </div>
+            </div>
+
+            <div class="section-label">선택한 조합을 적용하면</div>
+            <div class="preview-table" id="previewTable"><!-- JS로 채움 --></div>
+
+            <button class="apply-all" id="applyBtn" onclick="commitApply()">이 조합으로 다시 보기</button>
+          </div><!-- /advanced -->
+
+          <div class="suggest alt">
+            <div class="head"><span class="num">3</span>후보를 더 담아보기</div>
+            <p class="desc">관심매물함에 아직 1자리가 남아 있어요. 다른 후보를 담으면 겹칠 확률이 올라가요.</p>
+            <button class="apply" onclick="openWishlist()">관심매물함 열기</button>
+          </div>
+
+          <div class="escape"><button onclick="applyOther(0)">조정하지 않고, 그래도 이 4곳 중에서 이야기해볼래요</button></div>
+
+          <div class="footnote">1순위만 선택해도, 2순위만 선택해도, 둘 다 선택해도 됩니다 — 무엇을 포함할지는 두 분이 고르는 것이고 AI는 결과만 미리 보여줍니다. 흑석동은 주차, 신길동·당산동은 실부담처럼 이 두 조건과 무관한 항목이 남아있으면 완전히 풀리지 않을 수 있어요. 총점이나 순위는 매기지 않습니다.</div>
+
+          </div><!-- /adjustSection -->
+        </div>
+
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+// ── 안 좁혀질 때 시나리오의 후보 원자료 ──
+const data = {
+  흑석동:{ area:64, commute:34, roadWalk:13, parking:false, budgetB:true, budgetA:true },
+  상도동:{ area:63, commute:42, roadWalk:8,  parking:true,  budgetB:true, budgetA:true },
+  신길동:{ area:59, commute:38, roadWalk:6,  parking:true,  budgetB:true, budgetA:false },
+  당산동:{ area:72, commute:47, roadWalk:5,  parking:true,  budgetB:false, budgetA:true }
+};
+const state   = { area:{on:false,val:66}, commute:{on:false,val:40} }; // 미리보기(초안) — 아직 적용 전
+const applied = { area:{on:false,val:66}, commute:{on:false,val:40} }; // 실제 적용된 상태 — 왼쪽 배지·상단 요약은 이 값만 따름
+
+function toggleCond(cond){
+  state[cond].on = !state[cond].on;
+  document.getElementById('card-'+cond).classList.toggle('enabled', state[cond].on);
+  document.getElementById('toggle-'+cond).textContent = state[cond].on ? '✓' : '';
+  updatePreview();
+}
+function pickChip(cond,val,el){
+  document.querySelectorAll('#chips-'+cond+' .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('custom-'+cond).style.display='none';
+  document.getElementById('input-'+cond).value='';
+  state[cond].val = val;
+  updatePreview();
+}
+function toggleCustom(cond){
+  document.querySelectorAll('#chips-'+cond+' .chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('custom-'+cond).style.display='flex';
+  document.getElementById('input-'+cond).focus();
+}
+function onCustomInput(cond){
+  const v = parseFloat(document.getElementById('input-'+cond).value);
+  if(!isNaN(v)){ state[cond].val = v; updatePreview(); }
+}
+
+function evalWith(name, cond){
+  const d = data[name];
+  const areaThresh = cond.area.on ? cond.area.val : 66;
+  const commuteThresh = cond.commute.on ? cond.commute.val : 40;
+  const aPass = (d.roadWalk<=10) && (d.commute<=commuteThresh) && d.budgetA;
+  const bPass = (d.area>=areaThresh) && d.parking && d.budgetB;
+  if(aPass && bPass) return 'ok';
+  if(aPass || bPass) return 'warn';
+  return 'off';
+}
+function reasonWhy(name, cond, status){
+  const d = data[name];
+  const areaThresh = cond.area.on ? cond.area.val : 66;
+  const commuteThresh = cond.commute.on ? cond.commute.val : 40;
+  const remain = [];
+  if(!(d.roadWalk<=10)) remain.push('A 역도보(' + d.roadWalk + '분)');
+  if(!(d.commute<=commuteThresh)) remain.push('A 통근(' + d.commute + '분)');
+  if(!d.budgetA) remain.push('A 실부담');
+  if(!(d.area>=areaThresh)) remain.push('B 면적(' + d.area + '㎡)');
+  if(!d.parking) remain.push('B 주차');
+  if(!d.budgetB) remain.push('B 실부담');
+  if(status==='ok') return '모든 조건 충족';
+  return '남은 문제: ' + remain.join(', ');
+}
+function statusLabel(s){ return s==='ok' ? '둘 다 충족' : s==='warn' ? '한쪽만 충족' : '둘 다 불충족'; }
+function statusClass(s){ return s==='ok' ? 'st-ok' : s==='warn' ? 'st-warn' : 'st-off'; }
+function badgeClass(s){ return s==='ok' ? 'ok' : s==='warn' ? 'warn' : 'off'; }
+const names = Object.keys(data);
+
+// 미리보기(아직 적용 안 함) — 칩·체크박스를 만질 때마다 갱신. 왼쪽 배지·상단 요약은 건드리지 않는다.
+function updatePreview(){
+  const rows = names.map(name=>{
+    const s = evalWith(name, state);
+    return `<div class="r"><span>${name}</span><span style="color:#8a8f96;font-size:11px;flex:1;margin:0 8px;">${reasonWhy(name,state,s)}</span><span class="st ${statusClass(s)}">${statusLabel(s)}</span></div>`;
+  }).join('');
+  const pt = document.getElementById('previewTable');
+  if(pt) pt.innerHTML = rows;
+  const applyBtn = document.getElementById('applyBtn');
+  if(applyBtn) applyBtn.disabled = !(state.area.on || state.commute.on);
+}
+
+// 실제 적용 상태 — 왼쪽 후보 카드 배지와 상단 요약(둘다충족/한쪽만충족/둘다불충족)은 이것만 반영한다.
+function updateAppliedView(){
+  let ok=0,warn=0,off=0;
+  names.forEach(name=>{
+    const s = evalWith(name, applied);
+    if(s==='ok') ok++; else if(s==='warn') warn++; else off++;
+    const badge = document.getElementById('badge-'+name);
+    if(badge){ badge.textContent = statusLabel(s); badge.className = 'badge2 ' + badgeClass(s); }
+  });
+  document.getElementById('cntOk').textContent = ok;
+  document.getElementById('cntWarn').textContent = warn;
+  document.getElementById('cntOff').textContent = off;
+}
+
+// 적용 결과를 실제 화면(팝업 아님)으로 보여준다
+function showResultScreen(appliedLabel){
+  document.getElementById('resultApplied').textContent = '적용됨: ' + appliedLabel;
+  const cards = names.map(name=>{
+    const s = evalWith(name, applied);
+    const tagClass = s==='ok' ? 'green' : s==='warn' ? 'yellow' : '';
+    return `<div class="card"><div class="row"><strong>${name}</strong><span class="tag ${tagClass}">${statusLabel(s)}</span></div>
+      <div class="meta" style="margin-top:6px;">${reasonWhy(name,applied,s)}</div></div>`;
+  }).join('');
+  document.getElementById('resultCards').innerHTML = cards;
+  document.getElementById('resultPanel').style.display = 'block';
+  document.getElementById('adjustSection').style.display = 'none';
+  document.getElementById('resultPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function goBackToAdjust(){
+  document.getElementById('resultPanel').style.display = 'none';
+  document.getElementById('adjustSection').style.display = 'block';
+}
+
+function commitApply(){
+  applied.area = { ...state.area };
+  applied.commute = { ...state.commute };
+  updateAppliedView();
+  const picked = [];
+  if(applied.area.on) picked.push(`전용면적 ${applied.area.val}㎡ 이상`);
+  if(applied.commute.on) picked.push(`통근 ${applied.commute.val}분 이하`);
+  showResultScreen(picked.length ? picked.join(' + ') : '조정 없음');
+}
+function openWishlist(){
+  alert('관심매물함으로 이동합니다. (이 화면은 "04 공동비교" 흐름의 예시라 실제 이동은 연결하지 않았습니다 — 실제 화면에서는 관심매물 목록으로 이동해 후보를 추가로 담습니다.)');
+}
+function applyOther(n){
+  applied.area = { on:false, val:66 };
+  applied.commute = { on:false, val:40 };
+  updateAppliedView();
+  showResultScreen('조정 없음 — 원래 조건 그대로');
+}
+function toggleAdvanced(){
+  const box = document.getElementById('advancedBox');
+  const open = box.classList.toggle('open');
+  document.getElementById('expandBtn').textContent = open ? '기본 제안으로 접기' : '이 정도로는 부족하다면? 1·2순위를 직접 골라보기';
+}
+function quickApply(){
+  applied.area = { on:true, val:59 };
+  applied.commute = { on:false, val:40 };
+  // 상세 선택 UI도 같은 값으로 맞춰둔다 (나중에 펼쳐도 일관되게 보이도록)
+  state.area = { on:true, val:59 };
+  document.getElementById('card-area').classList.add('enabled');
+  document.getElementById('toggle-area').textContent = '✓';
+  document.querySelectorAll('#chips-area .chip').forEach(c=>{ c.classList.toggle('active', c.dataset.val === '59'); });
+  updatePreview();
+  updateAppliedView();
+  showResultScreen('전용면적 59㎡ 이상');
+}
+
+// ── 상단 데모 토글 (평소 ↔ 안 좁혀질 때) ──
+function showState(which){
+  document.getElementById('btnNormal').classList.toggle('on', which==='normal');
+  document.getElementById('btnZero').classList.toggle('on', which==='zero');
+  document.getElementById('centerNormal').style.display = which==='normal' ? 'block' : 'none';
+  document.getElementById('centerZero').style.display = which==='zero' ? 'block' : 'none';
+  document.getElementById('rightNormal').style.display = which==='normal' ? 'block' : 'none';
+  document.getElementById('rightZero').style.display = which==='zero' ? 'block' : 'none';
+  document.getElementById('summary').classList.toggle('zero', which==='zero');
+
+  if(which==='normal'){
+    document.getElementById('cntOk').textContent='1';
+    document.getElementById('cntWarn').textContent='2';
+    document.getElementById('cntOff').textContent='1';
+  } else {
+    updateAppliedView();
+    updatePreview();
+  }
+}
+showState('zero');
+</script>
+</body>
+</html>
