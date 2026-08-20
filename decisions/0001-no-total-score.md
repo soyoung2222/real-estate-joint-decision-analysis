@@ -2,7 +2,7 @@
 
 - **상태**: 채택
 - **일자**: 2026-08-14
-- **관련**: `docs/00-proposal.md`, `decisions/0002-two-person-premise.md`
+- **관련**: `docs/01-team-brief.md`, `decisions/0002-two-person-premise.md`
 
 ## 맥락
 

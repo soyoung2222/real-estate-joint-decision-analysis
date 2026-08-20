@@ -59,13 +59,16 @@
 우리는 사람마다 조건을 **한 번** 받습니다.
 
 ```
-나   :  통근 40분 이내 · 반려동물 필수 · 예산 70만 · 출근지 강남역
-상대 :  통근 30분 이내 · 방 2개 필수   · 예산 80만 · 출근지 여의도
+나   :  출근지 강남역 · 예산 70만 · 통근 40분 이내 · 역 도보 10분 이내
+상대 :  출근지 여의도 · 예산 80만 · 통근 30분 이내 · 방 2개 이상
 ```
 
 - 입력은 사람당 4번. 매물이 5개든 20개든 안 늘어납니다
 - 매물이 사라져도 조건은 남아서 새 매물에 자동으로 적용됩니다
 - **무엇보다, 상대에게 보낼 게 생깁니다**
+
+*(반려동물처럼 매물 데이터에 없는 항목은 조건으로 받지 않고 `확인 필요`로 빼서
+중개사에게 물어볼 목록으로 넘깁니다. 없는 걸 "안 됨"으로 판정하면 후보가 잘못 탈락합니다.)*
 
 → [0003](decisions/0003-conditions-belong-to-people.md)
 
@@ -96,11 +99,12 @@
 |---|---|
 | **상대가 초대를 받아서 조건을 입력하나** | **모름 — 제일 먼저 확인** |
 | 집 구할 때 여러 번 비교하나 | ✅ 맞음 (2.5개월간 4.1곳) |
-| **둘이라서 더 오래 걸리나** | **모름 — 이게 이 제안의 핵심인데 비어 있음** |
+| 둘이 고를 때 조건이 실제로 충돌하나 | ✅ 맞음 (미국인 77%가 파트너와 다툼, 상위 3개가 조건) |
+| **그 충돌 때문에 더 오래 걸리나** | **모름 — 이게 이 제안의 핵심인데 비어 있음** |
 | 출근지·예산을 입력해줄까 | 한 번에 안 묻고 필요할 때 하나씩 받으면 됨 |
 | 네이버 데이터로 비용 계산이 되나 | 반만 됨. 그래서 계산에 쓴 가정을 화면에 다 밝힘 |
 
-자세한 건 [`docs/01-hypotheses.md`](docs/01-hypotheses.md).
+자세한 건 [`docs/02-hypotheses.md`](docs/02-hypotheses.md).
 
 ## 만드는 순서
 
@@ -114,15 +118,34 @@
 
 ## 문서
 
+**처음이면 이 셋만 보면 됩니다.**
+
 | 뭐가 궁금하면 | 여기 |
 |---|---|
-| 전체 제안 | [`docs/00-proposal.md`](docs/00-proposal.md) |
-| 뭘 확인해야 하나 | [`docs/01-hypotheses.md`](docs/01-hypotheses.md) |
-| 경쟁 서비스 조사 | [`docs/02-research-2026-08.md`](docs/02-research-2026-08.md) |
-| 주거비 계산식 | [`docs/03-cost-model.md`](docs/03-cost-model.md) |
-| 참고할 서비스 | [`docs/04-benchmarks.md`](docs/04-benchmarks.md) |
-| 뭐가 확인됐고 뭐가 못 밝히나 | [`docs/05-verification-log.md`](docs/05-verification-log.md) |
-| 왜 이렇게 정했나 | [`decisions/`](decisions/) |
+| **팀이 맞춘 기준 전체** | [`01-team-brief.md`](docs/01-team-brief.md) |
+| **지금 뭐가 정해졌고 뭐가 안 정해졌나** | [`11-decision-status.md`](docs/11-decision-status.md) |
+| **뭘 단정할 수 있고 뭘 못 하나** | [`03-evidence-log.md`](docs/03-evidence-log.md) |
+
+<details>
+<summary>문서 11개 전체</summary>
+
+| # | 문서 | 무엇 |
+|---|---|---|
+| 01 | [팀 브리프](docs/01-team-brief.md) | **기준 문서.** 문제·해법·시장·MVP·가드레일·지표·리스크 |
+| 02 | [가설](docs/02-hypotheses.md) | H1~H5와 검증 순서 |
+| 03 | [근거 로그](docs/03-evidence-log.md) | 사실·추론·일화·가설 등급표 + 조사 원본(부록 A·B) |
+| 04 | [벤치마크](docs/04-benchmarks.md) | 기준 서비스(측정 대상) / 참조 서비스(설계 대상) |
+| 05 | [트레이드오프 패턴](docs/05-tradeoff-patterns.md) | 의료 IPDAS·Option Grid·집계 전략 |
+| 06 | [주거비 모델](docs/06-cost-model.md) | 6개 항목 계산식과 전제 공개 |
+| 07 | [여정·기회점수](docs/07-cjm-opportunity-score.md) | A/B 2레인 CJM, 어디가 제일 비어 있나 |
+| 08 | [화면 설계](docs/08-screen-design.md) | 입력 설계 · 시각화 명세 · 화면 목록 97개 |
+| 09 | [예외 상황](docs/09-edge-cases.md) | MVP 필수 5 / 후순위 8 |
+| 10 | [데이터 연동](docs/10-data-integration.md) | 네이버 연동 방식, 경로 API 호출량 |
+| 11 | [결정 현황](docs/11-decision-status.md) | 결정 / 미결정 / 리서치 필요 — **가장 자주 갱신** |
+
+그리고 [`decisions/`](decisions/)에 되돌릴 조건까지 적은 판단 기록 4건.
+
+</details>
 
 원본 자료: `ChatGPT - 역기획.pdf`
 
