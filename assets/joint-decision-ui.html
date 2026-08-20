@@ -318,14 +318,95 @@ body.mobonly .view#viewB{display:block}
 .avatars .who:first-child{margin-left:0}
 .avatars .who.b{background:var(--ink-3)}
 
+
+/* ── 출근지 검색 ── */
+.searchbox{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:var(--r);
+  padding:0 14px;height:46px;background:var(--surface)}
+.searchbox:focus-within{border-color:var(--nv-action);box-shadow:0 0 0 3px var(--nv-green-soft)}
+.searchbox input{flex:1;border:0;outline:0;font:inherit;background:none;color:var(--ink)}
+.searchbox input::placeholder{color:var(--ink-4)}
+.acl{list-style:none;border:1px solid var(--line);border-top:0;border-radius:0 0 var(--r) var(--r);
+  max-height:220px;overflow:auto;background:var(--surface)}
+.acl li{padding:12px 14px;border-top:1px solid var(--line-2);cursor:pointer;display:flex;gap:10px;align-items:baseline}
+.acl li:first-child{border-top:0}
+.acl li[aria-selected=true],.acl li:hover{background:var(--nv-green-soft)}
+.acl b{font-size:14px}.acl span{font-size:12px;color:var(--ink-4)}
+.picked{display:flex;align-items:center;gap:14px;border:1px solid var(--line);border-radius:var(--r);
+  padding:12px 14px;margin-top:12px;background:var(--bg)}
+.picked-map{width:64px;height:52px;border-radius:var(--r-s);flex:none;position:relative;
+  background:linear-gradient(#E4EDE8,#DCE7E1);display:grid;place-items:center}
+.picked-map .mk{color:var(--nv-action);font-size:16px}
+.picked-body{flex:1;min-width:0}
+.pk-t{font-size:14px;font-weight:700}
+.pk-a{font-size:12px;color:var(--ink-4);margin-top:2px}
+
+/* ── 조건 상세 입력 ── */
+.condrow{display:block;border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.condrow .cr-top{display:flex;align-items:center;gap:12px}
+.condrow b{font-size:14px;flex:1}
+.condrow .v{font-size:14px;font-weight:700;color:var(--nv-action-hover);font-variant-numeric:tabular-nums}
+.condrow .rm{font-size:12px;color:var(--ink-4);padding:4px 8px;margin:-4px -8px}
+.condrow .rm:hover{color:var(--no-fg)}
+.condrow input[type=range]{margin-top:8px}
+.condrow .cr-hit{font-size:12px;color:var(--ink-3);margin-top:2px}
+.condrow .cr-hit b{font-weight:700;color:var(--ink);font-size:12px}
+.condrow.bool .cr-top{padding:2px 0}
+
+/* ── 두 사람의 조건 · 선호 ── */
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line-2)}
+.pcol{padding:16px 20px}
+.pcol + .pcol{border-left:1px solid var(--line-2)}
+.pcol-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pcol-hd b{font-size:14px}
+.pcol-hd .role{font-size:11px;color:var(--ink-4);margin-left:auto}
+.cnd{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13px}
+.cnd dt{color:var(--ink-4)}
+.cnd dd{font-weight:600;font-variant-numeric:tabular-nums}
+.cnd dd.na{font-weight:400;color:var(--ink-4)}
+.prefbox{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.pb-t{font-size:11px;color:var(--ink-4);margin-bottom:6px}
+.prefbox p{font-size:13px;color:var(--ink-2);line-height:1.7}
+
+/* ── 조건 수정 패널 ── */
+.editpanel{border-top:1px solid var(--line-2);background:var(--bg);padding:4px 20px 18px}
+.ep-hd{display:flex;align-items:baseline;gap:10px;padding:16px 0 4px}
+.ep-hd b{font-size:14px}
+.ep-note{font-size:12px;color:var(--ink-4)}
+.editpanel .field{border:0;padding:12px 0}
+.ep-prev{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:12px 14px;font-size:13px;color:var(--ink-2)}
+.ep-prev b{font-weight:700;color:var(--ink)}
+.ep-acts{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+.ep-acts .btn{height:40px}
+
+/* ── 질문 · 체크리스트 ── */
+.qlist{list-style:none;padding:4px 20px 8px}
+.qlist li{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--line-2);font-size:14px}
+.qlist li:first-child{border-top:none}
+.qlist .qn{width:20px;font-size:12px;color:var(--ink-4);flex:none;font-variant-numeric:tabular-nums;line-height:1.6}
+.qw{font-size:12px;color:var(--ink-4);margin-top:4px;line-height:1.6}
+.chk{list-style:none;padding:8px 20px}
+.chk li{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--line-2)}
+.chk li:first-child{border-top:none}
+.chk .cb{width:20px;height:20px;border:2px solid var(--line);border-radius:var(--r-s);flex:none;margin-top:1px}
+.chk b{font-size:14px}
+
+@media (max-width:640px){
+  .pair{grid-template-columns:1fr}
+  .pcol + .pcol{border-left:0;border-top:1px solid var(--line-2)}
+  .ep-acts{flex-direction:column-reverse}
+  .ep-acts .btn{width:100%}
+}
+
 /* ── 반응형 ── */
 body.viewing-b .lnb{display:none}
 body.viewing-b .shell{grid-template-columns:1fr}
 @media (max-width:1100px){
   .mobile-stage{grid-template-columns:1fr;gap:24px;justify-items:center}
   .mobile-copy{max-width:520px}
-  .device{max-width:100%}
-  .device iframe{width:min(390px,100%)}
+  /* .device 에 확정 폭을 준다 — 내용 기준이면 iframe 의 100% 가 순환 참조된다 */
+  .device{width:min(390px,100%)}
+  .device iframe{width:100%}
 }
 @media (max-width:960px){
   .shell{grid-template-columns:1fr}
@@ -472,18 +553,49 @@ body.viewing-b .shell{grid-template-columns:1fr}
               <button aria-pressed="false">아니요 / 재택이에요</button>
             </div>
           </div>
-          <div class="field" id="commuteBox">
-            <label for="place">출근지</label>
-            <p class="desc">후보 5개까지의 실제 통근 시간을 바로 계산합니다.</p>
-            <div class="seg"><button aria-pressed="true">강남역 2호선</button></div>
-            <div class="seg" style="margin-top:12px"><button aria-pressed="true">대중교통</button>
-              <button aria-pressed="false">자차</button></div>
-            <div class="preview"><span class="pl">지금 후보 기준 통근 시간</span>
-              <span class="pv">상도 32분</span><span class="pv">흑석 34분</span>
-              <span class="pv">신길 45분</span><span class="pv">대방 38분</span><span class="pv">노량진 29분</span></div>
+
+          <div id="commuteBox">
+            <div class="field">
+              <label for="placeQ">출근지 검색</label>
+              <p class="desc">네이버 지도 검색을 그대로 씁니다 — 좌표를 받아 후보 5개까지의
+                실제 통근 시간을 계산합니다.</p>
+              <div class="searchbox">
+                <span aria-hidden="true">🔍</span>
+                <input id="placeQ" type="search" placeholder="회사 이름, 건물, 지하철역으로 검색"
+                       autocomplete="off" aria-describedby="placeHelp" aria-expanded="false"
+                       aria-controls="placeList" role="combobox">
+              </div>
+              <p id="placeHelp" class="sr">방향키로 결과를 고르고 엔터로 선택하세요</p>
+              <ul class="acl" id="placeList" role="listbox" aria-label="검색 결과" hidden></ul>
+
+              <div class="picked" id="picked">
+                <div class="picked-map" aria-hidden="true"><span class="mk">◉</span></div>
+                <div class="picked-body">
+                  <p class="pk-t" id="pkName">강남역 2호선</p>
+                  <p class="pk-a" id="pkAddr">서울 강남구 강남대로 396</p>
+                </div>
+                <button class="btn-text" id="pkChange">변경</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>이동수단</label>
+              <p class="desc">교통비 계산식이 달라집니다. 자차는 유류비와 통행료만 넣습니다.</p>
+              <div class="seg" id="modeSeg">
+                <button aria-pressed="true">대중교통</button>
+                <button aria-pressed="false">자차</button>
+              </div>
+              <div class="preview" id="commutePv">
+                <span class="pl">지금 후보 기준 통근 시간</span>
+                <span class="pv">상도 32분</span><span class="pv">흑석 34분</span>
+                <span class="pv">신길 45분</span><span class="pv">대방 38분</span><span class="pv">노량진 29분</span>
+              </div>
+            </div>
           </div>
+
           <p class="hint" id="noCommuteNote" hidden>출퇴근을 안 하시면 통근 시간과 교통비를 계산하지 않고,
-            비교표에서 그 줄을 빼버립니다. “계산 불가”가 아니라 잴 대상이 없는 것입니다.</p>
+            비교표에서 그 줄을 빼버립니다. <b>“계산 불가”가 아니라 잴 대상이 없는 것</b>입니다.
+            나중에 조건 수정에서 언제든 추가할 수 있습니다.</p>
         </div>
       </section>
 
@@ -518,19 +630,19 @@ body.viewing-b .shell{grid-template-columns:1fr}
         <div class="step-head">
           <p class="kicker">FT2 · 조건 입력 3/3</p>
           <h1>더 좁히시겠어요?</h1>
-          <p class="sub">필수 조건은 <b>최대 4개</b>까지, 넣고 싶은 만큼만. 하나도 안 넣어도 됩니다.</p>
+          <p class="sub">필수 조건은 <b>최대 4개</b>까지, 넣고 싶은 만큼만. 하나도 안 넣어도 됩니다.
+            각 조건의 <b>기준값을 직접 정합니다.</b></p>
         </div>
         <div class="card">
-          <div class="card-hd"><h2>내 필수 조건</h2><span class="cnt"><b id="condN">2</b> / 4</span></div>
+          <div class="card-hd"><h2>내 필수 조건</h2><span class="cnt"><b id="condN">2</b> / 4</span>
+            <span class="note">기준값을 움직이면 통과 개수가 바로 바뀝니다</span></div>
           <div class="field">
-            <div class="condlist" id="condList">
-              <div class="condrow"><b>통근시간</b><span class="v">40분 이내</span><span class="rm">삭제</span></div>
-              <div class="condrow"><b>역 도보</b><span class="v">10분 이내</span><span class="rm">삭제</span></div>
-            </div>
+            <div class="condlist" id="condList"></div>
             <div class="addrow" id="addRow">
-              <button data-add="전용면적 66㎡ 이상">＋ 전용면적</button>
-              <button data-add="주차 있음">＋ 주차</button>
-              <button data-add="매물 유형 = 아파트">＋ 매물 유형</button>
+              <button data-k="area">＋ 전용면적</button>
+              <button data-k="park">＋ 주차</button>
+              <button data-k="type">＋ 매물 유형</button>
+              <button data-k="floor">＋ 지상 층수</button>
             </div>
           </div>
           <p class="hint">4개가 상한인 이유는 후보 수가 아니라 <b>양보 문장</b>입니다.
@@ -539,10 +651,16 @@ body.viewing-b .shell{grid-template-columns:1fr}
         <div class="card">
           <div class="card-hd"><h2>선호</h2><span class="note">판정하지 않고 상대에게 전달만</span></div>
           <div class="field">
-            <p class="desc">기계가 못 재는 것들입니다. 버리지 않고 상대가 읽게 넘깁니다.</p>
-            <div class="seg"><button aria-pressed="true">중층 이상이면 좋겠어요</button>
+            <p class="desc">기계가 못 재는 것들입니다. 버리지 않고 <b>상대가 읽게</b> 넘깁니다.
+              칩을 누르면 문장으로 들어가고, 직접 고쳐 쓸 수 있습니다.</p>
+            <div class="seg" id="prefSeg">
+              <button aria-pressed="true">중층 이상이면 좋겠어요</button>
               <button aria-pressed="true">근처에 마트가 있으면 해요</button>
-              <button aria-pressed="false">＋ 직접 쓰기</button></div>
+              <button aria-pressed="false">남향이면 좋겠어요</button>
+              <button aria-pressed="false">조용한 동네였으면</button>
+            </div>
+            <div class="preview"><span class="pl">상대에게 이렇게 보입니다 · <b id="prefN">2</b> / 3</span>
+              <span class="pv" id="prefOut">중층 이상이면 좋겠어요 · 근처에 마트가 있으면 해요</span></div>
           </div>
         </div>
       </section>
@@ -584,6 +702,69 @@ body.viewing-b .shell{grid-template-columns:1fr}
           <p class="sub">B가 조건을 넣었습니다. 누가 어떤 조건을 감수하는지만 보여드립니다.</p>
           <p class="notice">점수를 매기거나 순위를 정하지 않습니다. 조건별로 따로 대조합니다.</p>
         </div>
+
+        <!-- 두 사람의 조건 + 선호 — A/B 동일 비중 -->
+        <div class="card">
+          <div class="card-hd"><h2>두 사람의 조건</h2>
+            <button class="btn-text" id="editCond" aria-expanded="false" aria-controls="editPanel"
+              style="margin-left:auto">내 조건 수정</button></div>
+          <div class="pair">
+            <section class="pcol">
+              <div class="pcol-hd"><span class="who" aria-hidden="true">A</span><b>나</b>
+                <span class="role">강남역 출근 · 대중교통</span></div>
+              <dl class="cnd">
+                <dt>예산</dt><dd>월 130만 이하</dd>
+                <dt>통근시간</dt><dd>40분 이내</dd>
+                <dt>역 도보</dt><dd>10분 이내</dd>
+              </dl>
+              <div class="prefbox">
+                <p class="pb-t">선호 — 판정하지 않음</p>
+                <p>중층 이상이면 좋겠어요</p>
+                <p>근처에 마트가 있으면 해요</p>
+              </div>
+            </section>
+            <section class="pcol">
+              <div class="pcol-hd"><span class="who" aria-hidden="true">B</span><b>상대</b>
+                <span class="role">재택 근무</span></div>
+              <dl class="cnd">
+                <dt>예산</dt><dd>월 135만 이하</dd>
+                <dt>통근시간</dt><dd class="na">출퇴근 안 함 — 재지 않음</dd>
+                <dt>전용면적</dt><dd>66㎡ 이상</dd>
+                <dt>주차</dt><dd>있음</dd>
+              </dl>
+              <div class="prefbox">
+                <p class="pb-t">선호 — 판정하지 않음</p>
+                <p>남향이면 좋겠어요</p>
+                <p>강아지랑 같이 살아요</p>
+              </div>
+            </section>
+          </div>
+          <p class="hint">선호는 <b>매물마다 ✓·✗를 붙이지 않습니다.</b> 사람에 붙어서 여기 한 번만 뜹니다.
+            붙이는 순간 그건 판정이고, 조건 개수 상한을 우회하는 것이 됩니다.</p>
+
+          <!-- 조건 수정 패널 (A-19) -->
+          <div class="editpanel" id="editPanel" hidden>
+            <div class="ep-hd"><b>내 조건 수정</b>
+              <span class="ep-note">바꾸면 전체가 즉시 재판정되고 상대에게 알림이 갑니다</span></div>
+            <div class="field">
+              <label for="e1">통근시간 — <span id="e1v">40분</span> 이내</label>
+              <input id="e1" type="range" min="20" max="70" value="40">
+            </div>
+            <div class="field">
+              <label for="e2">역 도보 — <span id="e2v">10분</span> 이내</label>
+              <input id="e2" type="range" min="3" max="20" value="10">
+            </div>
+            <div class="ep-prev" id="epPrev">지금 그대로면 <b>둘 다 충족 1개 · 한쪽만 3개</b>입니다.</div>
+            <div class="ep-acts">
+              <button class="btn btn-ghost" id="epCancel">되돌리기</button>
+              <button class="btn btn-primary" id="epApply">적용하고 상대에게 알리기</button>
+            </div>
+            <p class="hint" style="border:0;padding:12px 0 0">상대 조건은 여기서 못 바꿉니다.
+              <b>제안만 보낼 수 있고</b> 수락은 본인이 합니다 — 그러지 않으면 “네가 양보해”를
+              시스템이 대신 실행하는 것이 됩니다.</p>
+          </div>
+        </div>
+
         <div class="card">
           <div class="card-hd"><span class="b b-ok"><span class="m" aria-hidden="true">✓</span>둘 다 충족</span>
             <span class="cnt">1개</span><span class="note">논의할 지점이 없어요</span></div>
@@ -778,26 +959,61 @@ body.viewing-b .shell{grid-template-columns:1fr}
             <p class="quiet">남은 한 자리 — A 선택</p></div><span class="cost">월 124만</span></div>
         </div>
         <div class="card">
-          <div class="card-hd"><span class="b b-ask"><span class="m" aria-hidden="true">?</span>FT8 · 방문 전 질문</span>
-            <span class="note">개수 제한 없음 — 쓸지 말지는 자유</span></div>
+          <div class="card-hd"><span class="b b-ask"><span class="m" aria-hidden="true">?</span>중개사에게 문의할 내용</span>
+            <span class="note">FT8 · 전화로 답을 받을 수 있는 것</span></div>
           <ol class="qlist">
-            <li><span class="qn">1</span>반려동물과 함께 입주할 수 있나요?</li>
-            <li><span class="qn">2</span>관리비 12만원에 수도·인터넷이 포함되나요?</li>
-            <li><span class="qn">3</span>전입신고가 가능한가요?</li>
-            <li><span class="qn">4</span>근저당이나 융자가 잡혀 있나요?</li>
+            <li><span class="qn">1</span><div><b>반려동물과 함께 입주할 수 있나요?</b>
+              <p class="qw">매물 데이터에 없어 자동 판정이 안 됐습니다 — B의 확인 항목</p></div></li>
+            <li><span class="qn">2</span><div><b>관리비 12만원에 수도·인터넷이 포함되나요?</b>
+              <p class="qw">실부담 계산에서 관리비 세부 내역을 추정으로 넣었습니다</p></div></li>
+            <li><span class="qn">3</span><div><b>전입신고가 가능한가요?</b>
+              <p class="qw">B의 확인 항목</p></div></li>
+            <li><span class="qn">4</span><div><b>근저당이나 융자가 잡혀 있나요?</b>
+              <p class="qw">등기부는 우리가 읽지 않습니다. 물어볼 목록에만 넣습니다</p></div></li>
           </ol>
-          <p class="hint">전화로 물어 답을 받을 수 있는 것만 여기 있습니다.
-            곰팡이·층간소음·실제 채광처럼 <b>가서 봐야 아는 것</b>은 방문 체크리스트로 따로 갑니다(FT9).</p>
+          <div class="acts" style="padding:0 20px 16px">
+            <span class="lnk" style="font-size:12px;color:var(--ink-4)">전화하기 전에 복사해 두세요</span>
+            <button class="btn btn-ghost">질문 복사</button>
+          </div>
+          <p class="hint">전화로 물어 <b>답을 받을 수 있는 것만</b> 여기 있습니다.
+            곰팡이를 중개사에게 물으면 “없어요”라고 답합니다 — 답은 나오지만 믿을 수 없습니다.</p>
         </div>
+
         <div class="card">
-          <div class="card-hd"><h2>FT9 · 다녀와서</h2><span class="note">단계 2</span></div>
+          <div class="card-hd"><span class="b b-ok"><span class="m" aria-hidden="true">☑</span>방문 전 체크리스트</span>
+            <span class="note">FT9 · 가서 직접 봐야 아는 것</span></div>
+          <p class="hint" style="border:0;padding:12px 20px 0">
+            <b>가기 전에 받아야 의미가 있습니다.</b> 다녀온 뒤에 주면 이미 늦습니다.
+            전원 공통으로 뜨고 고르지 않습니다 — 곰팡이·소음은 누구나 봐야 하는 것이라
+            “선택하세요”가 이상합니다.</p>
+          <ul class="chk">
+            <li><span class="cb" aria-hidden="true"></span><div><b>층간소음</b>
+              <p class="qw">위층 발소리 · 배관 소리. 낮에는 잘 안 들립니다</p></div></li>
+            <li><span class="cb" aria-hidden="true"></span><div><b>실제 채광</b>
+              <p class="qw">방향은 데이터에 있지만 앞 건물에 가리는지는 가야 압니다</p></div></li>
+            <li><span class="cb" aria-hidden="true"></span><div><b>곰팡이</b>
+              <p class="qw">붙박이장 뒤 · 창틀 · 화장실 천장</p></div></li>
+            <li><span class="cb" aria-hidden="true"></span><div><b>실제 주차 난이도</b>
+              <p class="qw">세대당 0.8대로 나오지만 저녁에 자리가 있는지는 다른 얘기입니다</p></div></li>
+            <li><span class="cb" aria-hidden="true"></span><div><b>주변 소음</b>
+              <p class="qw">큰길 · 상가 · 학교</p></div></li>
+            <li><span class="cb" aria-hidden="true"></span><div><b>집 내부 상태</b>
+              <p class="qw">수압 · 창틀 · 도배 · 몰딩</p></div></li>
+          </ul>
+          <div class="acts" style="padding:0 20px 16px">
+            <span class="lnk" style="font-size:12px;color:var(--ink-4)">두 분 모두에게 같은 목록이 갑니다</span>
+            <button class="btn btn-ghost">체크리스트 보내기</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd"><h2>다녀와서</h2><span class="note">방문 뒤에 기록합니다</span></div>
           <div class="field">
-            <p class="desc">전원 공통으로 뜹니다. 고르는 게 아닙니다.</p>
-            <div class="seg"><button aria-pressed="false">층간소음</button><button aria-pressed="false">실제 채광</button>
-              <button aria-pressed="false">곰팡이</button><button aria-pressed="false">주차 난이도</button>
-              <button aria-pressed="false">주변 소음</button><button aria-pressed="false">집 내부 상태</button></div>
-            <p class="desc" style="margin:12px 0 0">기록한 뒤 <b>유지 · 보류 · 제외</b>로 정리하면
-              자리가 비고 다음 매물이 들어옵니다. 조건은 그대로 남아 자동으로 다시 대조됩니다.</p>
+            <p class="desc">체크리스트에 적은 것을 보고 <b>유지 · 보류 · 제외</b>로 정리합니다.</p>
+            <div class="seg"><button aria-pressed="false">유지</button>
+              <button aria-pressed="false">보류</button><button aria-pressed="false">제외</button></div>
+            <p class="desc" style="margin:12px 0 0">제외하면 자리가 비고 다음 매물이 들어옵니다.
+              <b>조건은 그대로 남아 자동으로 다시 대조됩니다</b> — 2회차는 입력이 0번입니다.</p>
           </div>
         </div>
       </section>
@@ -817,15 +1033,18 @@ body.viewing-b .shell{grid-template-columns:1fr}
       <div class="mobile-copy">
         <p class="kicker">B · 초대받은 사람</p>
         <h1>카톡 링크에서 열리는<br>모바일 화면</h1>
-        <p>오른쪽은 <b>390px 뷰포트로 실제 렌더링한 것</b>입니다. PC 화면에 그린 그림이 아니라
+        <p>오른쪽은 <b>390px 뷰포트로 실제 렌더링한 것</b>입니다. 눌러서 7단계를 끝까지 돌려볼 수 있습니다. PC 화면에 그린 그림이 아니라
           같은 페이지를 모바일 폭으로 띄운 것이라, 미디어쿼리가 그대로 걸립니다.</p>
         <p><b>B는 A의 11단계를 갖고 있지 않습니다.</b> 매물을 담지도, 판정을 조작하지도 않습니다.
           자기 조건만 내고 첫 결과를 봅니다.</p>
         <ol class="steps-note">
           <li><span class="k">1</span>초대 진입 — 후보를 먼저 보여준다. 가입 요구 없음</li>
-          <li><span class="k">2</span>예산 + 출퇴근 여부 — 입력은 여기까지</li>
-          <li><span class="k">3</span>첫 결과 — 값만. 아직 충족·미충족을 말하지 않는다</li>
-          <li><span class="k">4</span>참여 완료 — <b>로그인은 이 다음</b></li>
+          <li><span class="k">2</span>예산 — 항상 받는 하나</li>
+          <li><span class="k">3</span>출퇴근 여부 + 출근지 검색 — 안 해도 넘어간다</li>
+          <li><span class="k">4</span><b>첫 결과</b> — 값만. 여기서 멈춰도 된다</li>
+          <li><span class="k">5</span>필수 조건 — 기준값까지 직접 정한다</li>
+          <li><span class="k">6</span>선호 — 판정 안 하고 A가 읽기만 한다</li>
+          <li><span class="k">7</span>저장 → 참여 완료. <b>로그인은 이 다음</b></li>
         </ol>
         <p class="notice" style="margin-top:20px">로그인을 앞에 두면 초대 수락률이 아니라
           가입 전환율을 재게 됩니다. B의 조건은 로그인 전이라 초대 코드에 묶어 임시 저장하고,
@@ -843,14 +1062,15 @@ body.viewing-b .shell{grid-template-columns:1fr}
     <div id="mobRoot" hidden>
       <div class="mtop"><span class="n" aria-hidden="true">N</span><b>같이 고르기</b>
         <span class="x" aria-hidden="true">✕</span></div>
-      <div class="mprog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+      <div class="mprog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
       <div class="mbody">
+        <!-- 1 초대 진입 -->
         <section class="mstep on" data-m="0">
           <div class="avatars" aria-hidden="true"><span class="who">A</span><span class="who b">B</span></div>
           <p class="eyebrow">A님이 같이 볼 집을 보냈어요</p>
           <h1>이 5개 집을<br>같이 볼까요?</h1>
-          <p class="lead">가입하기 전에 후보를 먼저 보세요. 예산만 넣으면 첫 결과가 나와요.</p>
+          <p class="lead">가입하기 전에 후보를 먼저 보세요. 예산과 출근지만 넣으면 첫 결과가 나와요.</p>
           <div class="mcards">
             <div class="mcard"><p class="pt">상도동</p><p class="pn">상도 더샵 102동</p>
               <p class="pm">전세 3억 2,000 · 59㎡ · 월 124만</p></div>
@@ -863,45 +1083,130 @@ body.viewing-b .shell{grid-template-columns:1fr}
           </div>
         </section>
 
+        <!-- 2 예산 -->
         <section class="mstep" data-m="1">
-          <p class="eyebrow">내 조건 · 1 / 1</p>
+          <p class="eyebrow">내 조건 · 1 / 4</p>
           <h1>한 달에 얼마까지<br>낼 수 있나요?</h1>
-          <p class="lead">보증금 기회비용·대출이자·관리비까지 더한 가구 총 실부담이에요.
+          <p class="lead">보증금 기회비용·대출이자·관리비까지 더한 <b>가구 총 실부담</b>이에요.
             A님은 130만으로 잡았어요.</p>
           <div class="mfield">
             <label for="mbud">월 실부담 상한</label>
             <p class="money" id="mbudV">월 135만원</p>
             <input id="mbud" type="range" min="90" max="180" value="135">
+            <p class="desc" id="mbudHit">이 상한이면 후보 5개 중 4개가 들어와요.</p>
           </div>
-          <div class="mfield">
-            <label>정기적으로 출퇴근하세요?</label>
-            <div class="seg" id="mseg"><button aria-pressed="false">네, 출근지를 넣을게요</button>
-              <button aria-pressed="true">아니요 / 재택이에요</button></div>
-            <p class="desc" id="mnote">출퇴근을 안 하시면 통근 시간과 교통비를 계산하지 않아요.
-              나중에 언제든 추가할 수 있어요.</p>
-          </div>
+          <details class="assume" style="margin-top:18px"><summary>이 금액에 쓴 전제 보기</summary>
+            <p>보증금 기회비용은 2026년 6월 기준 예금금리 연 3.08%,
+              전세대출은 2026년 7월 기준 평균 연 4.00%로 계산한 추정치예요.
+              실제 금리는 심사 결과에 따라 달라질 수 있어요.</p></details>
         </section>
 
+        <!-- 3 출근지 -->
         <section class="mstep" data-m="2">
+          <p class="eyebrow">내 조건 · 2 / 4</p>
+          <h1>정기적으로<br>출퇴근하세요?</h1>
+          <p class="lead">안 하셔도 괜찮아요. 통근 시간과 교통비만 계산에서 빠집니다.</p>
+          <div class="mfield">
+            <div class="seg" id="mseg">
+              <button aria-pressed="true">네, 출근지를 넣을게요</button>
+              <button aria-pressed="false">아니요 / 재택이에요</button>
+            </div>
+          </div>
+          <div id="mCommute">
+            <div class="mfield">
+              <label for="mPlaceQ">출근지 검색</label>
+              <div class="searchbox">
+                <span aria-hidden="true">🔍</span>
+                <input id="mPlaceQ" type="search" placeholder="회사, 건물, 지하철역"
+                       autocomplete="off" role="combobox" aria-expanded="false" aria-controls="mPlaceList">
+              </div>
+              <ul class="acl" id="mPlaceList" role="listbox" aria-label="검색 결과" hidden></ul>
+              <div class="picked" id="mPicked">
+                <div class="picked-map" aria-hidden="true"><span class="mk">◉</span></div>
+                <div class="picked-body">
+                  <p class="pk-t" id="mPkName">여의도역 5호선</p>
+                  <p class="pk-a" id="mPkAddr">서울 영등포구 여의나루로 40</p>
+                </div>
+              </div>
+            </div>
+            <div class="mfield">
+              <label>이동수단</label>
+              <div class="seg"><button aria-pressed="true">대중교통</button><button aria-pressed="false">자차</button></div>
+              <div class="preview" id="mPv"><span class="pl">후보별 통근 시간</span>
+                <span class="pv">상도 26분</span><span class="pv">흑석 22분</span><span class="pv">신길 18분</span>
+                <span class="pv">대방 16분</span><span class="pv">노량진 24분</span></div>
+            </div>
+          </div>
+          <p class="desc" id="mNoCommute" hidden style="margin-top:16px">통근 시간과 교통비를 계산하지 않고,
+            비교표에서 그 줄을 뺍니다. <b>“계산 불가”가 아니라 잴 대상이 없는 거예요.</b>
+            나중에 언제든 추가할 수 있어요.</p>
+        </section>
+
+        <!-- 4 첫 결과 -->
+        <section class="mstep" data-m="3">
           <p class="eyebrow">첫 결과</p>
           <h1>두 분의 값이<br>나란히 보여요</h1>
-          <p class="lead">아직 필수 조건을 안 물어서 <b>충족·미충족은 말하지 않아요.</b> 실제 값만 보여드려요.</p>
+          <p class="lead">아직 필수 조건을 안 물어서 <b>충족·미충족은 말하지 않아요.</b> 실제 값만요.</p>
           <div class="mcards">
             <div class="mcard"><p class="pn">상도 더샵 102동</p>
-              <p class="pm">A 통근 32분 · 전용 59㎡ · 월 124만</p></div>
+              <p class="pm">A 32분 · B 26분 · 59㎡ · 월 124만</p></div>
             <div class="mcard"><p class="pn">흑석 한강센트레빌</p>
-              <p class="pm">A 통근 34분 · 전용 68㎡ · 월 128만</p></div>
+              <p class="pm">A 34분 · B 22분 · 68㎡ · 월 128만</p></div>
             <div class="mcard"><p class="pn">신길 보라매 SK뷰</p>
-              <p class="pm">A 통근 45분 · 전용 59㎡ · 월 121만</p></div>
-            <div class="mcard" style="border-style:dashed"><p class="pn" style="font-size:14px">＋ 더 좁히시겠어요?</p>
-              <p class="pm">필수 조건을 하나만 더하면 충족 여부를 볼 수 있어요</p></div>
+              <p class="pm">A 45분 · B 18분 · 59㎡ · 월 121만</p></div>
+            <div class="mcard"><p class="pn">대방 현대 1차</p>
+              <p class="pm">A 38분 · B 16분 · 66㎡ · 월 126만</p></div>
+          </div>
+          <p class="desc" style="margin-top:16px">여기서 멈춰도 됩니다.
+            조건을 더 넣으면 <b>충족·미충족 판정</b>이 나와요.</p>
+        </section>
+
+        <!-- 5 필수 조건 -->
+        <section class="mstep" data-m="4">
+          <p class="eyebrow">내 조건 · 3 / 4</p>
+          <h1>꼭 필요한 조건이<br>있나요?</h1>
+          <p class="lead">최대 4개까지, 넣고 싶은 만큼만. <b>기준값도 직접 정합니다.</b>
+            하나도 안 넣어도 괜찮아요.</p>
+          <div class="mfield">
+            <div class="condlist" id="mCondList"></div>
+            <div class="addrow" id="mAddRow">
+              <button data-k="area">＋ 전용면적</button>
+              <button data-k="park">＋ 주차</button>
+              <button data-k="floor">＋ 지상 층수</button>
+              <button data-k="type">＋ 매물 유형</button>
+            </div>
+            <p class="desc" style="margin-top:14px">A님은 <b>통근 40분 · 역 도보 10분</b>을 넣었어요.
+              같은 걸 안 넣어도 됩니다 — 서로 다른 조건이 부딪히는 지점을 보여주는 게 이 서비스예요.</p>
           </div>
         </section>
 
-        <section class="mstep" data-m="3">
+        <!-- 6 선호 -->
+        <section class="mstep" data-m="5">
+          <p class="eyebrow">내 조건 · 4 / 4</p>
+          <h1>판정은 안 되지만<br>말하고 싶은 게 있나요?</h1>
+          <p class="lead">기계가 못 재는 것들이에요. <b>판정에 안 들어가고 A님이 읽기만 합니다.</b>
+            매물마다 ✓·✗가 붙지 않아요.</p>
+          <div class="mfield">
+            <div class="seg" id="mPrefSeg">
+              <button aria-pressed="true">남향이면 좋겠어요</button>
+              <button aria-pressed="true">강아지랑 같이 살아요</button>
+              <button aria-pressed="false">조용한 동네였으면</button>
+              <button aria-pressed="false">근처에 병원이 있으면</button>
+              <button aria-pressed="false">＋ 직접 쓰기</button>
+            </div>
+            <div class="preview"><span class="pl">A님에게 이렇게 보여요 · <b id="mPrefN">2</b> / 3</span>
+              <span class="pv" id="mPrefOut">남향이면 좋겠어요 · 강아지랑 같이 살아요</span></div>
+            <p class="desc" style="margin-top:14px">반려동물처럼 <b>매물 데이터에 없는 것</b>은
+              조건으로 못 받아요. 대신 중개사에게 물어볼 목록으로 넘어갑니다.</p>
+          </div>
+        </section>
+
+        <!-- 7 참여 완료 -->
+        <section class="mstep" data-m="6">
           <div class="avatars" aria-hidden="true"><span class="who">A</span><span class="who b">B</span></div>
-          <h1 style="text-align:center">참여가 완료됐어요</h1>
-          <p class="lead" style="text-align:center">A님에게 조건 입력 완료 알림을 보냈어요.</p>
+          <h1 style="text-align:center">저장했어요</h1>
+          <p class="lead" style="text-align:center">A님에게 조건 입력 완료 알림을 보냈어요.
+            두 분 조건으로 다시 대조했습니다.</p>
           <div class="mcards">
             <div class="mcard"><p class="pt">양보 지점 3개</p>
               <p class="pn" style="margin-top:6px">둘의 기준이 다른 곳부터<br>같이 확인해 보세요</p></div>
@@ -967,8 +1272,8 @@ body.viewing-b .shell{grid-template-columns:1fr}
     var mSteps=[].slice.call(document.querySelectorAll('.mstep'));
     var mProg=[].slice.call(document.querySelectorAll('.mprog i'));
     var mNext=document.getElementById('mnext'), mSkip=document.getElementById('mskip');
-    var LABEL=['후보 5개 먼저 보기','첫 결과 보기','조건 추가하고 저장','양보 지점 보기'];
-    var SKIP =['지금은 참여하지 않을게요','','로그인은 이 다음에 요청합니다',''];
+    var LABEL=['후보 5개 먼저 보기','다음','첫 결과 보기','조건 더 넣기','다음','저장하고 A에게 알리기','양보 지점 보기'];
+    var SKIP =['지금은 참여하지 않을게요','','','여기서 멈출게요','건너뛰기','건너뛰고 저장','로그인하고 계속 보기'];
     var m=0;
     function mRender(){
       mSteps.forEach(function(s,n){ s.classList.toggle('on', n===m); });
@@ -979,17 +1284,123 @@ body.viewing-b .shell{grid-template-columns:1fr}
       window.scrollTo(0,0);
     }
     mNext.addEventListener('click', function(){ m=(m+1)%mSteps.length; mRender(); });
-    var mb=document.getElementById('mbud'), mbv=document.getElementById('mbudV');
-    mb && mb.addEventListener('input', function(){ mbv.textContent='월 '+mb.value+'만원'; });
+
+    // 예산
+    var mb=document.getElementById('mbud'), mbv=document.getElementById('mbudV'), mbh=document.getElementById('mbudHit');
+    var COSTS=[124,128,121,126,139];
+    mb && mb.addEventListener('input', function(){
+      mbv.textContent='월 '+mb.value+'만원';
+      mbh.textContent='이 상한이면 후보 5개 중 '+COSTS.filter(function(c){return c<=+mb.value}).length+'개가 들어와요.';
+    });
+
+    // 출퇴근 여부
     var mseg=document.getElementById('mseg');
     mseg && mseg.querySelectorAll('button').forEach(function(b,n,all){
       b.addEventListener('click', function(){
         all.forEach(function(x,k){ x.setAttribute('aria-pressed', String(k===n)); });
-        document.getElementById('mnote').textContent = n===0
-          ? '후보 5개까지의 실제 통근 시간을 바로 계산해 드려요.'
-          : '출퇴근을 안 하시면 통근 시간과 교통비를 계산하지 않아요. 나중에 언제든 추가할 수 있어요.';
+        document.getElementById('mCommute').hidden = n===1;
+        document.getElementById('mNoCommute').hidden = n===0;
       });
     });
+
+    // 출근지 검색
+    var MP=[{n:'여의도역 5호선',a:'서울 영등포구 여의나루로 40',t:[26,22,18,16,24]},
+            {n:'강남역 2호선',a:'서울 강남구 강남대로 396',t:[32,34,45,38,29]},
+            {n:'광화문역 5호선',a:'서울 종로구 세종대로 172',t:[41,38,44,42,36]},
+            {n:'서울역 1호선',a:'서울 중구 세종대로 지하 2',t:[28,24,31,27,21]}];
+    var mq=document.getElementById('mPlaceQ'), ml=document.getElementById('mPlaceList');
+    var MN=['상도','흑석','신길','대방','노량진'], mh=[], mi=-1;
+    function mPaint(){
+      if(!mh.length){ ml.hidden=true; mq.setAttribute('aria-expanded','false'); return; }
+      ml.innerHTML=mh.map(function(p,n){return '<li role="option" aria-selected="'+(n===mi)+'"><b>'+p.n+'</b><span>'+p.a+'</span></li>';}).join('');
+      ml.hidden=false; mq.setAttribute('aria-expanded','true');
+    }
+    function mChoose(p){
+      document.getElementById('mPkName').textContent=p.n;
+      document.getElementById('mPkAddr').textContent=p.a;
+      document.getElementById('mPv').innerHTML='<span class="pl">후보별 통근 시간</span>'+
+        p.t.map(function(v,k){return '<span class="pv">'+MN[k]+' '+v+'분</span>';}).join('');
+      mq.value=''; mh=[]; mi=-1; mPaint();
+    }
+    if(mq){
+      mq.addEventListener('input', function(){
+        var v=mq.value.trim();
+        mh = v ? MP.filter(function(p){return (p.n+p.a).indexOf(v)>-1;}) : [];
+        mi = mh.length?0:-1; mPaint();
+      });
+      mq.addEventListener('keydown', function(e){
+        if(!mh.length) return;
+        if(e.key==='ArrowDown'){e.preventDefault();mi=(mi+1)%mh.length;mPaint();}
+        else if(e.key==='ArrowUp'){e.preventDefault();mi=(mi-1+mh.length)%mh.length;mPaint();}
+        else if(e.key==='Enter'){e.preventDefault(); if(mh[mi]) mChoose(mh[mi]);}
+      });
+      ml.addEventListener('click', function(e){
+        var li=e.target.closest('li'); if(!li) return;
+        mChoose(mh[[].indexOf.call(ml.children, li)]);
+      });
+    }
+
+    // 필수 조건 — A 와 같은 규칙
+    var MSPEC={
+      area: {label:'전용면적', unit:'㎡ 이상', min:40,max:90,val:66, hit:[59,68,59,66,54], dir:'min'},
+      floor:{label:'지상 층수',unit:'층 이상', min:1, max:15,val:3,  hit:[7,12,2,5,9],     dir:'min'},
+      park: {label:'주차',     bool:'있음',    hit:[1,1,1,0,1]},
+      type: {label:'매물 유형',bool:'= 아파트', hit:[1,1,1,1,1]}
+    };
+    var mList=document.getElementById('mCondList');
+    function mPass(sp){
+      if(sp.bool) return sp.hit.filter(function(v){return v===1}).length;
+      return sp.hit.filter(function(v){return sp.dir==='max'?v<=sp.val:v>=sp.val;}).length;
+    }
+    function mSync(){
+      var full=mList.children.length>=4;
+      document.querySelectorAll('#mAddRow button').forEach(function(b){
+        b.disabled = full || !!mList.querySelector('[data-k="'+b.dataset.k+'"]');
+      });
+    }
+    function mAdd(k){
+      if(mList.children.length>=4) return;
+      var sp=MSPEC[k], row=document.createElement('div');
+      row.className='condrow'+(sp.bool?' bool':''); row.dataset.k=k;
+      row.innerHTML = sp.bool
+        ? '<div class="cr-top"><b>'+sp.label+'</b><span class="v">'+sp.bool+'</span><button class="rm">삭제</button></div><p class="cr-hit">후보 5개 중 <b>'+mPass(sp)+'개</b> 통과</p>'
+        : '<div class="cr-top"><b>'+sp.label+'</b><span class="v">'+sp.val+sp.unit+'</span><button class="rm">삭제</button></div>'+
+          '<label class="sr" for="mrg-'+k+'">'+sp.label+' 기준값</label>'+
+          '<input id="mrg-'+k+'" type="range" min="'+sp.min+'" max="'+sp.max+'" value="'+sp.val+'">'+
+          '<p class="cr-hit">후보 5개 중 <b>'+mPass(sp)+'개</b> 통과</p>';
+      mList.appendChild(row); mSync();
+    }
+    if(mList){
+      mAdd('area'); mAdd('park');
+      mList.addEventListener('input', function(e){
+        if(e.target.type!=='range') return;
+        var row=e.target.closest('.condrow'), sp=MSPEC[row.dataset.k];
+        sp.val=+e.target.value;
+        row.querySelector('.v').textContent=sp.val+sp.unit;
+        row.querySelector('.cr-hit').innerHTML='후보 5개 중 <b>'+mPass(sp)+'개</b> 통과';
+      });
+      mList.addEventListener('click', function(e){
+        if(!e.target.classList.contains('rm')) return;
+        e.target.closest('.condrow').remove(); mSync();
+      });
+      document.querySelectorAll('#mAddRow button').forEach(function(b){
+        b.addEventListener('click', function(){ mAdd(b.dataset.k); });
+      });
+    }
+
+    // 선호 (최대 3)
+    var mps=document.getElementById('mPrefSeg'), mpo=document.getElementById('mPrefOut'), mpn=document.getElementById('mPrefN');
+    mps && mps.querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var on=b.getAttribute('aria-pressed')==='true';
+        if(!on && mps.querySelectorAll('[aria-pressed=true]').length>=3) return;
+        b.setAttribute('aria-pressed', String(!on));
+        var picked=[].slice.call(mps.querySelectorAll('[aria-pressed=true]')).map(function(x){return x.textContent});
+        mpn.textContent=picked.length;
+        mpo.textContent = picked.length ? picked.join(' · ') : '아직 없음 — 안 써도 됩니다';
+      });
+    });
+
     mRender();
     return; // 모바일 모드에서는 A 흐름 로직을 돌리지 않는다
   }
@@ -1037,25 +1448,146 @@ body.viewing-b .shell{grid-template-columns:1fr}
     });
   });
 
-  // 조건 추가 (최대 4)
-  var list=document.getElementById('condList'), condN=document.getElementById('condN');
-  document.querySelectorAll('#addRow button').forEach(function(b){
+  // ── 출근지 검색 (네이버 지도 검색 자리) ──
+  var PLACES=[
+    {n:'강남역 2호선',a:'서울 강남구 강남대로 396',t:[32,34,45,38,29]},
+    {n:'강남역 신분당선',a:'서울 서초구 강남대로 지하 396',t:[34,36,47,40,31]},
+    {n:'여의도역 5호선',a:'서울 영등포구 여의나루로 40',t:[26,22,18,16,24]},
+    {n:'광화문역 5호선',a:'서울 종로구 세종대로 172',t:[41,38,44,42,36]},
+    {n:'판교역 신분당선',a:'경기 성남시 분당구 판교역로 160',t:[58,61,72,64,55]},
+    {n:'서울역 1호선',a:'서울 중구 세종대로 지하 2',t:[28,24,31,27,21]}
+  ];
+  var q=document.getElementById('placeQ'), list=document.getElementById('placeList');
+  var pkName=document.getElementById('pkName'), pkAddr=document.getElementById('pkAddr');
+  var pv=document.getElementById('commutePv');
+  var NAMES=['상도','흑석','신길','대방','노량진'], ai=-1, hits=[];
+  function paint(){
+    if(!hits.length){ list.hidden=true; q.setAttribute('aria-expanded','false'); return; }
+    list.innerHTML = hits.map(function(p,n){
+      return '<li role="option" id="opt'+n+'" aria-selected="'+(n===ai)+'"><b>'+p.n+'</b><span>'+p.a+'</span></li>';
+    }).join('');
+    list.hidden=false; q.setAttribute('aria-expanded','true');
+  }
+  function choose(p){
+    pkName.textContent=p.n; pkAddr.textContent=p.a;
+    pv.innerHTML='<span class="pl">지금 후보 기준 통근 시간</span>'+p.t.map(function(v,k){
+      return '<span class="pv">'+NAMES[k]+' '+v+'분</span>'; }).join('');
+    q.value=''; hits=[]; ai=-1; paint();
+  }
+  if(q){
+    q.addEventListener('input', function(){
+      var v=q.value.trim();
+      hits = v ? PLACES.filter(function(p){ return (p.n+p.a).indexOf(v)>-1; }) : [];
+      ai = hits.length ? 0 : -1; paint();
+    });
+    q.addEventListener('keydown', function(e){
+      if(!hits.length) return;
+      if(e.key==='ArrowDown'){ e.preventDefault(); ai=(ai+1)%hits.length; paint(); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); ai=(ai-1+hits.length)%hits.length; paint(); }
+      else if(e.key==='Enter'){ e.preventDefault(); if(hits[ai]) choose(hits[ai]); }
+      else if(e.key==='Escape'){ hits=[]; paint(); }
+    });
+    list.addEventListener('click', function(e){
+      var li=e.target.closest('li'); if(!li) return;
+      choose(hits[[].indexOf.call(list.children, li)]);
+    });
+    document.getElementById('pkChange').addEventListener('click', function(){ q.focus(); });
+  }
+
+  // ── 필수 조건 — 값까지 직접 정한다 ──
+  var SPEC={
+    commute:{label:'통근시간', unit:'분 이내', min:20,max:70,val:40, hit:[32,34,45,38,29], dir:'max'},
+    walk:   {label:'역 도보',  unit:'분 이내', min:3, max:20,val:10, hit:[6,13,9,7,11],     dir:'max'},
+    area:   {label:'전용면적', unit:'㎡ 이상', min:40,max:90,val:66, hit:[59,68,59,66,54],  dir:'min'},
+    floor:  {label:'지상 층수',unit:'층 이상', min:1, max:15,val:3,  hit:[7,12,2,5,9],      dir:'min'},
+    park:   {label:'주차',     bool:'있음',    hit:[1,1,1,0,1]},
+    type:   {label:'매물 유형',bool:'= 아파트', hit:[1,1,1,1,1]}
+  };
+  var list2=document.getElementById('condList'), condN=document.getElementById('condN');
+  function pass(sp){
+    if(sp.bool) return sp.hit.filter(function(v){return v===1}).length;
+    return sp.hit.filter(function(v){ return sp.dir==='max' ? v<=sp.val : v>=sp.val; }).length;
+  }
+  function addCond(k){
+    if(list2.children.length>=4) return;
+    var sp=SPEC[k], row=document.createElement('div');
+    row.className='condrow'+(sp.bool?' bool':''); row.dataset.k=k;
+    if(sp.bool){
+      row.innerHTML='<div class="cr-top"><b>'+sp.label+'</b><span class="v">'+sp.bool+
+        '</span><button class="rm">삭제</button></div><p class="cr-hit">후보 5개 중 <b>'+pass(sp)+'개</b> 통과</p>';
+    }else{
+      row.innerHTML='<div class="cr-top"><b>'+sp.label+'</b><span class="v">'+sp.val+sp.unit+
+        '</span><button class="rm">삭제</button></div>'+
+        '<label class="sr" for="rg-'+k+'">'+sp.label+' 기준값</label>'+
+        '<input id="rg-'+k+'" type="range" min="'+sp.min+'" max="'+sp.max+'" value="'+sp.val+'">'+
+        '<p class="cr-hit">후보 5개 중 <b>'+pass(sp)+'개</b> 통과</p>';
+    }
+    list2.appendChild(row); sync();
+  }
+  function sync(){
+    condN.textContent=list2.children.length;
+    var full=list2.children.length>=4;
+    document.querySelectorAll('#addRow button').forEach(function(b){
+      b.disabled = full || !!list2.querySelector('[data-k="'+b.dataset.k+'"]');
+    });
+  }
+  if(list2){
+    addCond('commute'); addCond('walk');
+    list2.addEventListener('input', function(e){
+      if(e.target.type!=='range') return;
+      var row=e.target.closest('.condrow'), sp=SPEC[row.dataset.k];
+      sp.val=+e.target.value;
+      row.querySelector('.v').textContent=sp.val+sp.unit;
+      row.querySelector('.cr-hit').innerHTML='후보 5개 중 <b>'+pass(sp)+'개</b> 통과';
+    });
+    list2.addEventListener('click', function(e){
+      if(!e.target.classList.contains('rm')) return;
+      e.target.closest('.condrow').remove(); sync();
+    });
+    document.querySelectorAll('#addRow button').forEach(function(b){
+      b.addEventListener('click', function(){ addCond(b.dataset.k); });
+    });
+  }
+
+  // ── 선호 칩 (최대 3) ──
+  var pseg=document.getElementById('prefSeg'), pOut=document.getElementById('prefOut'), pN=document.getElementById('prefN');
+  if(pseg) pseg.querySelectorAll('button').forEach(function(b){
     b.addEventListener('click', function(){
-      if(list.children.length>=4) return;
-      var t=b.dataset.add.split(' '); var v=t.pop(); var last=t.pop();
-      var d=document.createElement('div'); d.className='condrow';
-      d.innerHTML='<b>'+t.join(' ')+'</b><span class="v">'+last+' '+v+'</span><span class="rm">삭제</span>';
-      list.appendChild(d); condN.textContent=list.children.length; b.disabled=true;
-      if(list.children.length>=4){ document.querySelectorAll('#addRow button').forEach(function(x){x.disabled=true}); }
+      var on=b.getAttribute('aria-pressed')==='true';
+      var cnt=pseg.querySelectorAll('[aria-pressed=true]').length;
+      if(!on && cnt>=3) return;
+      b.setAttribute('aria-pressed', String(!on));
+      var picked=[].slice.call(pseg.querySelectorAll('[aria-pressed=true]')).map(function(x){return x.textContent});
+      pN.textContent=picked.length;
+      pOut.textContent = picked.length ? picked.join(' · ') : '아직 없음 — 안 써도 됩니다';
     });
   });
-  list && list.addEventListener('click', function(e){
-    if(!e.target.classList.contains('rm')) return;
-    e.target.closest('.condrow').remove(); condN.textContent=list.children.length;
-    if(list.children.length<4) document.querySelectorAll('#addRow button').forEach(function(x){
-      if(!list.textContent.includes(x.dataset.add.split(' ')[0])) x.disabled=false;
+
+  // ── 조건 수정 패널 (A-19) ──
+  var ec=document.getElementById('editCond'), ep=document.getElementById('editPanel');
+  if(ec){
+    ec.addEventListener('click', function(){
+      var open=ep.hidden; ep.hidden=!open;
+      ec.setAttribute('aria-expanded', String(open));
+      ec.textContent = open ? '닫기' : '내 조건 수정';
+      if(open) ep.scrollIntoView({block:'nearest'});
     });
-  });
+    var e1=document.getElementById('e1'), e2=document.getElementById('e2'), prev=document.getElementById('epPrev');
+    function recalc(){
+      document.getElementById('e1v').textContent=e1.value+'분';
+      document.getElementById('e2v').textContent=e2.value+'분';
+      var walk=[6,13,9,7,11], com=[32,34,45,38,29], both=0;
+      for(var k=0;k<5;k++){ if(com[k]<=+e1.value && walk[k]<=+e2.value) both++; }
+      var changed = (+e1.value!==40 || +e2.value!==10);
+      prev.innerHTML = changed
+        ? '이렇게 바꾸면 <b>둘 다 충족 '+both+'개</b>가 됩니다. 적용 전에는 아무것도 안 바뀝니다.'
+        : '지금 그대로면 <b>둘 다 충족 1개 · 한쪽만 3개</b>입니다.';
+    }
+    e1.addEventListener('input', recalc); e2.addEventListener('input', recalc);
+    document.getElementById('epCancel').addEventListener('click', function(){
+      e1.value=40; e2.value=10; recalc();
+    });
+  }
 
   // 일반 세그먼트 토글
   document.querySelectorAll('#relSeg button').forEach(function(b,n,all){
