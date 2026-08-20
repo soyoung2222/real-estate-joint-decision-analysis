@@ -1,2 +1,5 @@
 .DS_Store
 *.log
+
+# 검증 에이전트 산출물 — 로컬 참고용, 커밋하지 않는다
+spec-compliance/
