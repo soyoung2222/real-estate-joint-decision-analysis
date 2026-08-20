@@ -260,44 +260,72 @@ details.assume p{font-size:12px;color:var(--ink-4);line-height:1.7;margin-top:8p
 .step{display:none} .step.on{display:block}
 .view{display:none} .view.on{display:block}
 
-/* ── B 모바일 뷰 ── */
-.mobile-stage{display:grid;grid-template-columns:1fr 400px;gap:40px;padding:40px 24px;align-items:start;max-width:1080px}
+/* ── B 모바일 — iframe 으로 진짜 모바일 뷰포트를 띄운다 ── */
+.mobile-stage{display:grid;grid-template-columns:1fr 430px;gap:40px;padding:32px 24px;align-items:start;max-width:1080px}
 .mobile-copy .kicker{font-size:12px;font-weight:700;color:var(--nv-action);margin-bottom:8px}
-.mobile-copy h1{font-size:26px;font-weight:800;letter-spacing:-.6px;line-height:1.35}
+.mobile-copy h1{font-size:24px;font-weight:800;letter-spacing:-.6px;line-height:1.35}
 .mobile-copy p{font-size:14px;color:var(--ink-3);margin-top:12px;line-height:1.7}
-.mdots{display:flex;gap:8px;margin-top:24px}
-.mdots button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
-  font-size:13px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-.mdots button[aria-current]{background:var(--nv-action);border-color:var(--nv-action);color:#fff;font-weight:700}
-.phone{border:10px solid #1A1D21;border-radius:38px;background:var(--surface);overflow:hidden;
-  box-shadow:0 20px 50px rgba(0,0,0,.16);position:relative}
-.phone .notch{height:26px;background:#1A1D21;border-radius:0 0 14px 14px;width:120px;margin:0 auto;position:relative;z-index:2}
-.phone .pbar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--line-2);
-  font-size:13px;font-weight:700;margin-top:-26px;padding-top:34px}
-.phone .pbar .n{width:20px;height:20px;border-radius:5px;background:var(--nv-green);color:#fff;
-  display:grid;place-items:center;font-size:10px;font-weight:800}
-.pscreen{padding:20px 16px 16px;min-height:430px;display:none;flex-direction:column}
-.pscreen.on{display:flex}
-.pscreen h3{font-size:19px;font-weight:800;letter-spacing:-.4px;line-height:1.4}
-.pscreen .pdesc{font-size:13px;color:var(--ink-3);margin-top:8px;line-height:1.6}
-.pcards{display:flex;flex-direction:column;gap:8px;margin-top:16px}
-.pcard{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
-.pcard .pt{font-size:11px;color:var(--ink-4)}
-.pcard .pn{font-size:14px;font-weight:700;margin-top:2px}
-.pcard .pm{font-size:12px;color:var(--ink-3);margin-top:2px;font-variant-numeric:tabular-nums}
-.pfoot{margin-top:auto;padding-top:16px}
-.pfoot .btn{width:100%;display:block}
-.pfoot .skip{display:block;width:100%;text-align:center;font-size:12px;color:var(--ink-4);margin-top:12px}
-.avatars{display:flex;justify-content:center;margin-bottom:14px}
+.mobile-copy .steps-note{margin-top:20px;border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden}
+.mobile-copy .steps-note li{list-style:none;display:flex;gap:12px;padding:12px 16px;font-size:13px;
+  border-top:1px solid var(--line-2)}
+.mobile-copy .steps-note li:first-child{border-top:none}
+.mobile-copy .steps-note .k{width:16px;color:var(--ink-4);flex:none;font-variant-numeric:tabular-nums}
+.device{border:1px solid var(--line);border-radius:var(--r-l);background:var(--surface);overflow:hidden}
+.device-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line-2);
+  font-size:12px;color:var(--ink-4)}
+.device-bar b{color:var(--ink-2);font-weight:600}
+.device-bar .dot3{display:flex;gap:5px;margin-right:4px}
+.device-bar .dot3 i{width:8px;height:8px;border-radius:50%;background:var(--line)}
+.device iframe{display:block;width:390px;height:760px;border:0;margin:0 auto;background:var(--surface)}
+
+/* ── 모바일 단독 모드 (?b=1) — 실제 모바일 페이지 ── */
+body.mobonly{background:var(--surface)}
+body.mobonly .gnb,body.mobonly .lnb,body.mobonly #viewA,
+body.mobonly .mobile-stage{display:none!important}
+body.mobonly .shell{display:block;min-height:100vh}
+body.mobonly .view#viewB{display:block}
+.mtop{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line-2);
+  position:sticky;top:0;background:var(--surface);z-index:10}
+.mtop .n{width:22px;height:22px;border-radius:6px;background:var(--nv-green);color:#fff;
+  display:grid;place-items:center;font-size:11px;font-weight:800;flex:none}
+.mtop b{font-size:14px;font-weight:700}
+.mtop .x{margin-left:auto;font-size:18px;color:var(--ink-4);line-height:1}
+.mbody{padding:20px 16px 96px;min-height:calc(100vh - 108px)}
+.mstep{display:none} .mstep.on{display:block}
+.mstep h1{font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.35}
+.mstep .lead{font-size:13px;color:var(--ink-3);margin-top:10px;line-height:1.7}
+.mstep .eyebrow{font-size:12px;color:var(--ink-4);margin-bottom:6px}
+.mcards{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.mcard{border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.mcard .pt{font-size:11px;color:var(--ink-4)}
+.mcard .pn{font-size:15px;font-weight:700;margin-top:3px}
+.mcard .pm{font-size:12px;color:var(--ink-3);margin-top:4px;font-variant-numeric:tabular-nums}
+.mcard .verdict{margin-top:10px}
+.mfield{margin-top:22px}
+.mfield label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.mfield .money{font-size:26px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.6px}
+.mfield .desc{font-size:12px;color:var(--ink-4);margin-top:8px;line-height:1.6}
+.mbar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line-2);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+.mbar .btn{width:100%;display:block;height:48px}
+.mbar .skip{display:block;width:100%;text-align:center;font-size:12px;color:var(--ink-4);
+  margin-top:10px;padding:4px}
+.mprog{display:flex;gap:4px;padding:0 16px 12px}
+.mprog i{height:3px;flex:1;background:var(--line-2);border-radius:2px}
+.mprog i.on{background:var(--nv-green)}
+.avatars{display:flex;justify-content:center;margin-bottom:16px}
 .avatars .who{margin-left:-8px;border:2px solid var(--surface)}
 .avatars .who:first-child{margin-left:0}
 .avatars .who.b{background:var(--ink-3)}
 
 /* ── 반응형 ── */
+body.viewing-b .lnb{display:none}
+body.viewing-b .shell{grid-template-columns:1fr}
 @media (max-width:1100px){
   .mobile-stage{grid-template-columns:1fr;gap:24px;justify-items:center}
   .mobile-copy{max-width:520px}
-  .phone{max-width:380px;width:100%}
+  .device{max-width:100%}
+  .device iframe{width:min(390px,100%)}
 }
 @media (max-width:960px){
   .shell{grid-template-columns:1fr}
@@ -788,89 +816,111 @@ details.assume p{font-size:12px;color:var(--ink-4);line-height:1.7;margin-top:8p
     <div class="mobile-stage">
       <div class="mobile-copy">
         <p class="kicker">B · 초대받은 사람</p>
-        <h1>카톡 링크에서 열리는<br>모바일 흐름</h1>
-        <p>후보 미리보기 → 입력 2개 → 첫 결과 → <b>그다음에 로그인</b>.
-          이 순서가 초대 마찰을 결정합니다. 로그인을 앞에 두면 수락률이 아니라
-          가입 전환율을 재게 됩니다.</p>
-        <p>B는 매물을 담지 않습니다. 자기 조건만 냅니다.</p>
-        <div class="mdots" id="mdots">
-          <button aria-current="true">1</button><button>2</button><button>3</button><button>4</button>
-        </div>
-        <p class="notice" style="margin-top:20px">B의 조건은 로그인 전이라 초대 코드에 묶어 임시 저장하고,
-          마지막 접근일로부터 30일 뒤 지웁니다. 로그인하면 계정으로 옮겨집니다.</p>
+        <h1>카톡 링크에서 열리는<br>모바일 화면</h1>
+        <p>오른쪽은 <b>390px 뷰포트로 실제 렌더링한 것</b>입니다. PC 화면에 그린 그림이 아니라
+          같은 페이지를 모바일 폭으로 띄운 것이라, 미디어쿼리가 그대로 걸립니다.</p>
+        <p><b>B는 A의 11단계를 갖고 있지 않습니다.</b> 매물을 담지도, 판정을 조작하지도 않습니다.
+          자기 조건만 내고 첫 결과를 봅니다.</p>
+        <ol class="steps-note">
+          <li><span class="k">1</span>초대 진입 — 후보를 먼저 보여준다. 가입 요구 없음</li>
+          <li><span class="k">2</span>예산 + 출퇴근 여부 — 입력은 여기까지</li>
+          <li><span class="k">3</span>첫 결과 — 값만. 아직 충족·미충족을 말하지 않는다</li>
+          <li><span class="k">4</span>참여 완료 — <b>로그인은 이 다음</b></li>
+        </ol>
+        <p class="notice" style="margin-top:20px">로그인을 앞에 두면 초대 수락률이 아니라
+          가입 전환율을 재게 됩니다. B의 조건은 로그인 전이라 초대 코드에 묶어 임시 저장하고,
+          마지막 접근일로부터 30일 뒤 지웁니다.</p>
       </div>
 
-      <div class="phone">
-        <div class="notch" aria-hidden="true"></div>
-        <div class="pbar"><span class="n" aria-hidden="true">N</span>Npay 부동산</div>
+      <div class="device">
+        <div class="device-bar"><span class="dot3" aria-hidden="true"><i></i><i></i><i></i></span>
+          <b>390 × 760</b><span>· 실제 모바일 렌더링</span></div>
+        <iframe id="mframe" title="B · 초대받은 사람 모바일 화면" src="?b=1"></iframe>
+      </div>
+    </div>
 
-        <div class="pscreen on" data-m="0">
+    <!-- 모바일 단독 모드에서만 쓰이는 실제 화면 -->
+    <div id="mobRoot" hidden>
+      <div class="mtop"><span class="n" aria-hidden="true">N</span><b>같이 고르기</b>
+        <span class="x" aria-hidden="true">✕</span></div>
+      <div class="mprog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+
+      <div class="mbody">
+        <section class="mstep on" data-m="0">
           <div class="avatars" aria-hidden="true"><span class="who">A</span><span class="who b">B</span></div>
-          <h3>이 5개 집을<br>같이 볼까요?</h3>
-          <p class="pdesc">A님이 같이 볼 집을 보냈어요. 가입하기 전에 후보를 먼저 보고,
-            예산만 넣으면 첫 결과가 나와요.</p>
-          <div class="pcards">
-            <div class="pcard"><p class="pt">상도동</p><p class="pn">상도 더샵 102동</p>
-              <p class="pm">전세 3억 2,000 · 59㎡</p></div>
-            <div class="pcard"><p class="pt">흑석동</p><p class="pn">흑석 한강센트레빌</p>
-              <p class="pm">전세 3억 4,000 · 68㎡</p></div>
+          <p class="eyebrow">A님이 같이 볼 집을 보냈어요</p>
+          <h1>이 5개 집을<br>같이 볼까요?</h1>
+          <p class="lead">가입하기 전에 후보를 먼저 보세요. 예산만 넣으면 첫 결과가 나와요.</p>
+          <div class="mcards">
+            <div class="mcard"><p class="pt">상도동</p><p class="pn">상도 더샵 102동</p>
+              <p class="pm">전세 3억 2,000 · 59㎡ · 월 124만</p></div>
+            <div class="mcard"><p class="pt">흑석동</p><p class="pn">흑석 한강센트레빌</p>
+              <p class="pm">전세 3억 4,000 · 68㎡ · 월 128만</p></div>
+            <div class="mcard"><p class="pt">신길동</p><p class="pn">신길 보라매 SK뷰</p>
+              <p class="pm">전세 2억 9,000 · 59㎡ · 월 121만</p></div>
+            <div class="mcard"><p class="pt">대방동 · 노량진동</p><p class="pn">2곳 더</p>
+              <p class="pm">월 126만 · 월 139만</p></div>
           </div>
-          <div class="pfoot"><button class="btn btn-primary">후보 5개 먼저 보기</button>
-            <span class="skip">지금은 참여하지 않을게요</span></div>
-        </div>
+        </section>
 
-        <div class="pscreen" data-m="1">
-          <p class="pt" style="font-size:12px;color:var(--ink-4)">내 조건 · 1 / 2</p>
-          <h3 style="margin-top:6px">한 달에 얼마까지<br>낼 수 있나요?</h3>
-          <p class="pdesc">가구 총 실부담이에요. A님은 130만으로 잡았어요.</p>
-          <div style="margin-top:20px">
-            <p class="money">월 135만원</p>
-            <input type="range" min="90" max="180" value="135" aria-label="월 실부담 상한">
+        <section class="mstep" data-m="1">
+          <p class="eyebrow">내 조건 · 1 / 1</p>
+          <h1>한 달에 얼마까지<br>낼 수 있나요?</h1>
+          <p class="lead">보증금 기회비용·대출이자·관리비까지 더한 가구 총 실부담이에요.
+            A님은 130만으로 잡았어요.</p>
+          <div class="mfield">
+            <label for="mbud">월 실부담 상한</label>
+            <p class="money" id="mbudV">월 135만원</p>
+            <input id="mbud" type="range" min="90" max="180" value="135">
           </div>
-          <div style="margin-top:20px">
-            <p style="font-size:13px;font-weight:700;margin-bottom:8px">정기적으로 출퇴근하세요?</p>
-            <div class="seg"><button aria-pressed="false">네</button>
-              <button aria-pressed="true">아니요 / 재택</button></div>
-            <p class="pdesc" style="margin-top:10px">통근 시간과 교통비는 계산하지 않아요.
+          <div class="mfield">
+            <label>정기적으로 출퇴근하세요?</label>
+            <div class="seg" id="mseg"><button aria-pressed="false">네, 출근지를 넣을게요</button>
+              <button aria-pressed="true">아니요 / 재택이에요</button></div>
+            <p class="desc" id="mnote">출퇴근을 안 하시면 통근 시간과 교통비를 계산하지 않아요.
               나중에 언제든 추가할 수 있어요.</p>
           </div>
-          <div class="pfoot"><button class="btn btn-primary">첫 결과 보기</button></div>
-        </div>
+        </section>
 
-        <div class="pscreen" data-m="2">
-          <p class="pt" style="font-size:12px;color:var(--ink-4)">첫 결과</p>
-          <h3 style="margin-top:6px">두 분의 값이<br>나란히 보여요</h3>
-          <p class="pdesc">아직 필수 조건을 안 물어서 충족·미충족은 말하지 않아요.</p>
-          <div class="pcards">
-            <div class="pcard"><p class="pn">상도 더샵 102동</p>
-              <p class="pm">A 통근 32분 · 59㎡ · 월 124만</p></div>
-            <div class="pcard"><p class="pn">흑석 한강센트레빌</p>
-              <p class="pm">A 통근 34분 · 68㎡ · 월 128만</p></div>
-            <div class="pcard"><p class="pn">신길 보라매 SK뷰</p>
-              <p class="pm">A 통근 45분 · 59㎡ · 월 121만</p></div>
+        <section class="mstep" data-m="2">
+          <p class="eyebrow">첫 결과</p>
+          <h1>두 분의 값이<br>나란히 보여요</h1>
+          <p class="lead">아직 필수 조건을 안 물어서 <b>충족·미충족은 말하지 않아요.</b> 실제 값만 보여드려요.</p>
+          <div class="mcards">
+            <div class="mcard"><p class="pn">상도 더샵 102동</p>
+              <p class="pm">A 통근 32분 · 전용 59㎡ · 월 124만</p></div>
+            <div class="mcard"><p class="pn">흑석 한강센트레빌</p>
+              <p class="pm">A 통근 34분 · 전용 68㎡ · 월 128만</p></div>
+            <div class="mcard"><p class="pn">신길 보라매 SK뷰</p>
+              <p class="pm">A 통근 45분 · 전용 59㎡ · 월 121만</p></div>
+            <div class="mcard" style="border-style:dashed"><p class="pn" style="font-size:14px">＋ 더 좁히시겠어요?</p>
+              <p class="pm">필수 조건을 하나만 더하면 충족 여부를 볼 수 있어요</p></div>
           </div>
-          <p class="pdesc" style="margin-top:14px">＋ 더 좁히시겠어요?
-            필수 조건을 하나만 더하면 충족 여부를 볼 수 있어요.</p>
-          <div class="pfoot"><button class="btn btn-primary">조건 추가하고 저장</button>
-            <span class="skip">로그인은 이 다음에 요청합니다</span></div>
-        </div>
+        </section>
 
-        <div class="pscreen" data-m="3">
+        <section class="mstep" data-m="3">
           <div class="avatars" aria-hidden="true"><span class="who">A</span><span class="who b">B</span></div>
-          <h3 style="text-align:center">참여가 완료됐어요</h3>
-          <p class="pdesc" style="text-align:center">A님에게 조건 입력 완료 알림을 보냈어요.</p>
-          <div class="pcards" style="margin-top:20px">
-            <div class="pcard"><p class="pt">양보 지점 3개</p>
+          <h1 style="text-align:center">참여가 완료됐어요</h1>
+          <p class="lead" style="text-align:center">A님에게 조건 입력 완료 알림을 보냈어요.</p>
+          <div class="mcards">
+            <div class="mcard"><p class="pt">양보 지점 3개</p>
               <p class="pn" style="margin-top:6px">둘의 기준이 다른 곳부터<br>같이 확인해 보세요</p></div>
-            <div class="pcard"><p class="pn">흑석 한강센트레빌</p>
+            <div class="mcard"><p class="pn">흑석 한강센트레빌</p>
               <div class="verdict"><span class="b b-ok"><span class="m" aria-hidden="true">✓</span>B 충족</span>
                 <span class="b b-no"><span class="m" aria-hidden="true">✕</span>A 도보 <span class="gap">+3분</span></span></div></div>
-            <div class="pcard"><p class="pn">신길 보라매 SK뷰</p>
+            <div class="mcard"><p class="pn">신길 보라매 SK뷰</p>
               <div class="verdict"><span class="b b-ok"><span class="m" aria-hidden="true">✓</span>A 충족</span>
                 <span class="b b-no"><span class="m" aria-hidden="true">✕</span>B 면적 <span class="gap">−7㎡</span></span></div></div>
+            <div class="mcard"><p class="pn">대방 현대 1차</p>
+              <div class="verdict"><span class="b b-ok"><span class="m" aria-hidden="true">✓</span>A 충족</span>
+                <span class="b b-no"><span class="m" aria-hidden="true">✕</span>B 주차 <span class="gap">없음</span></span></div></div>
           </div>
-          <div class="pfoot"><button class="btn btn-primary">양보 지점 보기</button></div>
-        </div>
+        </section>
+      </div>
+
+      <div class="mbar">
+        <button class="btn btn-primary" id="mnext">후보 5개 먼저 보기</button>
+        <span class="skip" id="mskip">지금은 참여하지 않을게요</span>
       </div>
     </div>
   </div>
@@ -908,29 +958,54 @@ details.assume p{font-size:12px;color:var(--ink-4);line-height:1.7;margin-top:8p
     li.querySelector('a').addEventListener('click', function(e){ e.preventDefault(); i=n; render(); });
   });
 
-  // 뷰 전환
+  // ── 모바일 단독 모드 (?b=1) ── 진짜 모바일 뷰포트로 렌더링된다
+  var MOB = new URLSearchParams(location.search).has('b');
+  var mobRoot = document.getElementById('mobRoot');
+  if(MOB){
+    document.body.classList.add('mobonly');
+    mobRoot.hidden = false;
+    var mSteps=[].slice.call(document.querySelectorAll('.mstep'));
+    var mProg=[].slice.call(document.querySelectorAll('.mprog i'));
+    var mNext=document.getElementById('mnext'), mSkip=document.getElementById('mskip');
+    var LABEL=['후보 5개 먼저 보기','첫 결과 보기','조건 추가하고 저장','양보 지점 보기'];
+    var SKIP =['지금은 참여하지 않을게요','','로그인은 이 다음에 요청합니다',''];
+    var m=0;
+    function mRender(){
+      mSteps.forEach(function(s,n){ s.classList.toggle('on', n===m); });
+      mProg.forEach(function(x,n){ x.classList.toggle('on', n<=m); });
+      mNext.textContent=LABEL[m];
+      mSkip.textContent=SKIP[m]; mSkip.style.display=SKIP[m]?'block':'none';
+      var h=mSteps[m].querySelector('h1'); if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true});}
+      window.scrollTo(0,0);
+    }
+    mNext.addEventListener('click', function(){ m=(m+1)%mSteps.length; mRender(); });
+    var mb=document.getElementById('mbud'), mbv=document.getElementById('mbudV');
+    mb && mb.addEventListener('input', function(){ mbv.textContent='월 '+mb.value+'만원'; });
+    var mseg=document.getElementById('mseg');
+    mseg && mseg.querySelectorAll('button').forEach(function(b,n,all){
+      b.addEventListener('click', function(){
+        all.forEach(function(x,k){ x.setAttribute('aria-pressed', String(k===n)); });
+        document.getElementById('mnote').textContent = n===0
+          ? '후보 5개까지의 실제 통근 시간을 바로 계산해 드려요.'
+          : '출퇴근을 안 하시면 통근 시간과 교통비를 계산하지 않아요. 나중에 언제든 추가할 수 있어요.';
+      });
+    });
+    mRender();
+    return; // 모바일 모드에서는 A 흐름 로직을 돌리지 않는다
+  }
+
+  // ── 뷰 전환 ── B 를 볼 때는 A 의 좌측 네비를 감춘다.
+  //    B 에게는 A 의 11단계가 없고, 눌리면 A 의 진행 상태가 바뀌는 누수가 생긴다.
   var vA=document.getElementById('vA'), vB=document.getElementById('vB');
   function view(a){
     document.getElementById('viewA').classList.toggle('on', a);
     document.getElementById('viewB').classList.toggle('on', !a);
+    document.body.classList.toggle('viewing-b', !a);
     vA.setAttribute('aria-pressed', String(a)); vB.setAttribute('aria-pressed', String(!a));
     window.scrollTo(0,0);
   }
   vA.addEventListener('click', function(){ view(true); });
   vB.addEventListener('click', function(){ view(false); });
-
-  // 모바일 4단계
-  var ms=[].slice.call(document.querySelectorAll('.pscreen'));
-  var md=[].slice.call(document.querySelectorAll('#mdots button'));
-  md.forEach(function(b,n){
-    b.addEventListener('click', function(){
-      ms.forEach(function(s,k){ s.classList.toggle('on', k===n); });
-      md.forEach(function(x,k){ k===n ? x.setAttribute('aria-current','true') : x.removeAttribute('aria-current'); });
-    });
-  });
-  document.querySelectorAll('.pfoot .btn').forEach(function(b,n){
-    b.addEventListener('click', function(){ if(md[n+1]) md[n+1].click(); else md[0].click(); });
-  });
 
   // 후보 담기 토글
   var selN=document.getElementById('selN');
