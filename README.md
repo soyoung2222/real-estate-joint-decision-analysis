@@ -139,7 +139,7 @@
 | 05 | [트레이드오프 패턴](docs/05-tradeoff-patterns.md) | 의료 IPDAS·Option Grid·집계 전략 |
 | 06 | [주거비 모델](docs/06-cost-model.md) | 6개 항목 계산식과 전제 공개 |
 | 07 | [여정·기회점수](docs/07-cjm-opportunity-score.md) | A/B 2레인 CJM, 어디가 제일 비어 있나 |
-| 08 | [화면 설계](docs/08-screen-design.md) | 입력 설계 · 시각화 명세 · 화면 목록 97개 |
+| 08 | [화면 설계](docs/08-screen-design.md) | 입력 설계 · 시각화 명세 · 화면 목록 100개 |
 | 09 | [예외 상황](docs/09-edge-cases.md) | MVP 필수 5 / 후순위 8 |
 | 10 | [데이터 연동](docs/10-data-integration.md) | 네이버 연동 방식, 경로 API 호출량 |
 | 11 | [결정 현황](docs/11-decision-status.md) | 결정 / 미결정 / 리서치 필요 — **가장 자주 갱신** |
