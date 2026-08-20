@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>같이 고르기 — 네이버페이 부동산 시현본</title>
+<title>같이 보기 — 네이버페이 부동산 시현본</title>
 <style>
 /* ============================================================
    토큰 — 브랜드와 상태를 분리한다
@@ -481,6 +481,10 @@ body.mobonly .view#viewB{display:block}
 .chk li[aria-checked=true] .cb::after{content:"✓"}
 .chk li[aria-checked=true] b{text-decoration:line-through;color:var(--ink-4)}
 
+/* 관심부동산 안의 어느 기능인지 — 이름이 사이드바에 없었다 */
+.lnb-feat{margin:8px 0 0 14px;padding:0 10px 0 14px;border-left:2px solid var(--nv-green-soft);
+  font-size:13px;font-weight:700;color:var(--nv-action-hover);line-height:1.4}
+.lnb-feat span{display:block;font-size:11px;font-weight:400;color:var(--ink-4);margin-top:2px}
 .lnb-always{margin:10px 0 0 14px;padding-left:14px;border-left:2px solid var(--line-2)}
 .lnb-always button{display:flex;align-items:center;gap:8px;height:36px;padding:0 10px;width:100%;
   border-radius:var(--r);font-size:13px;color:var(--ink-3)}
@@ -588,6 +592,7 @@ body.viewing-b .shell{grid-template-columns:1fr}
       <li><a href="#"><span class="dot"></span>홈</a></li>
       <li>
         <a href="#" aria-current="page"><span class="dot"></span>관심부동산</a>
+        <p class="lnb-feat">같이 보기<span>둘이서 보러 갈 집 정하기</span></p>
         <ol class="lnb-sub" id="subnav">
           <li data-s="0"><a href="#"><span class="tick">✓</span>후보 담기</a></li>
           <li data-s="1"><a href="#"><span class="tick">✓</span>예산</a></li>
@@ -615,7 +620,7 @@ body.viewing-b .shell{grid-template-columns:1fr}
   <!-- ============================ A · PC ============================ -->
   <div class="view on" id="viewA">
     <div class="flow colpad">
-      <span class="lab">같이 고르기</span>
+      <span class="lab">같이 보기</span>
       <span class="track"><i id="bar" style="width:9%"></i></span>
       <span class="cnt"><b id="cur">1</b> / 11</span>
     </div>
@@ -625,7 +630,7 @@ body.viewing-b .shell{grid-template-columns:1fr}
       <!-- 0 · FT1 후보 담기 -->
       <section class="step on" data-step="0">
         <div class="step-head">
-          <p class="kicker">같이 고르기</p>
+          <p class="kicker">후보 담기</p>
           <h1>같이 볼 집을 골라주세요</h1>
           <p class="sub">관심매물에 저장해둔 집에서 <b>최대 5개</b>까지 담을 수 있어요.
             담고 나면 상대에게 링크를 보내 같은 목록을 보게 할 수 있습니다.</p>
@@ -856,7 +861,7 @@ body.viewing-b .shell{grid-template-columns:1fr}
       <section class="step" data-step="5">
         <div class="step-head">
           <p class="kicker">초대</p>
-          <h1>같이 고를 사람에게 링크를 보내세요</h1>
+          <h1>같이 볼 사람에게 링크를 보내세요</h1>
           <p class="sub">상대는 <b>가입하지 않고</b> 링크만 열어도 담아둔 집을 볼 수 있어요.
             조건 두 개만 넣으면 두 분 기준이 어디서 갈리는지 바로 나옵니다.</p>
         </div>
@@ -1487,7 +1492,7 @@ body.viewing-b .shell{grid-template-columns:1fr}
     <div id="mobRoot" hidden>
       <div class="mtop">
         <button class="back" id="mback" type="button" aria-label="이전 단계로" hidden>‹</button>
-        <span class="n" aria-hidden="true">N</span><b>같이 고르기</b>
+        <span class="n" aria-hidden="true">N</span><b>같이 보기</b>
         <span class="x" aria-hidden="true">✕</span></div>
       <div class="mprog" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
 
