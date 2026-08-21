@@ -52,6 +52,7 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
 .body.center{justify-content:center}
 .slide[data-proto] .body{gap:var(--s3)}
 .slide[data-proto] .h1{font-size:38px}
+.slide.fin .foot{border:0;color:#5F6B7A}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
@@ -171,23 +172,27 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
       <div class="card">
         <span class="ct">① 지금</span>
         <figure style="flex:1">
-          <svg viewBox="0 0 240 186" role="img" aria-label="관심매물 저장 한 곳에서 카톡 공유, 통근 확인, 주거비 계산, 메모 네 갈래로 빠져나간다">
-            <defs><marker id="a1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M0 0 L8 4 L0 8 z" fill="#A4A7AE"/></marker></defs>
-            <rect x="2" y="66" width="86" height="54" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="1.5"/>
-            <path d="M32 92 l13-11 13 11 v14 h-26 z" fill="none" stroke="#087A43" stroke-width="2"/>
-            <text x="45" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#087A43">저장</text>
-            <g stroke="#A4A7AE" stroke-width="1.4" stroke-dasharray="4 4" fill="none" marker-end="url(#a1)">
-              <path d="M90 82 C118 82 122 22 146 22"/>
-              <path d="M90 88 C118 88 122 70 146 70"/>
-              <path d="M90 98 C118 98 122 116 146 116"/>
-              <path d="M90 104 C118 104 122 164 146 164"/>
+          <svg viewBox="0 0 240 196" role="img" aria-label="관심매물 저장 한 곳에서 카톡 공유, 통근 확인, 주거비 계산, 메모 네 갈래로 빠져나간다">
+            <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M0 1 L9 5 L0 9 z" fill="#A4A7AE"/></marker></defs>
+            <rect x="2" y="54" width="98" height="86" rx="10" fill="#EAF6EF" stroke="#087A43" stroke-width="1.5"/>
+            <path d="M35 88 l16-15 16 15 v18 h-32 z" fill="none" stroke="#087A43" stroke-width="2" stroke-linejoin="round"/>
+            <text x="51" y="130" text-anchor="middle" font-size="13" font-weight="700" fill="#087A43">저장</text>
+            <g stroke="#A4A7AE" stroke-width="1.4" fill="none">
+              <path d="M104 78 C124 78 126 21 132 21"   stroke-dasharray="4 4"/>
+              <path d="M104 88 C124 88 126 71 132 71"   stroke-dasharray="4 4"/>
+              <path d="M104 106 C124 106 126 121 132 121" stroke-dasharray="4 4"/>
+              <path d="M104 116 C124 116 126 171 132 171" stroke-dasharray="4 4"/>
+              <line x1="132" y1="21"  x2="142" y2="21"  marker-end="url(#a1)"/>
+              <line x1="132" y1="71"  x2="142" y2="71"  marker-end="url(#a1)"/>
+              <line x1="132" y1="121" x2="142" y2="121" marker-end="url(#a1)"/>
+              <line x1="132" y1="171" x2="142" y2="171" marker-end="url(#a1)"/>
             </g>
             <g font-size="12" font-weight="600" fill="#717680">
-              <rect x="150" y="8"   width="88" height="28" rx="6" fill="#F3F5F7"/><text x="194" y="26" text-anchor="middle">카톡 공유</text>
-              <rect x="150" y="56"  width="88" height="28" rx="6" fill="#F3F5F7"/><text x="194" y="74" text-anchor="middle">통근 확인</text>
-              <rect x="150" y="102" width="88" height="28" rx="6" fill="#F3F5F7"/><text x="194" y="120" text-anchor="middle">주거비 계산</text>
-              <rect x="150" y="150" width="88" height="28" rx="6" fill="#F3F5F7"/><text x="194" y="168" text-anchor="middle">메모</text>
+              <rect x="147" y="6"   width="91" height="30" rx="6" fill="#F3F5F7"/><text x="192" y="25"  text-anchor="middle">카톡 공유</text>
+              <rect x="147" y="56"  width="91" height="30" rx="6" fill="#F3F5F7"/><text x="192" y="75"  text-anchor="middle">통근 확인</text>
+              <rect x="147" y="106" width="91" height="30" rx="6" fill="#F3F5F7"/><text x="192" y="125" text-anchor="middle">주거비 계산</text>
+              <rect x="147" y="156" width="91" height="30" rx="6" fill="#F3F5F7"/><text x="192" y="175" text-anchor="middle">메모</text>
             </g>
           </svg>
           <figcaption>비교와 합의는 서비스 밖에서 흩어짐</figcaption>
@@ -208,8 +213,8 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
         <span class="ct">③ 해결 방식</span>
         <figure style="flex:1">
           <svg viewBox="0 0 210 190" role="img" aria-label="각자 조건 입력에서 매물별 비교로, 매물별 비교에서 방문 후보 결정으로 이어진다">
-            <defs><marker id="a2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker></defs>
+            <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M0 1 L9 5 L0 9 z" fill="#087A43"/></marker></defs>
             <g fill="#fff" stroke="#087A43" stroke-width="1.5">
               <rect x="2" y="2" width="206" height="50" rx="8"/>
               <rect x="2" y="70" width="206" height="50" rx="8"/>
@@ -235,8 +240,8 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
         <span class="ct">④ 끝나는 지점</span>
         <figure style="flex:1;justify-content:center">
           <svg viewBox="0 0 200 176" role="img" aria-label="관심매물 5개가 보러 갈 집 2개로 좁혀진다">
-            <defs><marker id="a3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-              <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker></defs>
+            <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0 1 L9 5 L0 9 z" fill="#087A43"/></marker></defs>
             <g fill="#F3F5F7" stroke="#E4E7E9">
               <rect x="8" y="6" width="32" height="42" rx="5"/><rect x="46" y="6" width="32" height="42" rx="5"/>
               <rect x="84" y="6" width="32" height="42" rx="5"/><rect x="122" y="6" width="32" height="42" rx="5"/>
@@ -355,10 +360,10 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
           <span class="cb sm">로그인·관심매물 → 두 사람 조건을 같은 비중으로</span>
           <span class="cb sm">문의·방문 생태계 → 정하고 나면 원래 행동으로 복귀</span>
         </div></div>
-      <div class="card hi" style="justify-content:center">
-        <b class="badge b-hy" style="align-self:flex-start">여기가 급소</b>
-        <span class="lead" style="margin:0;color:var(--ink);font-size:22px">카톡에 이렇게 뜹니다<br>“OO님이 같이 보기에 초대했어요”</span>
-        <span class="cb xs">이걸 안 누르면 기능 자체가 성립하지 않습니다</span></div>
+      <div class="card hi">
+        <span class="ct" style="display:flex;align-items:center;gap:var(--s2)">이 기능의 급소 <b class="badge b-hy">가설</b></span>
+        <span class="lead" style="margin:var(--s2) 0 0;color:var(--ink);font-size:22px">카톡에 이렇게 뜹니다<br>“OO님이 같이 보기에 초대했어요”</span>
+        <span class="cb xs" style="margin-top:auto">이걸 안 누르면 기능 자체가 성립하지 않습니다</span></div>
     </div>
     <div class="foot"><b class="badge b-inf">추론</b> 이 구간 판단은 팀의 관찰입니다 · 혼자서도 막히진 않게 했지만 그걸 기본으로 삼진 않습니다</div>
   </div>
@@ -438,7 +443,7 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
     <div class="g2" style="flex:1;min-height:0">
       <div class="card hi"><span class="ct">JTBD · 진짜 하려는 일</span>
         <span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:21px">이미 저장한 관심매물 중, 감수할 조건을 알고 이번에 <span class="nb">보러 갈 집 두 곳</span>을 정합니다.</span>
-        <span class="cb xs">납득 = 내가 무엇을 감수하는지 알고도 방문 후보로 동의할 수 있는 상태</span></div>
+        <span class="cb xs" style="margin-top:auto">납득 = 내가 무엇을 감수하는지 알고도 방문 후보로 동의할 수 있는 상태</span></div>
       <div class="card"><span class="ct">왜 의견 교환이 먼저인가</span>
         <div class="col" style="gap:var(--s2)">
           <span class="cb sm">다른 도구로 대신할 수 없는, 사람 사이의 문제</span>
@@ -494,8 +499,8 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
       <div class="card hi">
         <figure style="flex:1">
           <svg viewBox="0 0 480 210" role="img" aria-label="의료 의사결정 비교표는 열이 선택지인데, 우리는 축을 돌려 열을 사람으로 바꿨다">
-            <defs><marker id="a4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-              <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker></defs>
+            <defs><marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0 1 L9 5 L0 9 z" fill="#087A43"/></marker></defs>
             <text x="0" y="12" font-size="12" font-weight="600" fill="#A4A7AE">Option Grid · 의료</text>
             <g stroke="#E4E7E9" fill="#fff">
               <rect x="0" y="22" width="60" height="26"/><rect x="60" y="22" width="60" height="26"/><rect x="120" y="22" width="60" height="26"/>
@@ -540,45 +545,45 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
   <h1 class="h1 wide">저희 서비스는 총점 · 순위 · AI 추천을 쓰지 않습니다</h1>
   <div class="body">
     <figure>
-      <svg viewBox="0 0 1140 128" role="img" aria-label="다른 서비스가 쓰는 공동 적합도 83점, 순위 1위, AI PICK 세 가지를 우리는 쓰지 않고, 대신 누가 무엇을 얼마나 감수하는지 문장으로 보여준다">
-        <defs><marker id="a7" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker></defs>
+      <svg viewBox="0 0 1140 132" role="img" aria-label="다른 서비스가 쓰는 공동 적합도 83점, 순위 1위, AI PICK 세 가지를 우리는 쓰지 않고, 대신 누가 무엇을 얼마나 감수하는지 문장으로 보여준다">
+        <defs><marker id="a7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+          <path d="M0 1 L9 5 L0 9 z" fill="#087A43"/></marker></defs>
         <text x="0" y="12" font-size="12" font-weight="700" fill="#A4A7AE">다른 서비스가 쓰는 방식</text>
         <g>
-          <rect x="0" y="24" width="150" height="60" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
-          <text x="75" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="#A4A7AE">83점</text>
-          <text x="75" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">공동 적합도</text>
-          <line x1="14" y1="76" x2="136" y2="32" stroke="#B3400C" stroke-width="2.5"/>
-          <line x1="14" y1="32" x2="136" y2="76" stroke="#B3400C" stroke-width="2.5"/>
+          <rect x="0" y="22" width="150" height="62" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
+          <text x="70" y="52" text-anchor="middle" font-size="19" font-weight="700" fill="#A4A7AE">83점</text>
+          <text x="70" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">공동 적합도</text>
+          <circle cx="140" cy="22" r="11" fill="#B3400C"/>
+          <path d="M136 18 l8 8 M144 18 l-8 8" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
         </g>
         <g>
-          <rect x="164" y="24" width="150" height="60" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
-          <text x="239" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="#A4A7AE">1위</text>
-          <text x="239" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">순위 합산</text>
-          <line x1="178" y1="76" x2="300" y2="32" stroke="#B3400C" stroke-width="2.5"/>
-          <line x1="178" y1="32" x2="300" y2="76" stroke="#B3400C" stroke-width="2.5"/>
+          <rect x="164" y="22" width="150" height="62" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
+          <text x="234" y="52" text-anchor="middle" font-size="19" font-weight="700" fill="#A4A7AE">1위</text>
+          <text x="234" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">순위 합산</text>
+          <circle cx="304" cy="22" r="11" fill="#B3400C"/>
+          <path d="M300 18 l8 8 M308 18 l-8 8" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
         </g>
         <g>
-          <rect x="328" y="24" width="150" height="60" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
-          <text x="403" y="52" text-anchor="middle" font-size="18" font-weight="700" fill="#A4A7AE">AI PICK</text>
-          <text x="403" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">자동 최적 타협</text>
-          <line x1="342" y1="76" x2="464" y2="32" stroke="#B3400C" stroke-width="2.5"/>
-          <line x1="342" y1="32" x2="464" y2="76" stroke="#B3400C" stroke-width="2.5"/>
+          <rect x="328" y="22" width="150" height="62" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
+          <text x="398" y="52" text-anchor="middle" font-size="17" font-weight="700" fill="#A4A7AE">AI PICK</text>
+          <text x="398" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">자동 최적 타협</text>
+          <circle cx="468" cy="22" r="11" fill="#B3400C"/>
+          <path d="M464 18 l8 8 M472 18 l-8 8" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
         </g>
-        <path d="M492 54 L556 54" stroke="#087A43" stroke-width="2" marker-end="url(#a7)"/>
-        <text x="524" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="#087A43">대신</text>
+        <line x1="494" y1="53" x2="554" y2="53" stroke="#087A43" stroke-width="2" marker-end="url(#a7)"/>
+        <text x="524" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#087A43">대신</text>
         <text x="572" y="12" font-size="12" font-weight="700" fill="#087A43">같이 보기가 하는 것</text>
-        <rect x="572" y="24" width="568" height="60" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/>
-        <text x="592" y="48" font-size="14" font-weight="700" fill="#1A1D24">A  예산 충족 · 통근 +13분</text>
-        <text x="592" y="70" font-size="14" font-weight="700" fill="#1A1D24">B  면적 충족 · 주차 확인</text>
-        <text x="880" y="48" font-size="11" fill="#717680">실제 13분, 기준 10분, 3분 초과</text>
-        <text x="880" y="70" font-size="11" fill="#717680">누가 · 무엇을 · 얼마나</text>
+        <rect x="572" y="22" width="568" height="62" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/>
+        <text x="594" y="48" font-size="14" font-weight="700" fill="#1A1D24">A  예산 충족 · 통근 +13분</text>
+        <text x="594" y="70" font-size="14" font-weight="700" fill="#1A1D24">B  면적 충족 · 주차 확인</text>
+        <text x="886" y="48" font-size="11" fill="#717680">실제 13분, 기준 10분, 3분 초과</text>
+        <text x="886" y="70" font-size="11" fill="#717680">누가 · 무엇을 · 얼마나</text>
         <g font-size="11" fill="#B3400C" font-weight="600">
-          <text x="75" y="102" text-anchor="middle">누가 양보했는지 사라짐</text>
-          <text x="239" y="102" text-anchor="middle">이기고 지는 구도</text>
-          <text x="403" y="102" text-anchor="middle">가치 판단을 대행</text>
+          <text x="70" y="104" text-anchor="middle">누가 양보했는지 사라짐</text>
+          <text x="234" y="104" text-anchor="middle">이기고 지는 구도</text>
+          <text x="398" y="104" text-anchor="middle">가치 판단을 대행</text>
         </g>
-        <text x="856" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#087A43">한쪽만 충족한 집도 설명 대상으로 유지</text>
+        <text x="856" y="104" text-anchor="middle" font-size="11" font-weight="600" fill="#087A43">한쪽만 충족한 집도 설명 대상으로 유지</text>
       </svg>
     </figure>
     <div class="card hi" style="flex:1;min-height:0;justify-content:center;align-items:center">
@@ -619,10 +624,10 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
     <figure style="flex:1;min-height:0">
       <svg viewBox="0 0 1140 244" role="img" aria-label="관심매물 5개에 사람별 조건을 적용하고 각자 2개를 고른다. 둘 다 겹치면 확정, 1개만 겹치면 남은 자리를 다시 비교, 0개면 2라운드를 거쳐 그래도 안 맞으면 각자 하나씩 가져간다">
         <defs>
-          <marker id="a5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-            <path d="M0 0 L8 4 L0 8 z" fill="#A4A7AE"/></marker>
-          <marker id="a5g" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-            <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker>
+          <marker id="a5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0 1 L9 5 L0 9 z" fill="#A4A7AE"/></marker>
+          <marker id="a5g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0 1 L9 5 L0 9 z" fill="#087A43"/></marker>
         </defs>
         <rect x="0" y="84" width="196" height="76" rx="8" fill="#F3F5F7"/>
         <text x="98" y="110" text-anchor="middle" font-size="14" font-weight="700" fill="#1A1D24">관심매물 5개</text>
@@ -656,8 +661,9 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
 
         <path d="M680 122 C706 122 706 46 730 46" stroke="#A4A7AE" stroke-width="1.6" fill="none" marker-end="url(#a5)"/>
         <path d="M680 202 C706 202 706 46 730 46" stroke="#A4A7AE" stroke-width="1.6" fill="none" marker-end="url(#a5)"/>
-        <path d="M680 210 L730 210" stroke="#A4A7AE" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#a5)"/>
-        <text x="705" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#A4A7AE">안 맞으면</text>
+        <path d="M680 210 L719 210" stroke="#A4A7AE" stroke-width="1.6" stroke-dasharray="5 4" fill="none"/>
+        <line x1="719" y1="210" x2="729" y2="210" stroke="#A4A7AE" stroke-width="1.6" marker-end="url(#a5)"/>
+        <text x="704" y="232" text-anchor="middle" font-size="11" font-weight="600" fill="#A4A7AE">안 맞으면</text>
 
         <rect x="736" y="22" width="212" height="48" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/>
         <text x="842" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#087A43">보러 갈 집 2개</text>
@@ -736,10 +742,10 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
   <div class="body">
     <figure>
       <svg viewBox="0 0 1140 124" role="img" aria-label="네이버 부동산에서 매물 데이터를 읽어 같이 보기가 사람별 조건으로 판정하고, 사용자를 다시 네이버 검색과 방문으로 돌려보낸다. 매물 데이터를 복제하거나 고치지 않는다">
-        <defs><marker id="a6" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker>
-          <marker id="a6b" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M0 0 L8 4 L0 8 z" fill="#A4A7AE"/></marker></defs>
+        <defs><marker id="a6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0 1 L9 5 L0 9 z" fill="#087A43"/></marker>
+          <marker id="a6b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0 1 L9 5 L0 9 z" fill="#A4A7AE"/></marker></defs>
         <rect x="0" y="30" width="300" height="70" rx="8" fill="#F3F5F7"/>
         <text x="150" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1D24">네이버 부동산</text>
         <text x="150" y="76" text-anchor="middle" font-size="11" fill="#717680">매물 ID · 좌표 · 가격 · 면적</text>
@@ -761,19 +767,21 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
         <text x="991" y="76" text-anchor="middle" font-size="11" fill="#717680">필터를 눌러 다시 검색</text>
         <text x="991" y="92" text-anchor="middle" font-size="11" fill="#717680">방문 · 문의로 복귀</text>
 
-        <path d="M991 24 C991 6 160 6 152 22" stroke="#A4A7AE" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#a6b)"/>
-        <text x="570" y="14" text-anchor="middle" font-size="11" font-weight="600" fill="#A4A7AE">매물 데이터를 복제하거나 고치지 않습니다</text>
+        <path d="M991 24 C991 6 176 6 166 18" stroke="#A4A7AE" stroke-width="1.4" fill="none" stroke-dasharray="5 4"/>
+        <line x1="166" y1="18" x2="157" y2="26" stroke="#A4A7AE" stroke-width="1.4" marker-end="url(#a6b)"/>
+        <text x="578" y="14" text-anchor="middle" font-size="11" font-weight="600" fill="#A4A7AE">매물 데이터를 복제하거나 고치지 않습니다</text>
       </svg>
     </figure>
     <div class="g3" style="flex:1;min-height:0">
       <div class="card"><span class="ct">1단계 · 할 것 일곱</span>
-        <span class="cb sm">집 최대 5개 · 예산과 출근 여부 · 링크 초대 · 자동 판정 · 양보 문장 · 조건 완화 · <span class="nb">보러 갈 집 2개</span></span></div>
+        <span class="cb sm">집 최대 5개 · 예산과 출근 여부 · 링크 초대 · 자동 판정 · 양보 문장 · 조건 완화 · <span class="nb">보러 갈 집 2개</span></span>
+        <span class="cb xs" style="margin-top:auto">먼저 만들어 검증하고, 통과한 뒤에 2단계로</span></div>
       <div class="card"><span class="ct">기능 25가지 · 여섯 묶음</span>
         <span class="cb sm">후보와 참여 · 사람별 조건 · <b>판정</b> · <b>trade-off</b> · 막다른 길과 결정 · 반복과 마무리</span>
         <span class="cb xs" style="margin-top:auto">그대로 사용자 시나리오 순서입니다</span></div>
       <div class="card hi"><span class="ct">검사 항목 56개</span>
         <span class="cb sm" style="color:var(--ink)">화면이 있느냐가 아니라 <b>판단을 흐리지 않는가</b>를 봅니다</span>
-        <span class="cb xs">25개 기능 중 20개 확정 · 5개 일부 미정</span></div>
+        <span class="cb xs" style="margin-top:auto">25개 기능 중 20개 확정 · 5개 일부 미정</span></div>
     </div>
     <div class="foot">하지 않을 것 — 새 매물 DB · 독립 검색 · 자동 추천 · 종합점수 · AI 최종 선택 · 계약과 대출 &nbsp;|&nbsp; 비로그인 조건은 30일 뒤 삭제 · 사진·중개사 정보는 판정에 쓰지 않음 &nbsp;|&nbsp; <b class="badge b-tbd">미정</b> 관심매물 API · 비로그인 열람 · 경로 계산 비용</div>
   </div>
@@ -815,10 +823,10 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
   </div>
 </section>
 
-<!-- 19 · 마무리 -->
-<section class="slide dark" data-act="4">
+<!-- 19 · 한계와 다음 결정 -->
+<section class="slide" data-act="4">
   <span class="chip">한계와 다음 결정</span>
-  <h1 class="h1 wide" style="color:#fff">다음 두 가지를 확인하고 1단계로 갑니다</h1>
+  <h1 class="h1 wide">다음 두 가지를 확인하고 1단계로 갑니다</h1>
   <div class="body">
     <div class="g3" style="flex:1;min-height:0">
       <div class="card"><b class="badge b-ok" style="align-self:flex-start">확정</b>
@@ -833,18 +841,33 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
           <span class="cb sm">Zillow 자료는 미국 · 2020년 · 매매</span>
           <span class="cb sm">초대 수락률 · 네이버 내부 데이터 미확인</span>
         </div></div>
-      <div class="card" style="border-color:var(--accent-lit)">
-        <b class="badge" style="align-self:flex-start;color:var(--accent-lit);background:rgba(0,229,109,.12);border-color:var(--accent-lit)">다음 결정</b>
+      <div class="card hi">
+        <b class="badge b-ok" style="align-self:flex-start">다음 결정</b>
         <div class="col" style="gap:var(--s2);margin-top:var(--s1)">
-          <span class="cb sm" style="color:#fff">1. 초대받은 사람이 오는지 측정</span>
-          <span class="cb sm" style="color:#fff">2. 늦어진 원인을 가르는 인터뷰</span>
-          <span class="cb sm" style="color:#fff">3. 둘 다 통과하면 1단계 프로토타입</span>
+          <span class="cb sm" style="color:var(--ink)"><b>1.</b> 초대받은 사람이 오는지 3단 깔때기로 측정</span>
+          <span class="cb sm" style="color:var(--ink)"><b>2.</b> 늦어진 원인을 가르는 인터뷰</span>
+          <span class="cb sm" style="color:var(--ink)"><b>3.</b> 둘 다 통과하면 1단계 프로토타입</span>
         </div></div>
     </div>
-    <div class="card" style="border-color:rgba(0,229,109,.3);align-items:center;padding:var(--s5)">
-      <span class="lead" style="margin:0;color:#fff;max-width:none;font-size:24px;text-align:center">두 사람이 정말 함께 쓰는지, 조건 차이가 결정을 얼마나 늦추는지를 먼저 확인합니다.<br>확인되면 조건 차이를 설명하는 <span class="g">같이 보기</span> 1단계로 갑니다.</span>
+    <div class="card tint" style="align-items:center;padding:var(--s4)">
+      <span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:23px;text-align:center">두 사람이 정말 함께 쓰는지, 조건 차이가 결정을 얼마나 늦추는지를 먼저 확인합니다.</span>
     </div>
     <div class="foot">IPDAS journals.sagepub.com/doi/full/10.1177/0272989X211021397 · Option Grid ncbi.nlm.nih.gov/pmc/articles/PMC3986464 &nbsp;|&nbsp; 근거 문서 — 팀 브리프 · 가설 · 근거 로그 · 벤치마크 · 화면 설계 · 기획서</div>
+  </div>
+</section>
+
+<!-- 20 · 발표 마무리 -->
+<section class="slide dark fin" data-act="4">
+  <div class="body center" style="align-items:center;gap:var(--s5);margin:0">
+    <span class="chip" style="align-self:center">네이버 매물 · 같이 보기</span>
+    <div class="display" style="text-align:center;font-size:62px">각자의 조건과 <span class="g">양보 지점</span>을 보고,<br>함께 <span class="g">보러 갈 집</span>을 정합니다.</div>
+    <div style="width:96px;height:2px;background:var(--accent-lit);margin:var(--s3) 0"></div>
+    <div class="lead" style="text-align:center;max-width:none;margin:0;font-size:30px;color:#fff;font-weight:700">감사합니다</div>
+    <div class="cb" style="text-align:center">질문 있으시면 말씀해 주세요 — <span class="nb">O 키로 전체 목록</span>을 열어 해당 장으로 바로 갑니다</div>
+  </div>
+  <div class="foot" style="display:flex;align-items:center;gap:var(--s5);padding-bottom:var(--s4)">
+    <span>서비스 역기획 · 4조 · 2026년 8월</span>
+    <span style="margin-left:auto">프로토타입은 이 덱 안에서 바로 조작할 수 있습니다</span>
   </div>
 </section>
 
@@ -3317,7 +3340,7 @@ const PROTO_M = PROTO.replace("new URLSearchParams(location.search).has('b')", "
 const slides = [...document.querySelectorAll('.slide')];
 const N = slides.length;
 const ACTS = [[1,'왜 만드나'],[2,'어떻게 푸나'],[3,'무엇을 만드나'],[4,'어떻게 확인하나']];
-const TALK = new Set([1,2,3,5,8,10,11,12,13,14,15,18,19]);
+const TALK = new Set([1,2,3,5,8,10,11,12,13,14,15,18,20]);
 let cur = 0;
 
 const bar = document.getElementById('bar');
