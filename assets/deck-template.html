@@ -11,7 +11,7 @@
   --ask-fg:#1D4ED8; --ask-bg:#EAF0FE;
   --off-fg:#5F6B7A; --off-bg:#F3F5F7;
   --r-s:6px; --r:8px; --r-l:12px;
-  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:72px;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px;
   --fs-display:84px; --fs-h1:44px; --fs-lead:24px; --fs-body:20px; --fs-label:17px; --fs-micro:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -25,194 +25,242 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:var(--r-s)}
 .nb{white-space:nowrap}
 .num{font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+figure{margin:0;display:flex;flex-direction:column;gap:var(--s2);min-height:0}
+figure svg{width:100%;height:auto;max-height:100%;display:block}
+figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wrap:pretty}
 
-/* ── 무대 ── */
 #stage{position:fixed;inset:0;display:grid;place-items:center}
 #deck{width:1280px;height:720px;position:relative;flex:none}
-.slide{
-  position:absolute;inset:0;background:var(--surface);
-  padding:56px 72px 48px;display:none;flex-direction:column;
-  opacity:0;transform:translateY(8px);transition:opacity .18s ease-out,transform .18s ease-out;
-}
+.slide{position:absolute;inset:0;background:var(--surface);padding:52px 68px 44px;
+  display:none;flex-direction:column;opacity:0;transform:translateY(8px);
+  transition:opacity .18s ease-out,transform .18s ease-out}
 .slide.on{display:flex;opacity:1;transform:none}
 .slide.dark{background:var(--deep);color:#fff}
 
-/* ── 머리 ── */
-.chip{
-  display:inline-block;align-self:flex-start;
-  font-size:var(--fs-micro);font-weight:600;letter-spacing:.02em;
-  color:var(--accent);background:var(--accent-bg);
-  padding:6px 14px;border-radius:var(--r-s);margin-bottom:var(--s4);
-}
+.chip{display:inline-block;align-self:flex-start;font-size:var(--fs-micro);font-weight:600;
+  letter-spacing:.02em;color:var(--accent);background:var(--accent-bg);
+  padding:6px 14px;border-radius:var(--r-s);margin-bottom:var(--s3)}
 .dark .chip{color:var(--accent-lit);background:rgba(0,229,109,.12)}
-.h1{font-size:var(--fs-h1);font-weight:600;letter-spacing:-.02em;line-height:1.25;text-wrap:balance;max-width:24ch}
-.h1.wide{max-width:34ch}
-.lead{font-size:var(--fs-lead);font-weight:600;color:var(--ink-2);line-height:1.5;text-wrap:pretty;max-width:52ch;margin-top:var(--s3)}
+.h1{font-size:var(--fs-h1);font-weight:600;letter-spacing:-.02em;line-height:1.24;text-wrap:balance;max-width:26ch}
+.h1.wide{max-width:36ch}
+.lead{font-size:var(--fs-lead);font-weight:600;color:var(--ink-2);line-height:1.5;text-wrap:pretty;max-width:52ch;margin-top:var(--s2)}
 .dark .lead{color:#A4A7AE}
 .display{font-size:var(--fs-display);font-weight:700;letter-spacing:-.035em;line-height:1.1;text-wrap:balance}
 .g{color:var(--accent)} .dark .g{color:var(--accent-lit)}
 
-/* ── 본문 ── */
-.body{flex:1;display:flex;flex-direction:column;gap:var(--s5);margin-top:var(--s6);min-height:0}
-.slide[data-proto] .body{margin-top:var(--s4);gap:var(--s3)}
-.slide[data-proto] .h1{font-size:38px}
+.body{flex:1;display:flex;flex-direction:column;gap:var(--s4);margin-top:var(--s4);min-height:0}
 .body.center{justify-content:center}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.slide[data-proto] .body{gap:var(--s3)}
+.slide[data-proto] .h1{font-size:38px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
-.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3)}
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
-.row{display:flex;gap:var(--s4);align-items:baseline}
-.col{display:flex;flex-direction:column;gap:var(--s3)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
+.row{display:flex;gap:var(--s3);align-items:baseline}
+.col{display:flex;flex-direction:column;gap:var(--s2)}
 
-.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);padding:var(--s5);display:flex;flex-direction:column;gap:var(--s3)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-l);
+  padding:var(--s4) var(--s5);display:flex;flex-direction:column;gap:var(--s2);min-height:0}
 .card.tint{background:var(--line-2);border-color:transparent}
 .card.hi{border-color:var(--accent);border-width:2px;background:var(--accent-bg)}
+.card.out{background:var(--off-bg);border-color:var(--line);position:relative;opacity:.72}
 .dark .card{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1)}
 .ct{font-size:var(--fs-label);font-weight:600;color:var(--ink)}
 .dark .ct{color:#fff}
-.cb{font-size:var(--fs-body);font-weight:400;color:var(--ink-2);line-height:1.55;text-wrap:pretty}
+.cb{font-size:var(--fs-body);font-weight:400;color:var(--ink-2);line-height:1.5;text-wrap:pretty}
+.cb.sm{font-size:var(--fs-label)}
+.cb.xs{font-size:var(--fs-micro)}
 .dark .cb{color:#A4A7AE}
-.big{font-size:40px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.mid{font-size:28px;font-weight:600;letter-spacing:-.02em}
+.big{font-size:38px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.mid{font-size:26px;font-weight:600;letter-spacing:-.02em}
 
-.badge{display:inline-flex;align-items:center;font-size:var(--fs-micro);font-weight:600;padding:4px 10px;border-radius:var(--r-s);border:1px solid}
+.badge{display:inline-flex;align-items:center;font-size:var(--fs-micro);font-weight:600;
+  padding:3px 9px;border-radius:var(--r-s);border:1px solid;white-space:nowrap}
 .b-ok{color:var(--accent);background:var(--accent-bg);border-color:var(--accent)}
 .b-inf{color:var(--ink-2);background:var(--off-bg);border-color:var(--ink-3)}
 .b-hy{color:var(--ask-fg);background:var(--ask-bg);border-color:var(--ask-fg)}
 .b-tbd{color:var(--ink-3);background:var(--surface);border-color:#D8DEE3;border-style:dashed}
+.b-no{color:var(--no-fg);background:var(--no-bg);border-color:var(--no-fg)}
 
-.st{display:inline-flex;align-items:center;font-size:var(--fs-micro);font-weight:600;padding:4px 10px;border-radius:var(--r-s)}
+.st{display:inline-flex;align-items:center;font-size:var(--fs-micro);font-weight:600;
+  padding:4px 10px;border-radius:var(--r-s);white-space:nowrap}
 .s-ok{color:var(--ok-fg);background:var(--ok-bg)}
-.s-no{color:var(--no-fg);background:var(--no-bg);border:2px solid var(--no-fg)}
+.s-no{color:var(--no-fg);background:var(--no-bg);box-shadow:inset 0 0 0 2px var(--no-fg)}
 .s-ask{color:var(--ask-fg);background:var(--ask-bg)}
 .s-off{color:var(--off-fg);background:var(--off-bg)}
 
-.foot{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);line-height:1.5;text-wrap:pretty;padding-top:var(--s4);border-top:1px solid var(--line-2)}
+.foot{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);line-height:1.5;
+  text-wrap:pretty;padding-top:var(--s3);border-top:1px solid var(--line-2)}
 .dark .foot{color:#717680;border-color:rgba(255,255,255,.1)}
-.pno{position:absolute;right:72px;bottom:24px;font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.pno{position:absolute;right:68px;bottom:20px;font-size:var(--fs-micro);font-weight:600;
+  color:var(--ink-3);font-variant-numeric:tabular-nums}
 .dark .pno{color:#717680}
 
-/* 흐름 띠 */
-.flow{display:flex;align-items:center;gap:var(--s2)}
-.fstep{flex:1;background:var(--line-2);border-radius:var(--r);padding:14px 12px;text-align:center;font-size:var(--fs-label);font-weight:600;color:var(--ink-2)}
-.fstep.on{background:var(--accent-bg);color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
-.farr{color:var(--ink-3);font-size:18px;flex:none}
-/* 순번 원 */
-.onum{width:30px;height:30px;flex:none;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:var(--fs-micro);font-weight:700}
-.card.hi .onum{background:var(--accent)}
-/* 표 */
 .tb{display:grid;gap:1px;background:var(--line);border-radius:var(--r);overflow:hidden}
-.tb>*{background:var(--surface);padding:14px 16px;font-size:var(--fs-label)}
+.tb>*{background:var(--surface);padding:11px 14px;font-size:var(--fs-label)}
 .tb .th{background:var(--ink);color:#fff;font-weight:600}
 .tb .rl{font-weight:600;color:var(--ink-2)}
 
-/* ── iframe 액자 ── */
-.frame{
-  position:relative;flex:1;min-height:0;border:1px solid var(--line);border-radius:var(--r-l);
+.frame{position:relative;flex:1;min-height:0;border:1px solid var(--line);border-radius:var(--r-l);
   overflow:hidden;background:var(--surface);cursor:zoom-in;
-  box-shadow:0 1px 2px rgba(26,29,36,.04),0 8px 24px rgba(26,29,36,.06);
-}
+  box-shadow:0 1px 2px rgba(26,29,36,.04),0 8px 24px rgba(26,29,36,.06)}
 .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;background:#fff}
+.frame.mob iframe{left:50%;width:430px;transform:translateX(-50%)}
 .frame .zi{position:absolute;right:12px;bottom:12px;width:34px;height:34px;border-radius:var(--r-s);
   background:rgba(26,29,36,.82);color:#fff;display:grid;place-items:center;font-size:15px;pointer-events:none}
-.frame.mob iframe{left:50%;width:430px;transform:translateX(-50%)}
-.cap{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-align:center;padding-top:var(--s3)}
+.cap{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-align:center}
 
-/* ── 크롬 ── */
 #bar{position:fixed;left:0;right:0;top:0;height:4px;display:flex;gap:2px;z-index:40;background:var(--ground)}
 #bar i{background:var(--line);transition:background .2s}
 #bar i.done{background:var(--ink-3)} #bar i.cur{background:var(--accent)}
 #nav{position:fixed;right:20px;bottom:16px;display:flex;gap:var(--s2);z-index:40}
-#nav button{width:40px;height:40px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);
-  color:var(--ink-2);font-size:17px;display:grid;place-items:center}
+#nav button{width:40px;height:40px;border-radius:var(--r);background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);font-size:17px;display:grid;place-items:center}
 #nav button:hover{background:var(--line-2);color:var(--ink)}
 #hint{position:fixed;left:20px;bottom:20px;font-size:var(--fs-micro);color:var(--ink-3);z-index:40}
 
-/* 라이트박스 */
-#lb{position:fixed;inset:0;background:rgba(10,13,18,.9);z-index:80;display:none;place-items:center;padding:24px}
+#lb{position:fixed;inset:0;background:rgba(10,13,18,.92);z-index:80;display:none;place-items:center}
 #lb.on{display:grid}
-#lb .win{width:1240px;max-width:100%;height:100%;max-height:900px;background:#fff;border-radius:var(--r-l);overflow:hidden;position:relative}
-#lb iframe{width:100%;height:100%;border:0}
-#lb .x{position:absolute;right:12px;top:12px;z-index:2;width:38px;height:38px;border-radius:var(--r);
-  background:rgba(26,29,36,.86);color:#fff;font-size:18px;display:grid;place-items:center}
-#lb .lbcap{position:absolute;left:0;right:0;bottom:0;padding:10px 16px;background:rgba(10,13,18,.86);color:#fff;font-size:var(--fs-micro);font-weight:600}
+#lb .win{background:#fff;border-radius:var(--r-l);overflow:hidden;position:relative;
+  transform-origin:center center;box-shadow:0 24px 80px rgba(0,0,0,.5)}
+#lb .win.mob{border-radius:28px;border:9px solid #14171C}
+#lb iframe{width:100%;height:100%;border:0;display:block}
+#lb .x{position:fixed;right:20px;top:20px;z-index:2;width:40px;height:40px;border-radius:var(--r);
+  background:rgba(255,255,255,.14);color:#fff;font-size:18px;display:grid;place-items:center}
+#lb .x:hover{background:rgba(255,255,255,.26)}
+#lb .lbcap{position:fixed;left:0;right:0;bottom:0;padding:12px 20px;background:rgba(10,13,18,.9);
+  color:#fff;font-size:var(--fs-micro);font-weight:600;text-align:center}
 
-/* 개요 */
-#ov{position:fixed;inset:0;background:var(--ground);z-index:70;display:none;overflow:auto;padding:32px 40px}
+#ov{position:fixed;inset:0;background:var(--ground);z-index:70;display:none;overflow:auto;padding:30px 38px}
 #ov.on{display:block}
-#ov h2{font-size:var(--fs-micro);font-weight:600;color:var(--accent);letter-spacing:.04em;margin:24px 0 10px}
-#ov h2:first-child{margin-top:0}
-#ov .gr{display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:10px}
-#ov .th{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;text-align:left;
-  display:flex;flex-direction:column;gap:5px;min-height:82px}
+#ov h2{font-size:var(--fs-micro);font-weight:600;color:var(--accent);letter-spacing:.04em;margin:22px 0 9px}
+#ov h2:first-of-type{margin-top:0}
+#ov .gr{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
+#ov .th{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:11px;
+  text-align:left;display:flex;flex-direction:column;gap:5px;min-height:76px}
 #ov .th:hover{border-color:var(--accent)}
 #ov .th.talk{box-shadow:inset 3px 0 0 var(--accent)}
 #ov .th b{font-size:var(--fs-micro);color:var(--ink-3);font-variant-numeric:tabular-nums}
 #ov .th span{font-size:var(--fs-micro);font-weight:600;line-height:1.4;color:var(--ink)}
-#ov .lg{font-size:var(--fs-micro);color:var(--ink-3);margin-bottom:18px}
-
+#ov .lg{font-size:var(--fs-micro);color:var(--ink-3);margin-bottom:16px}
 @media (prefers-reduced-motion:reduce){.slide{transition:none}}
 </style>
 
 <div id="bar"></div>
 <div id="stage"><div id="deck">
 
-<!-- 1 ─────────────────────────────── -->
+<!-- 1 · 표지 -->
 <section class="slide dark" data-act="1">
   <span class="chip">네이버 부동산 신규 기능 제안</span>
   <div class="body center">
     <div class="display">네이버 매물<br><span class="g">‘같이 보기’</span> 서비스</div>
-    <div class="lead" style="font-size:28px;margin-top:24px">관심매물 이후, 둘이 납득하는 결정까지</div>
-    <div class="cb" style="max-width:56ch;margin-top:8px">각자의 조건과 양보 지점을 보고, 함께 보러 갈 집을 정합니다.</div>
+    <div class="lead" style="font-size:28px;margin-top:22px">관심매물 이후, 둘이 납득하는 결정까지</div>
+    <div class="cb" style="max-width:56ch;margin-top:6px">각자의 조건과 양보 지점을 보고, 함께 보러 갈 집을 정합니다.</div>
   </div>
   <div class="foot">2026년 8월 · 4조</div>
 </section>
 
-<!-- 2 ─────────────────────────────── -->
+<!-- 2 · 요약 -->
 <section class="slide" data-act="1">
   <span class="chip">Executive Summary</span>
-  <div class="h1 wide" style="text-align:center;max-width:none;font-size:46px;font-weight:700;line-height:1.15"><span class="g">둘</span>이서 한집고르기</div>
-  <div class="lead" style="text-align:center;max-width:none;margin-top:10px;font-size:var(--fs-body)">관심매물 저장 이후 흩어지는 공동 의사결정을 한 화면으로 연결합니다</div>
-  <div class="body" style="margin-top:var(--s4);gap:var(--s3)">
-    <div class="g4" style="flex:1">
+  <div class="h1" style="text-align:center;max-width:none;font-size:46px;font-weight:700;line-height:1.15"><span class="g">둘</span>이서 한집고르기</div>
+  <div class="lead" style="text-align:center;max-width:none;margin-top:6px;font-size:var(--fs-body)">관심매물 저장 이후 흩어지는 공동 의사결정을 한 화면으로 연결합니다</div>
+  <div class="body" style="margin-top:var(--s4)">
+    <div class="g4" style="flex:1;min-height:0">
+
       <div class="card">
-        <div class="row"><span class="onum">1</span><span class="ct">현재</span></div>
-        <div class="cb" style="font-size:var(--fs-label)">관심매물 저장</div>
-        <div class="col" style="gap:6px">
-          <div class="st s-off">카톡 공유</div><div class="st s-off">통근 확인</div>
-          <div class="st s-off">주거비 계산</div><div class="st s-off">메모</div>
+        <span class="ct">① 지금</span>
+        <figure style="flex:1">
+          <svg viewBox="0 0 240 186" role="img" aria-label="관심매물 저장 한 곳에서 카톡 공유, 통근 확인, 주거비 계산, 메모 네 갈래로 빠져나간다">
+            <defs><marker id="a1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0 0 L8 4 L0 8 z" fill="#A4A7AE"/></marker></defs>
+            <rect x="2" y="66" width="86" height="54" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="1.5"/>
+            <path d="M32 92 l13-11 13 11 v14 h-26 z" fill="none" stroke="#087A43" stroke-width="2"/>
+            <text x="45" y="114" text-anchor="middle" font-size="12" font-weight="700" fill="#087A43">저장</text>
+            <g stroke="#A4A7AE" stroke-width="1.4" stroke-dasharray="4 4" fill="none" marker-end="url(#a1)">
+              <path d="M90 82 C118 82 122 22 146 22"/>
+              <path d="M90 88 C118 88 122 70 146 70"/>
+              <path d="M90 98 C118 98 122 116 146 116"/>
+              <path d="M90 104 C118 104 122 164 146 164"/>
+            </g>
+            <g font-size="12" font-weight="600" fill="#717680">
+              <rect x="150" y="8"   width="88" height="28" rx="6" fill="#F3F5F7"/><text x="194" y="26" text-anchor="middle">카톡 공유</text>
+              <rect x="150" y="56"  width="88" height="28" rx="6" fill="#F3F5F7"/><text x="194" y="74" text-anchor="middle">통근 확인</text>
+              <rect x="150" y="102" width="88" height="28" rx="6" fill="#F3F5F7"/><text x="194" y="120" text-anchor="middle">주거비 계산</text>
+              <rect x="150" y="150" width="88" height="28" rx="6" fill="#F3F5F7"/><text x="194" y="168" text-anchor="middle">메모</text>
+            </g>
+          </svg>
+          <figcaption>비교와 합의는 서비스 밖에서 흩어짐</figcaption>
+        </figure>
+      </div>
+
+      <div class="card">
+        <span class="ct">② 사용자와 문제</span>
+        <div class="col" style="gap:var(--s3);margin-top:var(--s1)">
+          <span class="cb sm">함께 살 집을 고르는 <b>2인</b></span>
+          <span class="cb sm">각자의 조건과 우선순위가 다름</span>
+          <span class="cb sm">충돌은 확인되지만, 원인 검증은 진행 중</span>
         </div>
-        <div class="cb" style="font-size:var(--fs-micro);margin-top:auto">비교와 합의는 서비스 밖에서 흩어짐</div>
+        <span class="cb xs" style="margin-top:auto"><b class="badge b-ok">확인</b> Zillow 2020 · 77%</span>
       </div>
-      <div class="card">
-        <div class="row"><span class="onum">2</span><span class="ct">사용자와 문제</span></div>
-        <div class="cb" style="font-size:var(--fs-label)">함께 살 집을 고르는 2인</div>
-        <div class="cb" style="font-size:var(--fs-label)">각자의 조건과 우선순위가 다름</div>
-        <div class="cb" style="font-size:var(--fs-label)">충돌은 확인되지만, 원인 검증은 진행 중</div>
-      </div>
+
       <div class="card hi">
-        <div class="row"><span class="onum">3</span><span class="ct">해결 방식</span></div>
-        <div class="cb" style="font-size:var(--fs-label);color:var(--ink)"><b>각자 조건 입력</b><br>예산은 공통 필수 · 출근 안 함 가능</div>
-        <div class="cb" style="font-size:var(--fs-label);color:var(--ink)"><b>매물별 비교</b><br>충족 · 미충족 · 양보 지점 병렬 설명</div>
-        <div class="cb" style="font-size:var(--fs-label);color:var(--ink)"><b>방문 후보 결정</b><br>총점 · 자동 추천 없이 둘이 직접 선택</div>
+        <span class="ct">③ 해결 방식</span>
+        <figure style="flex:1">
+          <svg viewBox="0 0 210 190" role="img" aria-label="각자 조건 입력에서 매물별 비교로, 매물별 비교에서 방문 후보 결정으로 이어진다">
+            <defs><marker id="a2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker></defs>
+            <g fill="#fff" stroke="#087A43" stroke-width="1.5">
+              <rect x="2" y="2" width="206" height="50" rx="8"/>
+              <rect x="2" y="70" width="206" height="50" rx="8"/>
+              <rect x="2" y="138" width="206" height="50" rx="8"/>
+            </g>
+            <g stroke="#087A43" stroke-width="1.6" marker-end="url(#a2)">
+              <line x1="105" y1="54" x2="105" y2="66"/>
+              <line x1="105" y1="122" x2="105" y2="134"/>
+            </g>
+            <g font-weight="700" font-size="13" fill="#087A43">
+              <text x="14" y="24">각자 조건 입력</text><text x="14" y="92">매물별 비교</text><text x="14" y="160">방문 후보 결정</text>
+            </g>
+            <g font-size="11" fill="#717680">
+              <text x="14" y="42">예산 필수 · 출근 안 함 가능</text>
+              <text x="14" y="110">충족 · 미충족 · 양보 병렬</text>
+              <text x="14" y="178">총점 없이 둘이 직접 선택</text>
+            </g>
+          </svg>
+        </figure>
       </div>
+
       <div class="card">
-        <div class="row"><span class="onum">4</span><span class="ct">끝나는 지점</span></div>
-        <div class="col" style="align-items:center;gap:var(--s3);margin:auto 0">
-          <div class="mid nb">관심매물 5개</div>
-          <div class="farr" style="font-size:24px">↓</div>
-          <div class="mid g nb">보러 갈 집 2개</div>
-        </div>
-        <div class="cb" style="font-size:var(--fs-micro);text-align:center">이번 주 방문 후보를 정하는 것이 MVP 범위</div>
+        <span class="ct">④ 끝나는 지점</span>
+        <figure style="flex:1;justify-content:center">
+          <svg viewBox="0 0 200 176" role="img" aria-label="관심매물 5개가 보러 갈 집 2개로 좁혀진다">
+            <defs><marker id="a3" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker></defs>
+            <g fill="#F3F5F7" stroke="#E4E7E9">
+              <rect x="8" y="6" width="32" height="42" rx="5"/><rect x="46" y="6" width="32" height="42" rx="5"/>
+              <rect x="84" y="6" width="32" height="42" rx="5"/><rect x="122" y="6" width="32" height="42" rx="5"/>
+              <rect x="160" y="6" width="32" height="42" rx="5"/>
+            </g>
+            <text x="100" y="70" text-anchor="middle" font-size="13" font-weight="600" fill="#717680">관심매물 5개</text>
+            <line x1="100" y1="82" x2="100" y2="104" stroke="#087A43" stroke-width="2" marker-end="url(#a3)"/>
+            <g fill="#EAF6EF" stroke="#087A43" stroke-width="1.5">
+              <rect x="46" y="112" width="46" height="42" rx="6"/><rect x="108" y="112" width="46" height="42" rx="6"/>
+            </g>
+            <path d="M60 140 l9-8 9 8 v10 h-18 z M122 140 l9-8 9 8 v10 h-18 z" fill="none" stroke="#087A43" stroke-width="1.6"/>
+            <text x="100" y="172" text-anchor="middle" font-size="13" font-weight="700" fill="#087A43">보러 갈 집 2개</text>
+          </svg>
+        </figure>
+        <span class="cb xs" style="text-align:center">이번 주 방문 후보를 정하는 것이 MVP 범위</span>
       </div>
     </div>
-    <div class="card tint" style="flex-direction:row;align-items:center;gap:var(--s5);padding:var(--s4) var(--s5)">
+
+    <div class="card tint" style="flex-direction:row;align-items:center;gap:var(--s4);padding:var(--s3) var(--s5)">
       <span class="ct nb">검증 순서</span>
-      <span class="cb" style="font-size:var(--fs-label)">초대받은 사람이 실제로 오는가</span><span class="farr">→</span>
-      <span class="cb" style="font-size:var(--fs-label)">원인이 조건 충돌인지 인터뷰</span><span class="farr">→</span>
-      <span class="cb" style="font-size:var(--fs-label)">1단계 프로토타입 검증</span>
-      <span style="margin-left:auto;display:flex;gap:6px">
+      <span class="cb sm">초대받은 사람이 오는가</span><span style="color:var(--ink-3)">→</span>
+      <span class="cb sm">원인이 조건 충돌인지</span><span style="color:var(--ink-3)">→</span>
+      <span class="cb sm">1단계 프로토타입</span>
+      <span style="margin-left:auto;display:flex;gap:5px">
         <b class="badge b-ok">확인</b><b class="badge b-inf">추론</b><b class="badge b-hy">가설</b><b class="badge b-tbd">미정</b>
       </span>
     </div>
@@ -220,422 +268,427 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   </div>
 </section>
 
-<!-- 3 ─────────────────────────────── -->
-<section class="slide" data-act="1">
-  <span class="chip">시장</span>
-  <h1 class="h1 wide">공유 · 비교 · 결정 — 세 칸이 저희 자리입니다</h1>
-  <div class="body">
-    <div class="flow">
-      <div class="fstep">탐색</div><span class="farr">›</span>
-      <div class="fstep">저장</div><span class="farr">›</span>
-      <div class="fstep on">공유</div><span class="farr">›</span>
-      <div class="fstep on">조건 비교</div><span class="farr">›</span>
-      <div class="fstep on">방문 결정</div><span class="farr">›</span>
-      <div class="fstep">계약 실행</div>
-    </div>
-    <div class="g3">
-      <div class="card"><span class="ct">제품 정의</span><span class="cb">함께 살 집을 구하는 2인 · 주거 형태는 제한하지 않음</span></div>
-      <div class="card"><span class="ct">제품 형태</span><span class="cb">별도 앱이 아니라 네이버 부동산 안의 기능</span></div>
-      <div class="card"><span class="ct">제외</span><span class="cb">계약 · 등기 · 보증보험 · 대출 · 3인 이상</span></div>
-    </div>
-    <div class="foot">시작 지점 · 이미 관심매물을 저장한 뒤 · 전·월세를 함께 구하는 2인</div>
-  </div>
-</section>
-
-<!-- 4 ─────────────────────────────── -->
+<!-- 3 · 시장 + Five Forces -->
 <section class="slide" data-act="1">
   <span class="chip">시장 · Five Forces</span>
-  <h1 class="h1">진짜 경쟁자는 매물 링크 공유 버튼입니다</h1>
+  <h1 class="h1 wide">진짜 경쟁자는 매물 링크 공유 버튼입니다</h1>
   <div class="body">
-    <div class="g5" style="flex:1">
-      <div class="card hi"><span class="badge b-ok" style="align-self:flex-start">매우 높음</span><span class="ct">대체재 위협</span><span class="cb" style="font-size:var(--fs-label)">카톡·지도·엑셀·메모보다 시작이 번거로우면 안 씁니다</span></div>
-      <div class="card"><span class="badge b-inf" style="align-self:flex-start">높음</span><span class="ct">기존 경쟁 강도</span><span class="cb" style="font-size:var(--fs-label)">검색·지도·매물량 정면 경쟁을 피함</span></div>
-      <div class="card"><span class="badge b-inf" style="align-self:flex-start">높음</span><span class="ct">구매자 교섭력</span><span class="cb" style="font-size:var(--fs-label)">가입·초대·조건 입력의 번거로움을 줄임</span></div>
-      <div class="card"><span class="badge b-inf" style="align-self:flex-start">중~높음</span><span class="ct">공급자 교섭력</span><span class="cb" style="font-size:var(--fs-label)">기존 매물 데이터를 읽어 조건을 판정</span></div>
-      <div class="card"><span class="badge b-inf" style="align-self:flex-start">중간</span><span class="ct">신규 진입 위협</span><span class="cb" style="font-size:var(--fs-label)">네이버 내부 기능 전제가 데이터 장벽을 낮춤</span></div>
+    <figure>
+      <svg viewBox="0 0 1140 96" role="img" aria-label="탐색 저장 공유 조건비교 방문결정 계약실행 여섯 단계 중 공유 조건비교 방문결정 세 칸이 우리 자리다">
+        <g font-size="14" font-weight="600">
+          <rect x="0" y="28" width="170" height="44" rx="7" fill="#F3F5F7"/><text x="85" y="56" text-anchor="middle" fill="#717680">탐색</text>
+          <rect x="180" y="28" width="170" height="44" rx="7" fill="#F3F5F7"/><text x="265" y="56" text-anchor="middle" fill="#717680">저장</text>
+          <rect x="360" y="20" width="170" height="60" rx="7" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/><text x="445" y="56" text-anchor="middle" font-weight="700" fill="#087A43">공유</text>
+          <rect x="540" y="20" width="170" height="60" rx="7" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/><text x="625" y="56" text-anchor="middle" font-weight="700" fill="#087A43">조건 비교</text>
+          <rect x="720" y="20" width="170" height="60" rx="7" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/><text x="805" y="56" text-anchor="middle" font-weight="700" fill="#087A43">방문 결정</text>
+          <rect x="900" y="28" width="170" height="44" rx="7" fill="#F3F5F7"/><text x="985" y="56" text-anchor="middle" fill="#717680">계약 실행</text>
+        </g>
+        <text x="625" y="12" text-anchor="middle" font-size="12" font-weight="700" fill="#087A43">세 칸이 저희 자리</text>
+      </svg>
+    </figure>
+    <div class="g4" style="flex:1;min-height:0">
+      <div class="card hi"><b class="badge b-ok" style="align-self:flex-start">매우 높음</b><span class="ct">대체재 위협</span>
+        <span class="cb sm">네이버 부동산에 <b>이미 공유 버튼이 있습니다.</b> 누르면 카톡으로 링크가 갑니다</span>
+        <span class="cb xs" style="margin-top:auto">버튼 하나 · 무료 · 학습 비용 0</span></div>
+      <div class="card"><b class="badge b-inf" style="align-self:flex-start">높음</b><span class="ct">기존 경쟁 강도</span><span class="cb sm">검색·지도·매물량 정면 경쟁을 피함</span></div>
+      <div class="card"><b class="badge b-inf" style="align-self:flex-start">높음</b><span class="ct">구매자 교섭력</span><span class="cb sm">가입·초대·조건 입력의 번거로움을 줄임</span></div>
+      <div class="card"><b class="badge b-inf" style="align-self:flex-start">중~높음</b><span class="ct">공급자 · 신규 진입</span><span class="cb sm">기존 매물 데이터를 읽어 판정 · 네이버 내부 기능 전제</span></div>
     </div>
-    <div class="card tint"><span class="ct">결론</span><span class="cb">매물을 더 잘 찾는 게 아닙니다. 이미 있는 탐색 위에 붙습니다.</span></div>
+    <div class="foot">링크 하나 보내는 것보다 시작이 번거로우면 안 쓰입니다 — 필수 입력 두 개, 링크만 누르면 들어온다는 결정이 전부 여기서 나왔습니다</div>
   </div>
 </section>
 
-<!-- 5 ─────────────────────────────── -->
+<!-- 4 · TAM-SAM-SOM -->
 <section class="slide" data-act="1">
   <span class="chip">시장 · TAM-SAM-SOM</span>
   <h1 class="h1 wide">공개 통계로 계산 가능한 하한은 <span class="num nb">54.6만 쌍</span>입니다</h1>
   <div class="body">
-    <div class="g3" style="flex:1">
-      <div class="card"><span class="ct">TAM · 전체 시장</span><span class="big num">500만~700만</span><span class="cb" style="font-size:var(--fs-label)">부동산 앱을 쓰는 사람 전체</span><span class="badge b-inf" style="align-self:flex-start;margin-top:auto">신뢰도 중간 · 앱끼리 중복</span></div>
-      <div class="card hi"><span class="ct">SAM · 우리가 닿는 범위</span><span class="big num">54.6만 쌍</span><span class="cb" style="font-size:var(--fs-label)">신혼부부 95.2만 × 무주택 57.3%</span><span class="badge b-ok" style="align-self:flex-start;margin-top:auto">신뢰도 높음 · 신혼부부만 넣음</span></div>
-      <div class="card"><span class="ct">SOM · 초기 목표</span><span class="big num">6.7만~20.1만</span><span class="cb" style="font-size:var(--fs-label)">네이버 월 이용자 134만 × 5/10/15%</span><span class="badge b-tbd" style="align-self:flex-start;margin-top:auto">신뢰도 낮음 · 예측 아님</span></div>
+    <div class="g3" style="flex:1;min-height:0">
+      <div class="card"><span class="ct">TAM · 전체 시장</span><span class="big">500만~700만</span>
+        <span class="cb sm">부동산 앱을 쓰는 사람 전체</span>
+        <b class="badge b-inf" style="align-self:flex-start;margin-top:auto">신뢰도 중간 · 앱끼리 중복</b></div>
+      <div class="card hi"><span class="ct">SAM · 우리가 닿는 범위</span><span class="big g">54.6만 쌍</span>
+        <span class="cb sm">신혼부부 95.2만 × 무주택 57.3%</span>
+        <b class="badge b-ok" style="align-self:flex-start;margin-top:auto">신뢰도 높음 · 근거로 쓰는 숫자</b></div>
+      <div class="card"><span class="ct">SOM · 초기 목표</span><span class="big">6.7만~20.1만</span>
+        <span class="cb sm">네이버 월 이용자 134만 × 5/10/15%</span>
+        <b class="badge b-tbd" style="align-self:flex-start;margin-top:auto">신뢰도 낮음 · 예측 아님</b></div>
     </div>
     <div class="card tint" style="flex-direction:row;gap:var(--s6);align-items:center">
       <span class="ct nb">2025 월 이용자</span>
-      <span class="cb num">직방 229만</span><span class="cb num">호갱노노 179만</span><span class="cb num">네이버 134만</span>
-      <span class="cb" style="margin-left:auto;font-size:var(--fs-micro)">SOM은 범위로만 해석합니다</span>
+      <span class="cb sm num">직방 229만</span><span class="cb sm num">호갱노노 179만</span><span class="cb sm num">네이버 134만</span>
+      <span class="cb xs" style="margin-left:auto">SOM은 범위로만 해석합니다</span>
     </div>
   </div>
 </section>
 
-<!-- 6 ─────────────────────────────── -->
+<!-- 5 · 가치사슬 + KSF -->
 <section class="slide" data-act="1">
-  <span class="chip">네이버 · 가치사슬</span>
+  <span class="chip">네이버 · 가치사슬 · KSF</span>
   <h1 class="h1 wide">네이버는 저장까지 있고, 그다음이 없습니다</h1>
   <div class="body">
-    <div class="flow">
-      <div class="fstep">매물 확보</div><div class="fstep">데이터 정리</div><div class="fstep">검색·지도</div><div class="fstep">상세</div><div class="fstep">관심매물</div>
-      <span class="farr" style="font-size:22px">⟢</span>
-      <div class="fstep on">공유·비교</div><div class="fstep on">방문 후보</div>
-      <span class="farr" style="font-size:22px">⟣</span>
-      <div class="fstep">문의/방문</div><div class="fstep">금융/계약</div>
+    <figure>
+      <svg viewBox="0 0 1140 112" role="img" aria-label="매물확보부터 계약까지 아홉 단계 중 관심매물과 문의 사이 공유비교와 방문후보 구간이 비어 있다">
+        <g font-size="13" font-weight="600" fill="#717680">
+          <rect x="0" y="34" width="104" height="42" rx="6" fill="#F3F5F7"/><text x="52" y="60" text-anchor="middle">매물 확보</text>
+          <rect x="112" y="34" width="104" height="42" rx="6" fill="#F3F5F7"/><text x="164" y="60" text-anchor="middle">데이터 정리</text>
+          <rect x="224" y="34" width="104" height="42" rx="6" fill="#F3F5F7"/><text x="276" y="60" text-anchor="middle">검색·지도</text>
+          <rect x="336" y="34" width="104" height="42" rx="6" fill="#F3F5F7"/><text x="388" y="60" text-anchor="middle">상세</text>
+          <rect x="448" y="34" width="104" height="42" rx="6" fill="#F3F5F7"/><text x="500" y="60" text-anchor="middle">관심매물</text>
+        </g>
+        <rect x="566" y="26" width="236" height="58" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="2" stroke-dasharray="7 5"/>
+        <text x="684" y="50" text-anchor="middle" font-size="13" font-weight="700" fill="#087A43">공유·비교 · 방문 후보</text>
+        <text x="684" y="70" text-anchor="middle" font-size="12" font-weight="600" fill="#087A43">여기가 없습니다</text>
+        <g font-size="13" font-weight="600" fill="#717680">
+          <rect x="816" y="34" width="104" height="42" rx="6" fill="#F3F5F7"/><text x="868" y="60" text-anchor="middle">문의/방문</text>
+          <rect x="928" y="34" width="104" height="42" rx="6" fill="#F3F5F7"/><text x="980" y="60" text-anchor="middle">금융/계약</text>
+        </g>
+        <text x="252" y="16" font-size="12" font-weight="600" fill="#A4A7AE">네이버가 이미 잘하는 구간</text>
+        <text x="924" y="16" text-anchor="middle" font-size="12" font-weight="600" fill="#A4A7AE">이미 있는 구간</text>
+      </svg>
+    </figure>
+    <div class="g2" style="flex:1;min-height:0">
+      <div class="card"><span class="ct">네이버가 가진 것 → 이 기능의 성공 조건</span>
+        <div class="col" style="gap:var(--s2);margin-top:var(--s1)">
+          <span class="cb sm">매물 데이터 → 매물이 바뀌어도 조건이 남는 후보 관리</span>
+          <span class="cb sm">지도·검색 속도 → 링크 하나로 들어오고 입력은 두 개만</span>
+          <span class="cb sm">로그인·관심매물 → 두 사람 조건을 같은 비중으로</span>
+          <span class="cb sm">문의·방문 생태계 → 정하고 나면 원래 행동으로 복귀</span>
+        </div></div>
+      <div class="card hi" style="justify-content:center">
+        <b class="badge b-hy" style="align-self:flex-start">여기가 급소</b>
+        <span class="lead" style="margin:0;color:var(--ink);font-size:22px">카톡에 이렇게 뜹니다<br>“OO님이 같이 보기에 초대했어요”</span>
+        <span class="cb xs">이걸 안 누르면 기능 자체가 성립하지 않습니다</span></div>
     </div>
-    <div class="g2" style="flex:1">
-      <div class="card hi"><span class="row" style="gap:var(--s3)"><b class="badge b-ok">빈 자리</b><span class="ct">저장 이후</span></span>
-        <span class="cb">저장한 집은 네이버에 남지만, 둘이 의견을 맞추는 과정은 다른 앱에서 이뤄집니다</span>
-        <span class="cb" style="font-size:var(--fs-micro);margin-top:auto"><b class="badge b-inf">추론</b> 네이버 내부 데이터로 확인한 건 아닙니다</span></div>
-      <div class="card"><span class="ct">제품 범위</span>
-        <span class="cb">새 매물 DB·검색은 안 만듭니다</span>
-        <span class="cb">저장된 관심매물 최대 5개에 사람별 조건을 적용합니다</span></div>
-    </div>
+    <div class="foot"><b class="badge b-inf">추론</b> 이 구간 판단은 팀의 관찰입니다 · 혼자서도 막히진 않게 했지만 그걸 기본으로 삼진 않습니다</div>
   </div>
 </section>
 
-<!-- 7 ─────────────────────────────── -->
+<!-- 6 · 고객 -->
 <section class="slide" data-act="1">
-  <span class="chip">기업 · KSF</span>
-  <h1 class="h1 wide">성공은 두 번째 사람이 들어오느냐에 달려 있습니다</h1>
+  <span class="chip">고객 · 세그먼트 · 두 사람의 역할</span>
+  <h1 class="h1 wide">참여자는 둘이고, 결정 권한은 같습니다</h1>
   <div class="body">
-    <div class="tb" style="grid-template-columns:1fr 1fr">
-      <div class="th">네이버가 가진 것</div><div class="th">이 기능의 성공 조건</div>
-      <div class="rl">풍부하고 신선한 매물 데이터</div><div>매물이 바뀌어도 조건이 남는 후보 관리</div>
-      <div class="rl">지도·필터·검색 속도</div><div>링크 하나로 들어오고, 입력은 두 개만</div>
-      <div class="rl">로그인 사용자·관심매물</div><div>두 사람 조건을 같은 비중으로 설명</div>
-      <div class="rl">문의·방문·금융 생태계</div><div>정하고 나면 원래 하던 문의·방문으로 돌아감</div>
-    </div>
-    <div class="card hi" style="flex-direction:row;align-items:center;gap:var(--s5)">
-      <b class="badge b-hy nb">여기가 급소</b>
-      <span class="lead" style="margin:0;color:var(--ink);font-size:var(--fs-lead)">카톡에 이렇게 뜹니다 — “OO님이 같이 보기에 초대했어요”</span>
-    </div>
-    <div class="foot">혼자서도 막히진 않게 했습니다. 다만 그걸 기본으로 삼진 않습니다.</div>
-  </div>
-</section>
-
-<!-- 8 ─────────────────────────────── -->
-<section class="slide" data-act="1">
-  <span class="chip">고객 · 세그먼트 맵</span>
-  <h1 class="h1 wide">처음 검증은 예비부부·신혼부부로 좁혔습니다</h1>
-  <div class="body">
-    <div class="card">
-      <span class="ct">제품 사용자 — 함께 살 집을 구하는 2인</span>
-      <div style="display:flex;align-items:center;gap:var(--s4);margin-top:var(--s3)">
-        <span class="cb nb" style="font-size:var(--fs-micro)">공동 의지 높음</span>
-        <div style="flex:1;height:2px;background:var(--line);position:relative">
-          <span style="position:absolute;left:6%;top:-8px;width:18px;height:18px;border-radius:50%;background:var(--accent)"></span>
-          <span style="position:absolute;left:78%;top:-8px;width:18px;height:18px;border-radius:50%;background:var(--ink-3)"></span>
+    <div class="card" style="padding:var(--s5) var(--s5) var(--s3)">
+      <div class="row" style="align-items:center;gap:var(--s4)">
+        <span class="ct nb">제품 사용자</span><span class="cb sm nb">함께 살 집을 구하는 2인</span>
+        <div style="flex:1;height:2px;background:var(--line);position:relative;margin:0 var(--s3)">
+          <span style="position:absolute;left:4%;top:-7px;width:16px;height:16px;border-radius:50%;background:var(--accent)"></span>
+          <span style="position:absolute;left:76%;top:-7px;width:16px;height:16px;border-radius:50%;background:var(--ink-3)"></span>
+          <span style="position:absolute;left:0;top:-27px;font-size:var(--fs-micro);font-weight:600;color:var(--accent);white-space:nowrap">1차 · 예비부부·신혼부부</span>
+          <span style="position:absolute;left:70%;top:-27px;font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);white-space:nowrap">2차 · 친구·룸메이트</span>
         </div>
-        <span class="cb nb" style="font-size:var(--fs-micro)">공동 의지 낮음</span>
-      </div>
-      <div class="row" style="margin-top:var(--s3)">
-        <span class="badge b-ok">1차 검증</span><span class="cb" style="font-size:var(--fs-label)">예비부부·신혼부부</span>
-        <span class="badge b-inf" style="margin-left:auto">2차 검증</span><span class="cb" style="font-size:var(--fs-label)">친구·룸메이트</span>
+        <span class="cb xs nb">공동 의지 →</span>
       </div>
     </div>
-    <div class="g3">
-      <div class="card"><span class="ct">초기 시장</span><span class="cb" style="font-size:var(--fs-label)">전·월세 공동 주거 탐색자 2인</span></div>
-      <div class="card"><span class="ct">검증 대상 조건</span><span class="cb" style="font-size:var(--fs-label)">둘 다 실제로 각자 의견을 내는 관계</span></div>
-      <div class="card"><span class="ct">현재 제외</span><span class="cb" style="font-size:var(--fs-label)">3인 이상 · 부모–자녀 · 한 사람이 정하고 다른 사람은 동의만 하는 관계</span></div>
-    </div>
-    <div class="foot">가상 페르소나는 만들지 않았습니다 — 나이·직업·소득을 조사한 적이 없어서, 지어내는 대신 관계 유형으로 나눴습니다</div>
-  </div>
-</section>
-
-<!-- 9 ─────────────────────────────── -->
-<section class="slide" data-act="1">
-  <span class="chip">고객 · 두 사람의 역할</span>
-  <h1 class="h1 wide">매물 비교 참여자는 둘이고, 결정 권한은 같습니다</h1>
-  <div class="body">
-    <div class="pair" style="flex:1">
+    <div class="pair" style="flex:1;min-height:0">
       <div class="card"><span class="ct">A · 초대하는 사람</span>
         <div class="col" style="gap:var(--s2)">
-          <span class="cb" style="font-size:var(--fs-label)"><b>시작</b> 관심매물을 탐색·저장 중</span>
-          <span class="cb" style="font-size:var(--fs-label)"><b>첫 행동</b> 관심매물 중 최대 5개 선택</span>
-          <span class="cb" style="font-size:var(--fs-label)"><b>입력</b> 예산 → 출근 여부 → 해당 시 출근지</span>
-          <span class="cb" style="font-size:var(--fs-label)"><b>필요 이유</b> 후보를 혼자 설명하지 않고 비교 시작</span>
-          <span class="cb" style="font-size:var(--fs-label)"><b>결정 권한</b> 자기 방문 후보 2개 선택</span>
+          <span class="cb sm"><b>시작</b> 관심매물을 탐색·저장 중</span>
+          <span class="cb sm"><b>첫 행동</b> 관심매물 중 최대 5개 선택</span>
+          <span class="cb sm"><b>입력</b> 예산 → 출근 여부 → 해당 시 출근지</span>
+          <span class="cb sm"><b>결정 권한</b> 자기 방문 후보 2개 선택</span>
         </div></div>
       <div class="card"><span class="ct">B · 초대받은 사람</span>
         <div class="col" style="gap:var(--s2)">
-          <span class="cb" style="font-size:var(--fs-label)"><b>시작</b> 카카오톡으로 받은 링크를 엶</span>
-          <span class="cb" style="font-size:var(--fs-label)"><b>첫 행동</b> 집들과 A의 조건을 먼저 확인</span>
-          <span class="cb" style="font-size:var(--fs-label)"><b>입력</b> 예산 → 출근 여부 → 해당 시 출근지</span>
-          <span class="cb" style="font-size:var(--fs-label)"><b>필요 이유</b> 왜 불렀는지 알고 조금만 입력</span>
-          <span class="cb" style="font-size:var(--fs-label)"><b>결정 권한</b> 자기 방문 후보 2개 선택</span>
+          <span class="cb sm"><b>시작</b> 카카오톡으로 받은 링크를 엶</span>
+          <span class="cb sm"><b>첫 행동</b> 집들과 A의 조건을 먼저 확인</span>
+          <span class="cb sm"><b>입력</b> 예산 → 출근 여부 → 해당 시 출근지</span>
+          <span class="cb sm"><b>결정 권한</b> 자기 방문 후보 2개 선택</span>
         </div></div>
     </div>
-    <div class="card tint" style="flex-direction:row;align-items:center;gap:var(--s5)">
-      <b class="badge b-ok nb">권한은 같다</b>
-      <span class="cb">A가 B의 조건을 대신 바꾸지 않습니다 · 진입 맥락은 달라도 결정 비중은 같습니다</span>
-    </div>
+    <div class="foot">A가 B의 조건을 대신 바꾸지 않습니다 · 진입 맥락은 달라도 결정 비중은 같습니다 &nbsp;|&nbsp; 가상 페르소나는 만들지 않았습니다 — 조사한 적이 없어 관계 유형으로 나눴습니다 · 3인 이상 · 부모–자녀 · 주도–승인형은 제외</div>
   </div>
 </section>
 
-<!-- 10 ────────────────────────────── -->
+<!-- 7 · 여정 + JTBD + 기회 -->
 <section class="slide" data-act="1">
-  <span class="chip">고객 · 여정지도 · JTBD</span>
+  <span class="chip">고객 · 여정지도 · JTBD · 기회점수</span>
   <h1 class="h1 wide">지금은 앱을 여러 번 오가고, 그때마다 맥락이 끊깁니다</h1>
   <div class="body">
-    <div class="flow" style="gap:6px">
-      <div class="fstep">저장<br><b class="badge b-inf" style="margin-top:6px">네이버</b></div><span class="farr">›</span>
-      <div class="fstep">공유<br><b class="badge b-inf" style="margin-top:6px">카톡</b></div><span class="farr">›</span>
-      <div class="fstep">링크 열기<br><b class="badge b-inf" style="margin-top:6px">네이버</b></div><span class="farr">›</span>
-      <div class="fstep">통근 확인<br><b class="badge b-inf" style="margin-top:6px">지도</b></div><span class="farr">›</span>
-      <div class="fstep">비용 계산<br><b class="badge b-inf" style="margin-top:6px">계산기</b></div><span class="farr">›</span>
-      <div class="fstep on">의견 교환<br><b class="badge b-inf" style="margin-top:6px">카톡</b></div><span class="farr">›</span>
-      <div class="fstep">메모<br><b class="badge b-inf" style="margin-top:6px">메모</b></div><span class="farr">›</span>
-      <div class="fstep">재검색<br><b class="badge b-inf" style="margin-top:6px">네이버</b></div>
-    </div>
-    <div class="card hi">
-      <span class="ct">JTBD · 진짜 하려는 일</span>
-      <span class="lead" style="margin:0;color:var(--ink);max-width:none">이미 저장한 관심매물 중, 감수할 조건을 알고 이번에 <span class="nb">보러 갈 집 두 곳</span>을 정합니다.</span>
-    </div>
-    <div class="g3">
-      <div class="card tint"><span class="ct">결과</span><span class="cb nb">보러 갈 집 2개</span></div>
-      <div class="card tint"><span class="ct">판단</span><span class="cb">무엇을 얼마나 감수</span></div>
-      <div class="card tint"><span class="ct">관계</span><span class="cb">각자 기준을 같은 비중으로</span></div>
-    </div>
-    <div class="foot">납득 = 내가 무엇을 감수하는지 알고도 방문 후보로 동의할 수 있는 상태</div>
-  </div>
-</section>
-
-<!-- 11 ────────────────────────────── -->
-<section class="slide" data-act="1">
-  <span class="chip">시장기회 · 기회점수(OS)</span>
-  <h1 class="h1 wide">기회는 의견 교환 단계에 있습니다</h1>
-  <div class="body">
-    <div class="flow">
-      <div class="fstep">저장</div><div class="fstep">통근 확인</div><div class="fstep">비용 계산</div>
-      <div class="fstep on">의견 교환</div><div class="fstep">메모</div><div class="fstep">재검색</div>
-    </div>
-    <div class="card" style="flex:1">
-      <span class="ct">왜 여기가 먼저인가</span>
-      <div class="col" style="gap:var(--s3);margin-top:var(--s2)">
-        <span class="cb">다른 도구로 대신할 수 없는, 사람 사이의 문제</span>
-        <span class="cb">“그냥 별로”가 선택 근거로 이어지지 않습니다 <b class="badge b-inf">추론</b></span>
-        <span class="cb">여기서 막히면 앞에서 비교한 게 다 무효가 됩니다 <b class="badge b-inf">추론</b></span>
-      </div>
-    </div>
-    <div class="card tint" style="flex-direction:row;align-items:center;gap:var(--s4)">
-      <b class="badge b-tbd nb">점수 없음</b>
-      <span class="cb">중요도·만족도 원자료가 없어 계산하지 않았습니다 — 순서만 세웠습니다</span>
+    <figure>
+      <svg viewBox="0 0 1140 172" role="img" aria-label="저장은 네이버, 공유는 카톡, 링크열기는 네이버, 통근확인은 지도, 비용계산은 계산기, 의견교환은 카톡, 메모는 메모앱, 재검색은 네이버로 앱을 일곱 번 오간다. 의견 교환 단계가 기회다">
+        <line x1="0" y1="38" x2="1140" y2="38" stroke="#E4E7E9"/>
+        <line x1="0" y1="130" x2="1140" y2="130" stroke="#E4E7E9"/>
+        <text x="0" y="20" font-size="12" font-weight="700" fill="#087A43">네이버 안</text>
+        <text x="0" y="164" font-size="12" font-weight="700" fill="#A4A7AE">다른 앱</text>
+        <polyline points="62,38 205,130 348,38 491,130 634,130 777,130 920,130 1063,38"
+          fill="none" stroke="#A4A7AE" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <g>
+          <circle cx="62" cy="38" r="8" fill="#087A43"/>
+          <circle cx="205" cy="130" r="8" fill="#A4A7AE"/>
+          <circle cx="348" cy="38" r="8" fill="#087A43"/>
+          <circle cx="491" cy="130" r="8" fill="#A4A7AE"/>
+          <circle cx="634" cy="130" r="8" fill="#A4A7AE"/>
+          <circle cx="777" cy="130" r="11" fill="#B3400C"/>
+          <circle cx="920" cy="130" r="8" fill="#A4A7AE"/>
+          <circle cx="1063" cy="38" r="8" fill="#087A43"/>
+        </g>
+        <g font-size="12" font-weight="600" fill="#717680" text-anchor="middle">
+          <text x="62" y="62">저장</text><text x="205" y="154">공유</text>
+          <text x="348" y="62">링크 열기</text><text x="491" y="154">통근 확인</text>
+          <text x="634" y="154">비용 계산</text><text x="920" y="154">메모</text>
+          <text x="1063" y="62">재검색</text>
+        </g>
+        <text x="777" y="154" text-anchor="middle" font-size="12" font-weight="700" fill="#B3400C">의견 교환</text>
+        <text x="777" y="110" text-anchor="middle" font-size="12" font-weight="700" fill="#B3400C">여기가 기회</text>
+      </svg>
+      <figcaption>앱을 오갈 때마다 어디까지 봤는지, 왜 그 집을 뺐는지가 남지 않습니다</figcaption>
+    </figure>
+    <div class="g2" style="flex:1;min-height:0">
+      <div class="card hi"><span class="ct">JTBD · 진짜 하려는 일</span>
+        <span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:21px">이미 저장한 관심매물 중, 감수할 조건을 알고 이번에 <span class="nb">보러 갈 집 두 곳</span>을 정합니다.</span>
+        <span class="cb xs">납득 = 내가 무엇을 감수하는지 알고도 방문 후보로 동의할 수 있는 상태</span></div>
+      <div class="card"><span class="ct">왜 의견 교환이 먼저인가</span>
+        <div class="col" style="gap:var(--s2)">
+          <span class="cb sm">다른 도구로 대신할 수 없는, 사람 사이의 문제</span>
+          <span class="cb sm">“그냥 별로”가 선택 근거로 이어지지 않습니다</span>
+          <span class="cb sm">여기서 막히면 앞에서 비교한 게 다 무효가 됩니다</span>
+        </div>
+        <span class="cb xs" style="margin-top:auto"><b class="badge b-tbd">점수 없음</b> 원자료가 없어 계산하지 않았습니다 — 순서만 세웠습니다</span></div>
     </div>
   </div>
 </section>
 
-<!-- 12 ────────────────────────────── -->
+<!-- 8 · 근거 + 문제 정의 -->
 <section class="slide" data-act="1">
-  <span class="chip">근거</span>
-  <h1 class="h1 wide">조건 충돌은 공개 자료로 확인됐습니다</h1>
-  <div class="body">
-    <div class="g3">
-      <div class="card"><span class="badge b-ok" style="align-self:flex-start">확인</span><span class="ct">반복 비교</span><span class="big num">2.5개월 · 4.1곳</span><span class="cb" style="font-size:var(--fs-micro)">당근부동산 2026 · n=971 · 전세<br>2인 여부 미측정</span></div>
-      <div class="card hi"><span class="badge b-ok" style="align-self:flex-start">확인</span><span class="ct">파트너 조건 충돌</span><span class="big num">77%</span><span class="cb" style="font-size:var(--fs-micro)">Zillow 2020 · 파트너와 구매 중 다툼<br>미국·매매 · 표본 크기 미확인</span></div>
-      <div class="card"><span class="badge b-inf" style="align-self:flex-start">형태만 확인</span><span class="ct">함께 쓰는 도구가 있습니다</span><span class="cb" style="font-size:var(--fs-label)">초대 앱 3종 · TwoKeys</span><span class="cb" style="font-size:var(--fs-micro)">수락률·성과 비공개</span></div>
-    </div>
-    <div class="g2" style="align-items:center">
-      <div class="card tint"><span class="ct">조건 충돌은 실재합니다</span><span class="cb" style="font-size:var(--fs-micro)"><b class="badge b-ok">확인</b> Zillow 2020 · 응답자 77%</span></div>
-      <div class="card hi"><span class="ct">얼마나 늦추는지를 잽니다</span><span class="cb" style="font-size:var(--fs-micro)"><b class="badge b-hy">다음 측정</b> 첫 실험으로 잡았습니다 — 늦어진 경험과 원인을 가르는 인터뷰</span></div>
-    </div>
-    <div class="foot">같은 조사에서 60%는 “결국 별문제 아니었다”고 답했습니다 — 그래서 크기를 재야 합니다</div>
-  </div>
-</section>
-
-<!-- 13 ────────────────────────────── -->
-<section class="slide" data-act="1">
-  <span class="chip">Problem Statement</span>
+  <span class="chip">근거 · Problem Statement</span>
   <h1 class="h1 wide">정보를 모으는 문제가 아니라, 둘의 기준이 다른 문제입니다</h1>
   <div class="body">
-    <div class="pair" style="flex:1">
-      <div class="card"><span class="ct">정보의 문제</span><span class="cb">정보가 흩어짐 → 일일이 비교 → 정하는 데 드는 품</span><span class="cb" style="font-size:var(--fs-micro);margin-top:auto">혼자 구해도 생김 · 기록·공유 도구가 일부 해결</span></div>
-      <div class="card hi"><span class="ct">사람의 문제 · 제품 범위</span><span class="cb" style="color:var(--ink)">각자 조건 → 충돌 → 누가 무엇을 감수하는지 불명확</span><span class="cb" style="font-size:var(--fs-micro);margin-top:auto">둘이 함께 정할 때만 생기는 문제</span></div>
-    </div>
-    <div class="card tint" style="align-items:center;padding:var(--s5)">
-      <span class="ct" style="color:var(--ink-2);font-size:var(--fs-micro)">우리가 답할 질문</span>
-      <span class="lead" style="margin-top:6px;color:var(--ink);max-width:none;text-align:center;font-size:26px">“우리 둘에게 가장 좋은 집은?”이 아니라<br>“무엇을 감수하고도 납득할 수 있는 집은?”</span>
-    </div>
-    <div class="foot">반복 비교 <b class="badge b-ok">확인</b> · 조건 충돌 <b class="badge b-ok">확인</b> · 결정 지연 <b class="badge b-hy">가설</b></div>
-  </div>
-</section>
-
-<!-- 14 ────────────────────────────── -->
-<section class="slide" data-act="2">
-  <span class="chip">벤치마크 · 같은 분야</span>
-  <h1 class="h1 wide">저장도 평가도 있는데, 누가 양보하는지는 없습니다</h1>
-  <div class="body">
-    <div class="flow">
-      <div class="fstep">저장</div><div class="fstep">개인 평가</div><div class="fstep">공동 평가</div><div class="fstep on">양보 설명</div>
-    </div>
-    <div class="tb" style="grid-template-columns:1.1fr 1.4fr 1.4fr">
-      <div class="th">서비스</div><div class="th">있는 것</div><div class="th">없는 것</div>
-      <div class="rl">네이버 부동산</div><div>탐색·상세·관심매물</div><div>함께 대조하는 건 비어 있음</div>
-      <div class="rl">집노트 등 20개</div><div>개인 체크리스트·채점</div><div>거의 다 혼자 쓰고, 점수를 매기고, 한 방향</div>
-      <div class="rl">주거비 계산기</div><div>전월세·이자·기회비용</div><div>공동 결정 기능 아님</div>
-      <div class="rl">TwoKeys</div><div>두 사람이 평가 · 총점 매김</div><div>조건을 매물에 저장하고 합산</div>
-    </div>
-    <div class="foot">비슷한 게 있다는 것과, 국내에서 쓰인다는 건 다릅니다</div>
-  </div>
-</section>
-
-<!-- 15 ────────────────────────────── -->
-<section class="slide" data-act="2">
-  <span class="chip">벤치마크 · 인접 분야</span>
-  <h1 class="h1 wide">초대 · 입력 · 비교 · 수렴, 네 군데를 뜯어봤습니다</h1>
-  <div class="body">
-    <div class="g4" style="flex:1">
-      <div class="card"><span class="badge b-ok" style="align-self:flex-start">초대</span><span class="ct">특별시·웨딩노트</span><span class="cb" style="font-size:var(--fs-label)">링크/코드 파트너 연결</span><span class="cb" style="font-size:var(--fs-micro);margin-top:auto">2인 초대가 있다는 것만 확인 · 수락률 비공개</span></div>
-      <div class="card"><span class="badge b-ok" style="align-self:flex-start">입력</span><span class="ct">위밋플레이스·모이삼</span><span class="cb" style="font-size:var(--fs-label)">각자 출발지 → 결과</span><span class="cb" style="font-size:var(--fs-micro);margin-top:auto">맥락 먼저, 입력은 조금만 · 집은 단일 최적점 아님</span></div>
-      <div class="card"><span class="badge b-ok" style="align-self:flex-start">비교</span><span class="ct">바로계산·EZB</span><span class="cb" style="font-size:var(--fs-label)">월·기간 기준 주거비 환산</span><span class="cb" style="font-size:var(--fs-micro);margin-top:auto">비교 근거 구조화 · 금융 조언 아님</span></div>
-      <div class="card"><span class="badge b-ok" style="align-self:flex-start">수렴</span><span class="ct">Airbnb·Doodle</span><span class="cb" style="font-size:var(--fs-label)">공동 저장·선호·참여 상태</span><span class="cb" style="font-size:var(--fs-micro);margin-top:auto">후보 관리와 참여 · 투표·순위는 그대로 못 가져옴</span></div>
-    </div>
-    <div class="card tint"><span class="ct">가져올 것</span><span class="cb">무엇이 번거로웠고 어떻게 줄였는지만 봤습니다. 답을 하나로 좁히는 방식은 안 가져옵니다.</span></div>
-  </div>
-</section>
-
-<!-- 16 ────────────────────────────── -->
-<section class="slide" data-act="2">
-  <span class="chip">벤치마크 · 다른 분야</span>
-  <h1 class="h1 wide">형식은 의료 분야에서 가져왔습니다</h1>
-  <div class="body">
-    <div class="pair" style="flex:1">
-      <div class="card"><span class="ct">Option Grid · 의료 의사결정 비교표</span><span class="cb" style="font-size:var(--fs-micro)">열 = 선택지</span>
-        <div class="tb" style="grid-template-columns:.8fr 1fr 1fr;margin-top:var(--s2)">
-          <div class="th"></div><div class="th">선택지 A</div><div class="th">선택지 B</div>
-          <div class="rl">비용</div><div></div><div></div>
-          <div class="rl">거리</div><div></div><div></div>
-          <div class="rl">면적</div><div></div><div></div>
-        </div>
-        <span class="cb" style="font-size:var(--fs-micro);margin-top:auto">관련 연구 40건 중 28건이 나란히 놓는 방식<br>70~96%가 균형 있다고 답함 · 부동산 전이는 추측</span></div>
-      <div class="card hi"><span class="ct">우리가 바꾼 것 · 같이 보기</span><span class="cb" style="font-size:var(--fs-micro)">열 = 사람 · 행 = 조건</span>
-        <div class="tb" style="grid-template-columns:.8fr 1fr 1fr;margin-top:var(--s2)">
-          <div class="th"></div><div class="th">A · 나</div><div class="th">B · 상대</div>
-          <div class="rl">예산</div><div><span class="st s-ok num">128 ≤ 130</span></div><div><span class="st s-ok num">128 ≤ 135</span></div>
-          <div class="rl">역 도보</div><div><span class="st s-no num">13 &gt; 10</span></div><div><span class="st s-off">해당 없음</span></div>
-          <div class="rl">면적</div><div><span class="st s-off">없음</span></div><div><span class="st s-ok num">68 ≥ 66</span></div>
-          <div class="rl">확인</div><div><span class="st s-ask">반려동물</span></div><div><span class="st s-off">없음</span></div>
-        </div></div>
-    </div>
-    <div class="card tint"><span class="cb">총점으로 합치지 않고, 한쪽만 충족을 설명 대상으로 유지합니다.</span></div>
-  </div>
-</section>
-
-<!-- 17 ────────────────────────────── -->
-<section class="slide" data-act="2">
-  <span class="chip">전이 가능성</span>
-  <h1 class="h1 wide">참여와 비교는 가져오고, 답을 하나로 좁히는 건 버렸습니다</h1>
-  <div class="body">
-    <div class="pair" style="flex:1">
-      <div class="card"><span class="badge b-ok" style="align-self:flex-start">그대로</span>
-        <div class="col" style="gap:var(--s3);margin-top:var(--s2)">
-          <span class="cb"><b>링크 기본·코드 보조</b><br>B는 모바일에서 집들을 먼저 봅니다</span>
-          <span class="cb"><b>나란히 놓기</b><br>두 사람 칸의 크기와 순서를 똑같이</span>
-          <span class="cb"><b>물어보는 순서</b><br>예산 → 통근 → 꼭 지킬 조건 → 확인 순서 고정</span>
-        </div></div>
-      <div class="card hi"><span class="badge b-hy" style="align-self:flex-start">바꿈</span>
-        <div class="col" style="gap:var(--s3);margin-top:var(--s2)">
-          <span class="cb" style="color:var(--ink)"><b>선택지 열 → 사람 열</b><br>열은 사람, 행은 조건으로 바꿔 집 하나의 대가를 비교</span>
-          <span class="cb" style="color:var(--ink)"><b>답 하나로 좁히기 → 상태 설명</b><br>상태만 설명하고, <span class="nb">보러 갈 집 2개</span>는 사용자가 선택</span>
-          <span class="cb" style="color:var(--ink)"><b>개인 점수 → 사람에 저장</b><br>조건을 사람에게 저장해 새 매물에도 다시 적용</span>
-        </div></div>
-    </div>
-    <div class="foot">화면을 베끼는 게 아니라, 원리를 우리 상황에 맞게 고칩니다</div>
-  </div>
-</section>
-
-<!-- 18 ────────────────────────────── -->
-<section class="slide" data-act="2">
-  <span class="chip">전이 · 제외 판단</span>
-  <h1 class="h1 wide">총점 · 순위 · AI 추천, 셋 다 뺐습니다</h1>
-  <div class="body">
     <div class="g3">
-      <div class="card"><span class="big" style="color:var(--ink-3)">83점</span><span class="ct">공동 적합도</span><span class="cb" style="font-size:var(--fs-label)">누가 양보했는지 사라짐</span></div>
-      <div class="card"><span class="big" style="color:var(--ink-3)">1위</span><span class="ct">순위를 합산하는 방식</span><span class="cb" style="font-size:var(--fs-label)">이기고 지는 구도</span></div>
-      <div class="card"><span class="big" style="color:var(--ink-3)">AI PICK</span><span class="ct">자동 최적 타협</span><span class="cb" style="font-size:var(--fs-label)">대신 판단해 버림</span></div>
+      <div class="card"><b class="badge b-ok" style="align-self:flex-start">확인</b><span class="ct">반복 비교</span>
+        <span class="big">2.5개월 · 4.1곳</span><span class="cb xs">당근부동산 2026 · n=971 · 전세 · 2인 여부 미측정</span></div>
+      <div class="card hi"><b class="badge b-ok" style="align-self:flex-start">확인</b><span class="ct">파트너 조건 충돌</span>
+        <span class="big g">77%</span><span class="cb xs">Zillow 2020 · 미국·매매 · 표본 크기 미확인</span></div>
+      <div class="card"><b class="badge b-hy" style="align-self:flex-start">이번에 잴 것</b><span class="ct">얼마나 늦추는지</span>
+        <span class="cb sm">같은 조사에서 60%는 “결국 별문제 아니었다”</span><span class="cb xs">그래서 크기를 재야 합니다 — 첫 실험으로 잡았습니다</span></div>
     </div>
-    <div class="card hi" style="flex:1;justify-content:center">
-      <span class="ct">대신 이렇게</span>
-      <div class="pair" style="margin-top:var(--s3)">
-        <span class="lead" style="margin:0;color:var(--ink);font-size:var(--fs-lead)"><b>A</b>&nbsp; 예산 충족 · 통근 <span class="nb">+13분</span></span>
-        <span class="lead" style="margin:0;color:var(--ink);font-size:var(--fs-lead)"><b>B</b>&nbsp; 면적 충족 · 주차 확인</span>
-      </div>
-      <span class="cb" style="margin-top:var(--s3)">실제 13분, 기준 10분, 3분 초과 — 한쪽만 충족한 집도 설명 대상으로 유지</span>
+    <div class="pair" style="flex:1;min-height:0">
+      <div class="card"><span class="ct">정보의 문제</span><span class="cb sm">정보가 흩어짐 → 일일이 비교 → 정하는 데 드는 품</span>
+        <span class="cb xs" style="margin-top:auto">혼자 구해도 생김 · 기록·공유 도구가 일부 해결</span></div>
+      <div class="card hi"><span class="ct">사람의 문제 · 제품 범위</span><span class="cb sm" style="color:var(--ink)">각자 조건 → 충돌 → 누가 무엇을 감수하는지 불명확</span>
+        <span class="cb xs" style="margin-top:auto">둘이 함께 정할 때만 생기는 문제</span></div>
     </div>
-    <div class="foot">각자 2개 선택 → 겹치면 확정, 아니면 각자 하나씩 · 통근 시간대로 지도에서 집을 찾아주는 것과 사진을 평가 근거로 내세우는 것도 제외</div>
+    <div class="card tint" style="align-items:center;padding:var(--s3)">
+      <span class="lead" style="margin:0;color:var(--ink);max-width:none;text-align:center;font-size:23px">“우리 둘에게 가장 좋은 집은?”이 아니라 “무엇을 감수하고도 납득할 수 있는 집은?”</span>
+    </div>
   </div>
 </section>
 
-<!-- 19 ────────────────────────────── -->
+<!-- 9 · 벤치마크 -->
+<section class="slide" data-act="2">
+  <span class="chip">벤치마크 · 같은 · 인접 · 다른 분야</span>
+  <h1 class="h1 wide">형식은 의료 분야에서 가져와 축을 바꿨습니다</h1>
+  <div class="body">
+    <div class="g2" style="flex:1;min-height:0">
+      <div class="card">
+        <span class="ct">같은 분야 — 저장도 평가도 있는데 누가 양보하는지는 없습니다</span>
+        <div class="tb" style="grid-template-columns:1fr 1.3fr;margin-top:var(--s1)">
+          <div class="th">서비스</div><div class="th">빠진 것</div>
+          <div class="rl">네이버 부동산</div><div>함께 대조하는 건 비어 있음</div>
+          <div class="rl">집노트 등 20개</div><div>혼자 쓰고, 점수 매기고, 한 방향</div>
+          <div class="rl">TwoKeys</div><div>조건을 매물에 저장하고 합산</div>
+        </div>
+        <span class="cb xs" style="margin-top:auto">인접 분야에서 가져온 것 — 결혼준비 앱의 링크 초대 · 약속 장소 앱의 “맥락 먼저, 입력은 조금만” · 주거비 계산기의 비교 근거 구조화</span>
+      </div>
+      <div class="card hi">
+        <figure style="flex:1">
+          <svg viewBox="0 0 480 210" role="img" aria-label="의료 의사결정 비교표는 열이 선택지인데, 우리는 축을 돌려 열을 사람으로 바꿨다">
+            <defs><marker id="a4" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker></defs>
+            <text x="0" y="12" font-size="12" font-weight="600" fill="#A4A7AE">Option Grid · 의료</text>
+            <g stroke="#E4E7E9" fill="#fff">
+              <rect x="0" y="22" width="60" height="26"/><rect x="60" y="22" width="60" height="26"/><rect x="120" y="22" width="60" height="26"/>
+              <rect x="0" y="48" width="60" height="26"/><rect x="60" y="48" width="60" height="26"/><rect x="120" y="48" width="60" height="26"/>
+              <rect x="0" y="74" width="60" height="26"/><rect x="60" y="74" width="60" height="26"/><rect x="120" y="74" width="60" height="26"/>
+            </g>
+            <g font-size="11" fill="#717680" text-anchor="middle">
+              <text x="90" y="39" font-weight="700">치료 A</text><text x="150" y="39" font-weight="700">치료 B</text>
+              <text x="30" y="65">비용</text><text x="30" y="91">거리</text>
+            </g>
+            <text x="90" y="108" text-anchor="middle" font-size="11" font-weight="600" fill="#A4A7AE">열 = 선택지</text>
+            <path d="M198 66 L260 66" stroke="#087A43" stroke-width="2" fill="none" marker-end="url(#a4)"/>
+            <text x="229" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="#087A43">축을 돌림</text>
+            <text x="280" y="12" font-size="12" font-weight="700" fill="#087A43">같이 보기</text>
+            <g stroke="#087A43" fill="#fff">
+              <rect x="280" y="22" width="66" height="26"/><rect x="346" y="22" width="66" height="26"/><rect x="412" y="22" width="66" height="26"/>
+              <rect x="280" y="48" width="66" height="26"/><rect x="346" y="48" width="66" height="26"/><rect x="412" y="48" width="66" height="26"/>
+              <rect x="280" y="74" width="66" height="26"/><rect x="346" y="74" width="66" height="26"/><rect x="412" y="74" width="66" height="26"/>
+            </g>
+            <g font-size="11" text-anchor="middle">
+              <text x="379" y="39" font-weight="700" fill="#087A43">A · 나</text><text x="445" y="39" font-weight="700" fill="#087A43">B · 상대</text>
+              <text x="313" y="65" fill="#717680">예산</text><text x="313" y="91" fill="#717680">역 도보</text>
+              <text x="379" y="65" fill="#3F4A5A">충족</text><text x="445" y="65" fill="#3F4A5A">충족</text>
+              <text x="379" y="91" font-weight="700" fill="#B3400C">+3분</text><text x="445" y="91" fill="#A4A7AE">해당 없음</text>
+            </g>
+            <text x="379" y="108" text-anchor="middle" font-size="11" font-weight="700" fill="#087A43">열 = 사람 · 행 = 조건</text>
+            <line x1="0" y1="126" x2="480" y2="126" stroke="#E4E7E9"/>
+            <text x="0" y="148" font-size="12" font-weight="600" fill="#717680">관련 연구 40건 중 28건이 나란히 놓는 방식</text>
+            <text x="0" y="168" font-size="12" font-weight="600" fill="#717680">70~96%가 균형 있게 설명받았다고 답함</text>
+            <text x="0" y="194" font-size="11" fill="#A4A7AE">부동산에도 통할지는 저희 추측 — 형식과 균형 원칙만 가져왔습니다</text>
+          </svg>
+        </figure>
+      </div>
+    </div>
+    <div class="foot">집 하나를 놓고 두 사람의 대가가 나란히 보입니다 — 총점으로 합치지 않고, 한쪽만 충족한 집도 설명 대상으로 유지합니다</div>
+  </div>
+</section>
+
+<!-- 10 · 우리가 안 쓰는 것 -->
+<section class="slide" data-act="2">
+  <span class="chip">제품 결정 · 저희가 쓰지 않는 것</span>
+  <h1 class="h1 wide">저희 서비스는 총점 · 순위 · AI 추천을 쓰지 않습니다</h1>
+  <div class="body">
+    <figure>
+      <svg viewBox="0 0 1140 128" role="img" aria-label="다른 서비스가 쓰는 공동 적합도 83점, 순위 1위, AI PICK 세 가지를 우리는 쓰지 않고, 대신 누가 무엇을 얼마나 감수하는지 문장으로 보여준다">
+        <defs><marker id="a7" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker></defs>
+        <text x="0" y="12" font-size="12" font-weight="700" fill="#A4A7AE">다른 서비스가 쓰는 방식</text>
+        <g>
+          <rect x="0" y="24" width="150" height="60" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
+          <text x="75" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="#A4A7AE">83점</text>
+          <text x="75" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">공동 적합도</text>
+          <line x1="14" y1="76" x2="136" y2="32" stroke="#B3400C" stroke-width="2.5"/>
+          <line x1="14" y1="32" x2="136" y2="76" stroke="#B3400C" stroke-width="2.5"/>
+        </g>
+        <g>
+          <rect x="164" y="24" width="150" height="60" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
+          <text x="239" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="#A4A7AE">1위</text>
+          <text x="239" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">순위 합산</text>
+          <line x1="178" y1="76" x2="300" y2="32" stroke="#B3400C" stroke-width="2.5"/>
+          <line x1="178" y1="32" x2="300" y2="76" stroke="#B3400C" stroke-width="2.5"/>
+        </g>
+        <g>
+          <rect x="328" y="24" width="150" height="60" rx="8" fill="#F3F5F7" stroke="#E4E7E9"/>
+          <text x="403" y="52" text-anchor="middle" font-size="18" font-weight="700" fill="#A4A7AE">AI PICK</text>
+          <text x="403" y="72" text-anchor="middle" font-size="11" fill="#A4A7AE">자동 최적 타협</text>
+          <line x1="342" y1="76" x2="464" y2="32" stroke="#B3400C" stroke-width="2.5"/>
+          <line x1="342" y1="32" x2="464" y2="76" stroke="#B3400C" stroke-width="2.5"/>
+        </g>
+        <path d="M492 54 L556 54" stroke="#087A43" stroke-width="2" marker-end="url(#a7)"/>
+        <text x="524" y="44" text-anchor="middle" font-size="11" font-weight="700" fill="#087A43">대신</text>
+        <text x="572" y="12" font-size="12" font-weight="700" fill="#087A43">같이 보기가 하는 것</text>
+        <rect x="572" y="24" width="568" height="60" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/>
+        <text x="592" y="48" font-size="14" font-weight="700" fill="#1A1D24">A  예산 충족 · 통근 +13분</text>
+        <text x="592" y="70" font-size="14" font-weight="700" fill="#1A1D24">B  면적 충족 · 주차 확인</text>
+        <text x="880" y="48" font-size="11" fill="#717680">실제 13분, 기준 10분, 3분 초과</text>
+        <text x="880" y="70" font-size="11" fill="#717680">누가 · 무엇을 · 얼마나</text>
+        <g font-size="11" fill="#B3400C" font-weight="600">
+          <text x="75" y="102" text-anchor="middle">누가 양보했는지 사라짐</text>
+          <text x="239" y="102" text-anchor="middle">이기고 지는 구도</text>
+          <text x="403" y="102" text-anchor="middle">가치 판단을 대행</text>
+        </g>
+        <text x="856" y="102" text-anchor="middle" font-size="11" font-weight="600" fill="#087A43">한쪽만 충족한 집도 설명 대상으로 유지</text>
+      </svg>
+    </figure>
+    <div class="card hi" style="flex:1;min-height:0;justify-content:center;align-items:center">
+      <span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:26px;text-align:center">
+        <b>총점을 안 쓰는 건 계산을 못 해서가 아닙니다.</b><br>
+        이 제품의 질문이 “최고”가 아니라 “납득”이기 때문입니다.
+      </span>
+    </div>
+    <div class="foot">그대로 가져온 것 — 링크 하나로 들어오는 낮은 마찰 · 나란히 놓기 · 물어보는 순서 고정 &nbsp;|&nbsp; 바꾼 것 — 답을 하나로 좁히지 않고, 조건을 사람에게 저장해 새 매물에도 다시 적용 &nbsp;|&nbsp; 투표·순위, 통근시간대 지도 후보 생성, 사진을 평가 근거로 내세우는 것도 제외</div>
+  </div>
+</section>
+
+<!-- 11 · Value Proposition -->
 <section class="slide" data-act="2">
   <span class="chip">Value Proposition</span>
   <h1 class="h1 wide">그래서 저희가 하는 일은 이 한 문장입니다</h1>
   <div class="body center">
     <div class="card hi" style="padding:var(--s7)">
-      <span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:32px;line-height:1.5">
-        함께 살 집을 구하는 두 사람이 관심매물별 조건 충돌과 양보 지점을 한눈에 확인하고,
-        서로 납득할 방문 후보를 정하도록 돕는 네이버 기능.
+      <span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:31px;line-height:1.5">
+        함께 살 집을 구하는 두 사람이 관심매물별 <b>조건 충돌</b>과 <b>양보 지점</b>을 한눈에 확인하고,
+        서로 납득할 <b>방문 후보</b>를 정하도록 돕는 네이버 기능.
       </span>
     </div>
-    <div class="g3" style="margin-top:var(--s5)">
-      <div class="card tint"><span class="ct">조건 충돌</span><span class="cb">누구의 무엇이 어긋나는가</span></div>
-      <div class="card tint"><span class="ct">양보 지점</span><span class="cb">무엇을 얼마나 감수하는가</span></div>
-      <div class="card tint"><span class="ct">보러 갈 집</span><span class="cb">알고도 둘이 선택하는가</span></div>
+    <div class="g3" style="margin-top:var(--s4)">
+      <div class="card tint"><span class="ct">조건 충돌</span><span class="cb sm">누구의 무엇이 어긋나는가</span></div>
+      <div class="card tint"><span class="ct">양보 지점</span><span class="cb sm">무엇을 얼마나 감수하는가</span></div>
+      <div class="card tint"><span class="ct">방문 후보</span><span class="cb sm">알고도 둘이 선택하는가</span></div>
     </div>
-    <div class="foot">한 줄로 하면 — 각자의 조건과 양보 지점을 보고, 함께 보러 갈 집을 정합니다.</div>
+    <div class="foot">동사는 추천한다가 아니라 확인하고, 정하도록 돕는다입니다</div>
   </div>
 </section>
 
-<!-- 20 ────────────────────────────── -->
+<!-- 12 · To-Be -->
 <section class="slide" data-act="3">
   <span class="chip">To-Be Concept</span>
   <h1 class="h1 wide">저장한 5개가 <span class="nb">보러 갈 2개</span>가 됩니다</h1>
   <div class="body">
-    <div class="row" style="gap:var(--s5);align-items:stretch">
-      <div class="card" style="flex:1"><span class="ct nb">관심매물 최대 5개</span><span class="cb" style="font-size:var(--fs-label)">사람별 조건 — 예산 · 출근 여부 · 출근하면 출근지와 이동수단</span><span class="cb" style="font-size:var(--fs-micro);margin-top:auto">첫 결과 후 · 꼭 지킬 조건 0~4개 · 선호는 개수 제한 없음 · 확인 필요</span></div>
-      <span class="farr" style="align-self:center;font-size:26px">→</span>
-      <div class="card hi" style="flex:none;width:220px;align-items:center;justify-content:center"><span class="mid g nb">보러 갈 집 2개</span></div>
-    </div>
-    <div class="flow">
-      <div class="fstep"><span class="onum" style="margin:0 auto 8px">1</span>각자 2개 선택</div><span class="farr">›</span>
-      <div class="fstep"><span class="onum" style="margin:0 auto 8px">2</span>겹치면 확정</div><span class="farr">›</span>
-      <div class="fstep"><span class="onum" style="margin:0 auto 8px">3</span>1개만 겹치면 다시 비교</div><span class="farr">›</span>
-      <div class="fstep"><span class="onum" style="margin:0 auto 8px">4</span>2번 후 각자 하나씩</div>
-    </div>
+    <figure style="flex:1;min-height:0">
+      <svg viewBox="0 0 1140 244" role="img" aria-label="관심매물 5개에 사람별 조건을 적용하고 각자 2개를 고른다. 둘 다 겹치면 확정, 1개만 겹치면 남은 자리를 다시 비교, 0개면 2라운드를 거쳐 그래도 안 맞으면 각자 하나씩 가져간다">
+        <defs>
+          <marker id="a5" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0 0 L8 4 L0 8 z" fill="#A4A7AE"/></marker>
+          <marker id="a5g" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker>
+        </defs>
+        <rect x="0" y="84" width="196" height="76" rx="8" fill="#F3F5F7"/>
+        <text x="98" y="110" text-anchor="middle" font-size="14" font-weight="700" fill="#1A1D24">관심매물 5개</text>
+        <text x="98" y="130" text-anchor="middle" font-size="11" fill="#717680">사람별 조건 — 예산 ·</text>
+        <text x="98" y="146" text-anchor="middle" font-size="11" fill="#717680">출근 여부 · 출근지</text>
+
+        <line x1="202" y1="122" x2="240" y2="122" stroke="#A4A7AE" stroke-width="1.6" marker-end="url(#a5)"/>
+
+        <rect x="246" y="84" width="176" height="76" rx="8" fill="#fff" stroke="#087A43" stroke-width="1.5"/>
+        <text x="334" y="116" text-anchor="middle" font-size="14" font-weight="700" fill="#087A43">각자 2개 선택</text>
+        <text x="334" y="138" text-anchor="middle" font-size="11" fill="#717680">A와 B가 따로</text>
+
+        <path d="M426 106 C452 106 452 46 474 46" stroke="#087A43" stroke-width="1.8" fill="none" marker-end="url(#a5g)"/>
+        <path d="M426 122 L474 122" stroke="#A4A7AE" stroke-width="1.6" fill="none" marker-end="url(#a5)"/>
+        <path d="M426 138 C452 138 452 202 474 202" stroke="#A4A7AE" stroke-width="1.6" fill="none" marker-end="url(#a5)"/>
+        <g font-size="11" font-weight="700">
+          <text x="450" y="72" text-anchor="middle" fill="#087A43">2개 겹침</text>
+          <text x="450" y="114" text-anchor="middle" fill="#A4A7AE">1개 겹침</text>
+          <text x="450" y="192" text-anchor="middle" fill="#A4A7AE">0개 겹침</text>
+        </g>
+
+        <rect x="480" y="22" width="196" height="48" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/>
+        <text x="578" y="52" text-anchor="middle" font-size="14" font-weight="700" fill="#087A43">그대로 확정</text>
+
+        <rect x="480" y="98" width="196" height="48" rx="8" fill="#fff" stroke="#E4E7E9"/>
+        <text x="578" y="118" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1D24">남은 한 자리만</text>
+        <text x="578" y="136" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1D24">다시 비교</text>
+
+        <rect x="480" y="178" width="196" height="48" rx="8" fill="#fff" stroke="#E4E7E9"/>
+        <text x="578" y="208" text-anchor="middle" font-size="13" font-weight="600" fill="#1A1D24">2라운드</text>
+
+        <path d="M680 122 C706 122 706 46 730 46" stroke="#A4A7AE" stroke-width="1.6" fill="none" marker-end="url(#a5)"/>
+        <path d="M680 202 C706 202 706 46 730 46" stroke="#A4A7AE" stroke-width="1.6" fill="none" marker-end="url(#a5)"/>
+        <path d="M680 210 L730 210" stroke="#A4A7AE" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#a5)"/>
+        <text x="705" y="228" text-anchor="middle" font-size="11" font-weight="600" fill="#A4A7AE">안 맞으면</text>
+
+        <rect x="736" y="22" width="212" height="48" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/>
+        <text x="842" y="52" text-anchor="middle" font-size="15" font-weight="700" fill="#087A43">보러 갈 집 2개</text>
+
+        <rect x="736" y="186" width="212" height="48" rx="8" fill="#fff" stroke="#E4E7E9" stroke-dasharray="6 4"/>
+        <text x="842" y="216" text-anchor="middle" font-size="13" font-weight="600" fill="#717680">각자 하나씩</text>
+
+        <text x="978" y="42" font-size="11" font-weight="700" fill="#A4A7AE">확정 숫자</text>
+        <text x="978" y="64" font-size="11" fill="#717680">2인 · 집 5개</text>
+        <text x="978" y="82" font-size="11" fill="#717680">꼭 지킬 조건 0~4개</text>
+        <text x="978" y="100" font-size="11" fill="#717680">결과 2개 · 최대 2번</text>
+      </svg>
+    </figure>
     <div class="g2">
-      <div class="card tint"><span class="ct">확정된 정책</span><span class="cb" style="font-size:var(--fs-label)">출근 안 함 = 통근·교통비를 재지 않음 · 비교표에서 그 줄을 뺌</span></div>
-      <div class="card tint"><span class="ct">조건 완화</span><span class="cb" style="font-size:var(--fs-label)">풀면 뭐가 달라지는지 미리 보여줄 뿐, 대신 타협하지 않습니다</span></div>
+      <div class="card tint"><span class="ct">확정된 정책</span><span class="cb sm">출근 안 함 = 통근·교통비를 재지 않음 · 비교표에서 그 줄을 뺌</span></div>
+      <div class="card tint"><span class="ct">조건 완화</span><span class="cb sm">풀면 뭐가 달라지는지 미리 보여줄 뿐, 대신 타협하지 않습니다</span></div>
     </div>
-    <div class="foot">2단계 · 방문 전에 물어볼 것 정리 → 방문 전 체크리스트 → 다녀와서 유지·보류·제외</div>
   </div>
 </section>
 
-<!-- 21 ────────────────────────────── -->
-<section class="slide" data-act="3" data-proto="0">
-  <span class="chip">To-Be · 사용자 흐름</span>
-  <h1 class="h1 wide">두 사람이 각자 어디서 무엇을 하는지</h1>
-  <div class="body">
-    <div class="frame"><iframe title="후보 담기 화면"></iframe><span class="zi">⤢</span></div>
-    <div class="cap">A가 관심매물에서 같이 볼 집을 고르는 화면 — 클릭하면 직접 조작</div>
-  </div>
-</section>
-
-<!-- 22 ────────────────────────────── -->
+<!-- 13 · 화면 ① -->
 <section class="slide" data-act="3" data-proto="m">
   <span class="chip">To-Be · 핵심 화면 ①</span>
   <h1 class="h1 wide">초대받은 사람은 조건보다 집을 먼저 봅니다</h1>
   <div class="body">
     <div class="frame mob"><iframe title="모바일 진입 화면"></iframe><span class="zi">⤢</span></div>
-    <div class="cap">집 5개와 상대가 바라는 것을 먼저 — 필수 입력은 예산과 출근 여부 두 개</div>
+    <div class="cap">집 5개와 상대가 바라는 것을 먼저 — 필수 입력은 예산과 출근 여부 두 개 · 클릭하면 직접 조작</div>
   </div>
 </section>
 
-<!-- 23 ────────────────────────────── -->
+<!-- 14 · 화면 ② -->
 <section class="slide" data-act="3" data-proto="7">
   <span class="chip">To-Be · 핵심 화면 ②</span>
   <h1 class="h1 wide">누가 무엇을 얼마나 감수하는지</h1>
@@ -645,7 +698,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   </div>
 </section>
 
-<!-- 24 ────────────────────────────── -->
+<!-- 15 · 화면 ③ -->
 <section class="slide" data-act="3" data-proto="9">
   <span class="chip">To-Be · 핵심 화면 ③</span>
   <h1 class="h1 wide">남은 한 자리만 다시 비교합니다</h1>
@@ -655,19 +708,20 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   </div>
 </section>
 
-<!-- 25 ────────────────────────────── -->
+<!-- 16 · 조건 4상태 -->
 <section class="slide" data-act="3" data-proto="6">
   <span class="chip">데이터 · 조건 구조</span>
-  <h1 class="h1 wide">화면이 저렇게 나오려면 “안 맞음”을 네 가지로 나눠야 합니다</h1>
+  <h1 class="h1 wide">“안 맞음”에도 네 종류가 있습니다</h1>
   <div class="body">
-    <div class="row" style="gap:var(--s5);align-items:stretch;flex:1;min-height:0">
-      <div class="col" style="width:330px;flex:none;gap:var(--s2)">
+    <div class="row" style="gap:var(--s4);align-items:stretch;flex:1;min-height:0">
+      <div class="col" style="width:322px;flex:none;gap:var(--s2)">
         <span class="st s-no">미충족 — 재봤는데 기준에 안 맞음</span>
         <span class="st s-off">계산 불가 — 시스템이 못 잼. 미충족 아님</span>
         <span class="st s-ask">확인 필요 — 데이터로 판정 불가</span>
         <span class="st s-off">해당 없음 — 잴 대상이 없음</span>
-        <span class="cb" style="font-size:var(--fs-micro);margin-top:var(--s3)">조건은 매물이 아니라 <b>사람</b>에게 저장합니다 — 새 매물이 나와도 다시 대조됩니다</span>
-        <span class="cb" style="font-size:var(--fs-micro)">판정 가능한 6개 — 예산 · 통근시간 · 역 도보 · 전용면적 · 주차 · 매물 유형</span>
+        <span class="cb xs" style="margin-top:var(--s3)">넷을 하나로 뭉치면 <b>서버 오류인데 “조건에 안 맞아요”</b>라고 나와 멀쩡한 집을 버립니다</span>
+        <span class="cb xs">조건은 매물이 아니라 <b>사람</b>에게 저장 — 새 매물이 나와도 다시 대조됩니다</span>
+        <span class="cb xs">판정 가능한 6개 — 예산 · 통근시간 · 역 도보 · 전용면적 · 주차 · 매물 유형</span>
       </div>
       <div class="frame"><iframe title="판정 3분류 화면"></iframe><span class="zi">⤢</span></div>
     </div>
@@ -675,223 +729,179 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   </div>
 </section>
 
-<!-- 26 ────────────────────────────── -->
+<!-- 17 · 시스템 + PRD -->
 <section class="slide" data-act="3">
-  <span class="chip">데이터 · 시스템</span>
-  <h1 class="h1 wide">그 판정은 네이버 데이터를 읽어서 합니다</h1>
+  <span class="chip">데이터 · 시스템 · PRD</span>
+  <h1 class="h1 wide">네이버 데이터를 읽어 판정하고, 다시 네이버로 돌려보냅니다</h1>
   <div class="body">
-    <div class="g3">
-      <div class="card"><span class="badge b-inf" style="align-self:flex-start">읽고</span><span class="ct">네이버 부동산</span><span class="cb" style="font-size:var(--fs-label)">매물 ID·좌표·가격·면적·유형 / 주차와 역 도보, 거래 상태</span></div>
-      <div class="card hi"><span class="badge b-ok" style="align-self:flex-start">판정하고</span><span class="ct">같이 보기</span><span class="cb" style="font-size:var(--fs-label);color:var(--ink)">사람별 조건 · 후보 묶음 / 조건별 판정 · 미달량 · 양보 문장</span></div>
-      <div class="card"><span class="badge b-inf" style="align-self:flex-start">돌려보내고</span><span class="ct">네이버 검색 · 방문</span><span class="cb" style="font-size:var(--fs-label)">사용자가 필터를 눌러 다시 검색 / 방문 · 문의로 돌아감</span></div>
+    <figure>
+      <svg viewBox="0 0 1140 124" role="img" aria-label="네이버 부동산에서 매물 데이터를 읽어 같이 보기가 사람별 조건으로 판정하고, 사용자를 다시 네이버 검색과 방문으로 돌려보낸다. 매물 데이터를 복제하거나 고치지 않는다">
+        <defs><marker id="a6" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#087A43"/></marker>
+          <marker id="a6b" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M0 0 L8 4 L0 8 z" fill="#A4A7AE"/></marker></defs>
+        <rect x="0" y="30" width="300" height="70" rx="8" fill="#F3F5F7"/>
+        <text x="150" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1D24">네이버 부동산</text>
+        <text x="150" y="76" text-anchor="middle" font-size="11" fill="#717680">매물 ID · 좌표 · 가격 · 면적</text>
+        <text x="150" y="92" text-anchor="middle" font-size="11" fill="#717680">주차 · 역 도보 · 거래 상태</text>
+
+        <line x1="306" y1="65" x2="410" y2="65" stroke="#087A43" stroke-width="2" marker-end="url(#a6)"/>
+        <text x="358" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="#087A43">읽는다</text>
+
+        <rect x="418" y="22" width="304" height="86" rx="8" fill="#EAF6EF" stroke="#087A43" stroke-width="2"/>
+        <text x="570" y="50" text-anchor="middle" font-size="14" font-weight="700" fill="#087A43">같이 보기</text>
+        <text x="570" y="72" text-anchor="middle" font-size="11" fill="#717680">사람별 조건 · 후보 묶음</text>
+        <text x="570" y="90" text-anchor="middle" font-size="11" fill="#717680">조건별 판정 · 미달량 · 양보 문장</text>
+
+        <line x1="730" y1="65" x2="834" y2="65" stroke="#087A43" stroke-width="2" marker-end="url(#a6)"/>
+        <text x="782" y="56" text-anchor="middle" font-size="11" font-weight="700" fill="#087A43">돌려보낸다</text>
+
+        <rect x="842" y="30" width="298" height="70" rx="8" fill="#F3F5F7"/>
+        <text x="991" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="#1A1D24">네이버 검색 · 방문</text>
+        <text x="991" y="76" text-anchor="middle" font-size="11" fill="#717680">필터를 눌러 다시 검색</text>
+        <text x="991" y="92" text-anchor="middle" font-size="11" fill="#717680">방문 · 문의로 복귀</text>
+
+        <path d="M991 24 C991 6 160 6 152 22" stroke="#A4A7AE" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#a6b)"/>
+        <text x="570" y="14" text-anchor="middle" font-size="11" font-weight="600" fill="#A4A7AE">매물 데이터를 복제하거나 고치지 않습니다</text>
+      </svg>
+    </figure>
+    <div class="g3" style="flex:1;min-height:0">
+      <div class="card"><span class="ct">1단계 · 할 것 일곱</span>
+        <span class="cb sm">집 최대 5개 · 예산과 출근 여부 · 링크 초대 · 자동 판정 · 양보 문장 · 조건 완화 · <span class="nb">보러 갈 집 2개</span></span></div>
+      <div class="card"><span class="ct">기능 25가지 · 여섯 묶음</span>
+        <span class="cb sm">후보와 참여 · 사람별 조건 · <b>판정</b> · <b>trade-off</b> · 막다른 길과 결정 · 반복과 마무리</span>
+        <span class="cb xs" style="margin-top:auto">그대로 사용자 시나리오 순서입니다</span></div>
+      <div class="card hi"><span class="ct">검사 항목 56개</span>
+        <span class="cb sm" style="color:var(--ink)">화면이 있느냐가 아니라 <b>판단을 흐리지 않는가</b>를 봅니다</span>
+        <span class="cb xs">25개 기능 중 20개 확정 · 5개 일부 미정</span></div>
     </div>
-    <div class="g3" style="flex:1">
-      <div class="card tint"><span class="ct">비로그인 조건</span><span class="cb" style="font-size:var(--fs-label)">초대 코드로 연결 · 마지막으로 연 날부터 30일 뒤 삭제 · 로그인하면 계정으로 옮김</span></div>
-      <div class="card tint"><span class="ct">통근 계산</span><span class="cb" style="font-size:var(--fs-label)">출근지 · 매물 좌표 · 이동수단을 저장해 재사용 · 출근 안 하면 계산 안 함</span></div>
-      <div class="card tint"><span class="ct">비용 표시</span><span class="cb" style="font-size:var(--fs-label)">기회비용 · 대출이자 · 월세 · 관리비 · 교통비 · 초기비용, 전제와 기준일을 함께</span></div>
-    </div>
-    <div class="foot"><b class="badge b-tbd">미정</b> 네이버 안에 확인이 필요한 것 — 관심매물 API · 비로그인 열람 · 검색 결과 수 · 필터 값 · 경로 계산 비용<br>사진 · 설명 · 중개사 정보는 판정에 쓰지 않음 · 네이버 매물 데이터를 고치지 않음</div>
+    <div class="foot">하지 않을 것 — 새 매물 DB · 독립 검색 · 자동 추천 · 종합점수 · AI 최종 선택 · 계약과 대출 &nbsp;|&nbsp; 비로그인 조건은 30일 뒤 삭제 · 사진·중개사 정보는 판정에 쓰지 않음 &nbsp;|&nbsp; <b class="badge b-tbd">미정</b> 관심매물 API · 비로그인 열람 · 경로 계산 비용</div>
   </div>
 </section>
 
-<!-- 27 ────────────────────────────── -->
-<section class="slide" data-act="3">
-  <span class="chip">PRD · 목적과 범위</span>
-  <h1 class="h1 wide">여기까지를 1단계 범위로 잡았습니다</h1>
-  <div class="body">
-    <div class="card hi"><span class="ct">제품 목표</span><span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:var(--fs-lead)">두 사람이 각 매물의 충족·미달·확인 사항을 이해하고, 자기 판단으로 <span class="nb">보러 갈 집 2개</span>를 정합니다.</span></div>
-    <div class="card" style="flex:1"><span class="ct">1단계 · 먼저 검증할 핵심</span>
-      <div class="flow" style="flex-wrap:wrap;gap:var(--s2);margin-top:var(--s2)">
-        <div class="fstep">집 최대 5개</div><div class="fstep">예산 + 출근 여부</div><div class="fstep">링크·코드 초대</div>
-        <div class="fstep">자동 판정</div><div class="fstep">양보 문장</div><div class="fstep">조건 완화 · 0개일 때</div>
-        <div class="fstep on nb">보러 갈 집 2개</div>
-      </div>
-    </div>
-    <div class="card tint"><span class="ct">하지 않을 것</span><span class="cb">새 매물 DB · 독립 검색 · 자동 추천 · 종합점수 · AI 최종 선택 · 계약과 대출</span></div>
-    <div class="foot">2단계 · 방문 전 질문 정리 → 체크리스트 → 유지/보류/제외 &nbsp;|&nbsp; 확정 숫자 — 2인 · 집 5개 · 꼭 지킬 조건 0~4개 · 결과 2개 · 최대 2번</div>
-  </div>
-</section>
-
-<!-- 28 ────────────────────────────── -->
-<section class="slide" data-act="3">
-  <span class="chip">PRD · 요구사항</span>
-  <h1 class="h1 wide">그 범위를 기능 25가지로 나눴습니다</h1>
-  <div class="body">
-    <div class="g3" style="flex:1">
-      <div class="card"><span class="row"><span class="onum">1</span><span class="ct">후보와 참여</span></span><span class="cb" style="font-size:var(--fs-label)">관심매물 1~5개 · 링크와 코드 · 초대 맥락</span></div>
-      <div class="card"><span class="row"><span class="onum">2</span><span class="ct">사람별 조건</span></span><span class="cb" style="font-size:var(--fs-label)">예산 필수 · 출근하는지 · 고르는 조건</span></div>
-      <div class="card hi"><span class="row"><span class="onum">3</span><span class="ct">판정</span></span><span class="cb" style="font-size:var(--fs-label);color:var(--ink)">사람별 충족/미달/확인 · 오류 분리</span></div>
-      <div class="card hi"><span class="row"><span class="onum">4</span><span class="ct">trade-off</span></span><span class="cb" style="font-size:var(--fs-label);color:var(--ink)">양보 주체 · 미달량 · 두 사람 균형</span></div>
-      <div class="card"><span class="row"><span class="onum">5</span><span class="ct">막다른 길과 결정</span></span><span class="cb" style="font-size:var(--fs-label)">0개일 때 · 각자 2개 · 최대 2번</span></div>
-      <div class="card"><span class="row"><span class="onum">6</span><span class="ct">반복과 마무리</span></span><span class="cb" style="font-size:var(--fs-label)">조건이 남음 · 집이 나감 · 질문과 방문 기록</span></div>
-    </div>
-    <div class="card tint"><span class="cb" style="font-size:var(--fs-lead);font-weight:600;color:var(--ink)">AI는 비교하고 설명합니다 · 최종 후보, 순위, 타협, 상대 조건 변경은 사용자가 합니다</span></div>
-    <div class="foot">여섯 묶음은 그대로 사용자 시나리오 순서입니다 — 초대받고 → 조건 넣고 → 판정되고 → 양보를 이해하고 → 정하고 → 다시 돌아옵니다</div>
-  </div>
-</section>
-
-<!-- 29 ────────────────────────────── -->
-<section class="slide" data-act="3">
-  <span class="chip">PRD · Acceptance Criteria</span>
-  <h1 class="h1 wide">다 만들었는지는 “판단을 흐리지 않는가”로 검사합니다</h1>
-  <div class="body">
-    <div class="g4">
-      <div class="card tint" style="align-items:center"><span class="big num">25</span><span class="cb" style="font-size:var(--fs-micro)">만들 기능</span></div>
-      <div class="card hi" style="align-items:center"><span class="big num">56</span><span class="cb" style="font-size:var(--fs-micro)">검사 항목</span></div>
-      <div class="card tint" style="align-items:center"><span class="big num">20</span><span class="cb" style="font-size:var(--fs-micro)">다 정해진 기능</span></div>
-      <div class="card tint" style="align-items:center"><span class="big num">5</span><span class="cb" style="font-size:var(--fs-micro)">일부 미정인 기능</span></div>
-    </div>
-    <div class="card" style="flex:1"><span class="ct">넘지 않을 선 5개</span>
-      <div class="col" style="gap:var(--s2);margin-top:var(--s2)">
-        <span class="cb" style="font-size:var(--fs-label)"><b>1</b>&nbsp; 출근 안 함 → 출근지·이동수단을 안 물음 · 통근을 재지 않음</span>
-        <span class="cb" style="font-size:var(--fs-label)"><b>2</b>&nbsp; 사람별·조건별로만 대조 · 공동 총점을 만들지 않음</span>
-        <span class="cb" style="font-size:var(--fs-label)"><b>3</b>&nbsp; 0개이거나 2번까지 안 맞으면 → 각자 하나씩 · 투표와 자동선택 안 함</span>
-        <span class="cb" style="font-size:var(--fs-label)"><b>4</b>&nbsp; 출근 안 함 → 해당 없음 · 비교표에서 통근 줄을 뺌</span>
-        <span class="cb" style="font-size:var(--fs-label)"><b>5</b>&nbsp; 공동 적합도 · 추천 배지 · AI가 고른 집을 띄우지 않음</span>
-      </div></div>
-    <div class="foot">참여/입력 — 집 고르기·초대·조건·로그인·혼자일 때 &nbsp;|&nbsp; 판정/trade-off — 조건별 판정 · 양보 · 완화 · 후보 0개 &nbsp;|&nbsp; 결정/운영 — 보러 갈 2개 · 조건 유지 · 넘지 않을 선</div>
-  </div>
-</section>
-
-<!-- 30 ────────────────────────────── -->
+<!-- 18 · KPI + 위험 + 법윤리 -->
 <section class="slide" data-act="4">
-  <span class="chip">KPI · Guardrail</span>
-  <h1 class="h1 wide">성공 지표는 하나만 세웠습니다</h1>
+  <span class="chip">KPI · Guardrail · 리스크 · 법·윤리</span>
+  <h1 class="h1 wide">성공 지표는 하나, 그게 안 나올 위험은 기능 문제가 아닙니다</h1>
   <div class="body">
-    <div class="card hi"><span class="ct">North Star</span><span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:26px">초대를 보낸 것 중, 7일 안에 <span class="nb">보러 갈 집 2개</span>가 정해진 비율</span>
-      <span class="cb" style="font-size:var(--fs-micro)"><b class="badge b-tbd">목표값 미정</b> 7일이 맞는지도 처음 재본 뒤에 조정</span></div>
-    <div class="g3" style="flex:1">
-      <div class="card"><span class="badge b-hy" style="align-self:flex-start">급소 가설 ①</span><span class="ct">초대 열기 → 조건 입력 → 로그인</span><span class="cb" style="font-size:var(--fs-label)">먼저 잰다</span></div>
-      <div class="card"><span class="badge b-hy" style="align-self:flex-start">급소 가설 ②</span><span class="ct">늦어진 경험 + 원인 인터뷰</span><span class="cb" style="font-size:var(--fs-label)">가장 중요</span></div>
-      <div class="card"><span class="badge b-inf" style="align-self:flex-start">프로토타입</span><span class="ct">1단계 핵심 기능</span><span class="cb" style="font-size:var(--fs-label)">앞의 둘을 통과하면 · 조건 입력·비용 신뢰·매물 지속성</span></div>
+    <div class="card hi" style="flex-direction:row;align-items:center;gap:var(--s5)">
+      <span class="ct nb">North Star</span>
+      <span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:22px">초대를 보낸 것 중, 7일 안에 <span class="nb">보러 갈 집 2개</span>가 정해진 비율</span>
+      <b class="badge b-tbd" style="margin-left:auto">목표값 미정 · 처음 재본 뒤에 조정</b>
     </div>
-    <div class="card tint" style="flex-direction:row;align-items:center;gap:var(--s3);flex-wrap:wrap">
+    <div class="g2" style="flex:1;min-height:0">
+      <div class="card"><span class="ct">제일 큰 위험 둘</span>
+        <div class="col" style="gap:var(--s2)">
+          <span class="cb sm"><b class="badge b-hy">가설</b> 초대받은 사람이 안 들어옴 → 3단 깔때기로 먼저 잰다</span>
+          <span class="cb sm"><b class="badge b-hy">가설</b> 조건 충돌이 주원인이 아님 → 원인을 가르는 인터뷰</span>
+          <span class="cb sm"><b class="badge b-tbd">미정</b> 네이버 내부 데이터를 못 쓰게 될 수 있음</span>
+        </div>
+        <span class="cb xs" style="margin-top:auto">화면을 더 다듬는 것보다 전제가 맞는지가 더 급합니다</span></div>
+      <div class="card"><span class="ct">법·윤리 — 규제는 데이터에서 옵니다</span>
+        <div class="col" style="gap:var(--s2)">
+          <span class="cb sm"><b>출근지·예산은 민감정보</b> 꼭 필요한 것만 · 목적 외 사용 안 함</span>
+          <span class="cb sm"><b class="badge b-tbd">미정</b> 상대에게 내 예산이 보이는 범위</span>
+          <span class="cb sm"><b>중개 행위 아님</b> 정보 제공과 비교만 · 계약과 대출은 안 함</span>
+          <span class="cb sm"><b>금융 조언 아님</b> 비용 숫자 옆에 전제와 기준일</span>
+        </div>
+        <span class="cb xs" style="margin-top:auto">출근지와 예산은 직장과 소득을 추정할 수 있는 값입니다 — 법률 검토는 아직입니다</span></div>
+    </div>
+    <div class="card tint" style="flex-direction:row;align-items:center;gap:var(--s3);flex-wrap:wrap;padding:var(--s3) var(--s5)">
       <span class="ct nb">넘지 않을 선</span>
       <span class="st s-off">총점 없음</span><span class="st s-off">AI 최종 선택 없음</span><span class="st s-off">두 사람 같은 비중</span>
       <span class="st s-off">오류 ≠ 미충족</span><span class="st s-off">동의 없이 조건 안 바꿈</span>
+      <span class="cb xs" style="margin-left:auto">성공 지표로 쓰지 않음 — 결정 시간 단축 · 갈등 감소 · 계약 전환</span>
     </div>
-    <div class="foot">이건 성공 지표로 쓰지 않습니다 — 결정 시간 단축 · 갈등 감소 · 계약 전환 상승 · 탐색 기간 감소</div>
   </div>
 </section>
 
-<!-- 31 ────────────────────────────── -->
-<section class="slide" data-act="4">
-  <span class="chip">위험</span>
-  <h1 class="h1 wide">이 지표가 안 나올 위험 둘은 기능 문제가 아닙니다</h1>
-  <div class="body">
-    <div class="tb" style="grid-template-columns:.6fr 1.5fr 1.5fr .6fr">
-      <div class="th">등급</div><div class="th">위험</div><div class="th">대응</div><div class="th">상태</div>
-      <div class="rl" style="color:var(--no-fg)">치명적</div><div>초대받은 사람이 안 들어옴</div><div>먼저 잰다 · 혼자일 때 경로</div><div><b class="badge b-hy">가설</b></div>
-      <div class="rl" style="color:var(--no-fg)">치명적</div><div>조건 충돌이 늦어짐의 주원인이 아님</div><div>원인을 가르는 인터뷰</div><div><b class="badge b-hy">가설</b></div>
-      <div class="rl">큼</div><div>조건 입력 부담 · 비용 계산 신뢰</div><div>한 번에 다 안 묻고 나눠서 · 숫자 옆에 항상 전제</div><div><b class="badge b-hy">가설</b></div>
-      <div class="rl">큼</div><div>네이버 내부 데이터를 못 쓰게 될 수 있음</div><div>네이버 내부 확인이 필요</div><div><b class="badge b-tbd">미정</b></div>
-      <div class="rl">중간</div><div>집이 나감 · 각자 하나씩 · 관계 데이터</div><div>조건이 남음 · 쓰기 편한지 검증 · 출시 전 정책</div><div><b class="badge b-tbd">미정</b></div>
-    </div>
-    <div class="foot">화면을 더 다듬는 것보다, 전제가 맞는지가 더 급합니다</div>
-  </div>
-</section>
-
-<!-- 32 ────────────────────────────── -->
-<section class="slide" data-act="4">
-  <span class="chip">법·윤리·보안</span>
-  <h1 class="h1 wide">그리고 규제는 기능이 아니라 데이터에서 옵니다</h1>
-  <div class="body">
-    <div class="tb" style="grid-template-columns:.7fr 1.5fr 1.6fr .8fr">
-      <div class="th">등급</div><div class="th">항목</div><div class="th">대응</div><div class="th">상태</div>
-      <div class="rl" style="color:var(--no-fg)">법적 필수</div><div>출근지·예산은 민감한 개인정보</div><div>꼭 필요한 것만 수집 · 목적 외 사용 안 함</div><div><b class="badge b-tbd">출시 전 필수</b></div>
-      <div class="rl" style="color:var(--no-fg)">법적 필수</div><div>상대방에게 내 예산이 보이는가</div><div>서로 보이는 범위를 조건별로 정합니다</div><div><b class="badge b-tbd">미정</b></div>
-      <div class="rl">확정</div><div>중개 행위가 아니다</div><div>정보 제공과 비교만 · 계약과 대출은 안 함</div><div><b class="badge b-ok">확정</b></div>
-      <div class="rl">큼</div><div>데이터를 언제 지우나</div><div>비로그인 30일 · 관계가 끝났을 때 규칙 필요</div><div><b class="badge b-tbd">출시 전 필수</b></div>
-      <div class="rl">중간</div><div>비용 숫자가 금융 조언으로 읽힐 수 있음</div><div>전제와 기준일을 항상 같이 표시</div><div><b class="badge b-ok">확정</b></div>
-    </div>
-    <div class="foot">출근지와 예산은 직장과 소득을 추정할 수 있는 값입니다 — 법률 검토는 아직 받지 않았고, 항목을 식별한 단계입니다</div>
-  </div>
-</section>
-
-<!-- 33 ────────────────────────────── -->
+<!-- 19 · 마무리 -->
 <section class="slide dark" data-act="4">
   <span class="chip">한계와 다음 결정</span>
   <h1 class="h1 wide" style="color:#fff">다음 두 가지를 확인하고 1단계로 갑니다</h1>
   <div class="body">
-    <div class="g3" style="flex:1">
-      <div class="card"><span class="badge b-ok" style="align-self:flex-start">확정</span>
-        <div class="col" style="gap:var(--s2);margin-top:var(--s2)">
-          <span class="cb">저장 이후, 둘이 함께 정하기</span>
-          <span class="cb">조건은 사람에게 저장 · 합산 없음</span>
-          <span class="cb">AI는 설명만 · <span class="nb">보러 갈 집 2개</span>는 사용자가 선택</span>
+    <div class="g3" style="flex:1;min-height:0">
+      <div class="card"><b class="badge b-ok" style="align-self:flex-start">확정</b>
+        <div class="col" style="gap:var(--s2);margin-top:var(--s1)">
+          <span class="cb sm">저장 이후, 둘이 함께 정하기</span>
+          <span class="cb sm">조건은 사람에게 저장 · 합산 없음</span>
+          <span class="cb sm">AI는 설명만 · <span class="nb">보러 갈 집 2개</span>는 사용자가 선택</span>
         </div></div>
-      <div class="card"><span class="badge b-tbd" style="align-self:flex-start">미검증 · 한계</span>
-        <div class="col" style="gap:var(--s2);margin-top:var(--s2)">
-          <span class="cb">늦어지는 원인 — 직접 근거를 못 찾음</span>
-          <span class="cb">Zillow 자료는 미국 · 2020년 · 매매</span>
-          <span class="cb">초대 수락률 · 효과 · 네이버 내부 데이터 미확인</span>
+      <div class="card"><b class="badge b-tbd" style="align-self:flex-start">미검증 · 한계</b>
+        <div class="col" style="gap:var(--s2);margin-top:var(--s1)">
+          <span class="cb sm">늦어지는 원인 — 직접 근거를 못 찾음</span>
+          <span class="cb sm">Zillow 자료는 미국 · 2020년 · 매매</span>
+          <span class="cb sm">초대 수락률 · 네이버 내부 데이터 미확인</span>
         </div></div>
-      <div class="card" style="border-color:var(--accent-lit)"><span class="badge b-hy" style="align-self:flex-start;color:var(--accent-lit);background:rgba(0,229,109,.12);border-color:var(--accent-lit)">다음 결정</span>
-        <div class="col" style="gap:var(--s2);margin-top:var(--s2)">
-          <span class="cb" style="color:#fff">1. 초대받은 사람이 오는지 측정</span>
-          <span class="cb" style="color:#fff">2. 늦어진 원인을 가르는 인터뷰</span>
-          <span class="cb" style="color:#fff">3. 둘 다 통과하면 1단계 프로토타입</span>
+      <div class="card" style="border-color:var(--accent-lit)">
+        <b class="badge" style="align-self:flex-start;color:var(--accent-lit);background:rgba(0,229,109,.12);border-color:var(--accent-lit)">다음 결정</b>
+        <div class="col" style="gap:var(--s2);margin-top:var(--s1)">
+          <span class="cb sm" style="color:#fff">1. 초대받은 사람이 오는지 측정</span>
+          <span class="cb sm" style="color:#fff">2. 늦어진 원인을 가르는 인터뷰</span>
+          <span class="cb sm" style="color:#fff">3. 둘 다 통과하면 1단계 프로토타입</span>
         </div></div>
     </div>
-    <div class="card" style="border-color:rgba(0,229,109,.3)">
-      <span class="lead" style="margin:0;color:#fff;max-width:none;font-size:26px">두 사람이 정말 함께 쓰는지, 조건 차이가 결정을 얼마나 늦추는지를 먼저 확인합니다.<br>확인되면 조건 차이를 설명하는 <span class="g">같이 보기</span> 1단계로 갑니다.</span>
+    <div class="card" style="border-color:rgba(0,229,109,.3);align-items:center;padding:var(--s5)">
+      <span class="lead" style="margin:0;color:#fff;max-width:none;font-size:24px;text-align:center">두 사람이 정말 함께 쓰는지, 조건 차이가 결정을 얼마나 늦추는지를 먼저 확인합니다.<br>확인되면 조건 차이를 설명하는 <span class="g">같이 보기</span> 1단계로 갑니다.</span>
     </div>
-    <div class="foot">IPDAS journals.sagepub.com/doi/full/10.1177/0272989X211021397 · Option Grid ncbi.nlm.nih.gov/pmc/articles/PMC3986464<br>근거 문서 — 팀 브리프 · 가설 · 근거 로그 · 벤치마크 · 화면 설계 · 기획서</div>
+    <div class="foot">IPDAS journals.sagepub.com/doi/full/10.1177/0272989X211021397 · Option Grid ncbi.nlm.nih.gov/pmc/articles/PMC3986464 &nbsp;|&nbsp; 근거 문서 — 팀 브리프 · 가설 · 근거 로그 · 벤치마크 · 화면 설계 · 기획서</div>
   </div>
 </section>
 
 </div></div>
 
 <div id="nav"><button id="prev" aria-label="이전">‹</button><button id="next" aria-label="다음">›</button></div>
-<div id="hint">← → 이동 · O 전체 보기 · F 전체 화면 · 이미지 클릭 확대</div>
+<div id="hint">← → 이동 · O 전체 보기 · F 전체 화면 · 화면 클릭 확대</div>
 
-<div id="lb"><div class="win"><button class="x" aria-label="닫기">✕</button><iframe title="확대"></iframe><div class="lbcap"></div></div></div>
+<div id="lb"><button class="x" aria-label="닫기">✕</button><div class="win"><iframe title="확대"></iframe></div><div class="lbcap"></div></div>
 <div id="ov"></div>
 
 <script type="text/plain" id="proto">__PROTO__</script>
 <script>
-const PROTO = document.getElementById('proto').textContent.replace(/<\\\/script>/g,'<\/script>');
+const RAW = document.getElementById('proto').textContent;
+const PROTO = RAW.replace(/<\\\/script>/g, '<\/script>');
+// 프로토타입은 location.search 로 모바일 모드를 판단한다. srcdoc 에는 search 가 없어 직접 켠다.
+const PROTO_M = PROTO.replace("new URLSearchParams(location.search).has('b')", "true");
+
 const slides = [...document.querySelectorAll('.slide')];
 const N = slides.length;
 const ACTS = [[1,'왜 만드나'],[2,'어떻게 푸나'],[3,'무엇을 만드나'],[4,'어떻게 확인하나']];
-const TALK = new Set([1,2,4,6,12,13,18,19,20,23,25,30,33]);
+const TALK = new Set([1,2,3,5,8,10,11,12,13,14,15,18,19]);
 let cur = 0;
 
-// 진행바
 const bar = document.getElementById('bar');
 ACTS.forEach(([a])=>{
-  const n = slides.filter(s=>s.dataset.act==String(a)).length;
+  const n = slides.filter(s=>s.dataset.act == String(a)).length;
   const i = document.createElement('i'); i.style.flex = n; i.dataset.act = a; bar.appendChild(i);
 });
-
-// 페이지 번호
 slides.forEach((s,i)=>{
-  const p = document.createElement('div'); p.className='pno';
+  const p = document.createElement('div'); p.className = 'pno';
   p.innerHTML = '<span class="num">'+String(i+1).padStart(2,'0')+'</span> / '+N;
   s.appendChild(p);
 });
 
 function fitScale(){
-  const k = Math.min(innerWidth/1280, innerHeight/720);
-  document.getElementById('deck').style.transform = 'scale('+k+')';
+  document.getElementById('deck').style.transform =
+    'scale('+Math.min(innerWidth/1280, innerHeight/720)+')';
 }
 addEventListener('resize', fitScale); fitScale();
 
-function protoStep(frame, key){
+function dressProto(d, key, keepGnb){
   try{
-    const d = frame.contentDocument; if(!d) return;
-    // 덱 안에서는 제품 크롬을 숨긴다 — 덱의 진행바와 겹친다
-    d.querySelectorAll('.gnb, .flow, .lnb, aside').forEach(e=>{ e.style.display='none'; });
-    const sh = d.querySelector('.shell'); if(sh) sh.style.gridTemplateColumns='1fr';
-    d.querySelectorAll('[style*="sticky"]').forEach(e=>{ e.style.position='static'; });
-    const m = d.querySelector('.main'); if(m){ m.style.paddingTop='0'; }
-    d.body.style.background='#fff';
+    // 덱 안에서는 제품 크롬을 숨긴다 — 덱의 진행바·라벨과 겹친다
+    d.querySelectorAll('.gnb, .flow, .lnb, aside').forEach(e=>{ e.style.display = 'none'; });
+    const sh = d.querySelector('.shell'); if(sh) sh.style.gridTemplateColumns = '1fr';
+    d.querySelectorAll('[style*="sticky"]').forEach(e=>{ e.style.position = 'static'; });
+    const m = d.querySelector('.main'); if(m) m.style.paddingTop = '0';
+    d.body.style.background = '#fff';
     if(key === 'm'){
       const mb = d.querySelector('.mbody');
-      if(mb){ mb.style.setProperty('max-width','none','important'); }
+      if(mb) mb.style.setProperty('max-width','none','important');
     }else{
-      d.querySelectorAll('.step[data-step]').forEach(s=>s.classList.toggle('on', s.dataset.step===String(key)));
+      d.querySelectorAll('.step[data-step]')
+       .forEach(s=>s.classList.toggle('on', s.dataset.step === String(key)));
     }
+    if(keepGnb) d.querySelectorAll('.gnb').forEach(e=>{ e.style.display = ''; });
     d.documentElement.scrollTop = 0;
   }catch(e){}
 }
@@ -903,12 +913,9 @@ function loadFrames(){
     const near = Math.abs(i - cur) <= 1;
     if(near && !f.dataset.on){
       f.dataset.on = '1';
-      f.onload = ()=>protoStep(f, key);
-      // 프로토타입은 location.search 로 모바일 모드를 판단한다 — srcdoc 에는 search 가 없어 직접 켠다
-      f.srcdoc = key === 'm'
-        ? PROTO.replace("new URLSearchParams(location.search).has('b')", "true")
-        : PROTO;
-    } else if(!near && f.dataset.on){
+      f.onload = ()=>dressProto(f.contentDocument, key, false);
+      f.srcdoc = key === 'm' ? PROTO_M : PROTO;
+    }else if(!near && f.dataset.on){
       f.dataset.on = ''; f.srcdoc = '';
     }
   });
@@ -916,62 +923,78 @@ function loadFrames(){
 
 function go(n){
   cur = Math.max(0, Math.min(N-1, n));
-  slides.forEach((s,i)=>s.classList.toggle('on', i===cur));
+  slides.forEach((s,i)=>s.classList.toggle('on', i === cur));
   const act = +slides[cur].dataset.act;
   [...bar.children].forEach(i=>{
     const a = +i.dataset.act;
     i.className = a < act ? 'done' : (a === act ? 'cur' : '');
   });
   loadFrames();
-  location.hash = cur + 1;
+  if(location.hash !== '#'+(cur+1)) location.hash = cur + 1;
 }
 
-// 라이트박스
-const lb = document.getElementById('lb');
+// ── 확대 ──
+const lb  = document.getElementById('lb');
+const win = lb.querySelector('.win');
 const lbf = lb.querySelector('iframe');
 const lbc = lb.querySelector('.lbcap');
+
+function sizeWin(mob){
+  const availW = innerWidth - 72, availH = innerHeight - 88;
+  // 모바일은 폰 폭 430 을 유지한다 — 넓히면 데스크톱 CSS 가 걸려 폰이 아니게 된다.
+  // 높이를 창에 맞춰 잘라 두면 배율이 1 아래로 떨어지지 않는다 (안이 스크롤된다).
+  const w = mob ? 430 : 1240;
+  const h = mob ? Math.min(900, availH) : 900;
+  win.style.width = w+'px'; win.style.height = h+'px';
+  const fit = Math.min(availW/w, availH/h);
+  const k = mob ? Math.max(1, Math.min(fit, 1.9)) : Math.min(fit, 1.6);
+  win.style.transform = 'scale('+k+')';
+}
+
 function zoom(s){
   const key = s.dataset.proto; if(key === undefined) return;
-  lbf.onload = ()=>protoStep(lbf, key);
-  lbf.srcdoc = key === 'm'
-    ? PROTO.replace("new URLSearchParams(location.search).has('b')", "true")
-    : PROTO;
-  lbc.textContent = (s.querySelector('.cap')||{}).textContent || '';
+  const mob = key === 'm';
+  win.classList.toggle('mob', mob);
+  sizeWin(mob);
+  lbf.onload = ()=>dressProto(lbf.contentDocument, key, true);
+  lbf.srcdoc = mob ? PROTO_M : PROTO;
+  lbc.textContent = ((s.querySelector('.cap')||{}).textContent || '') + '  —  Esc 로 닫기';
   lb.classList.add('on');
 }
 function closeLb(){ lb.classList.remove('on'); lbf.srcdoc = ''; }
 lb.addEventListener('click', e=>{ if(e.target === lb || e.target.classList.contains('x')) closeLb(); });
+addEventListener('resize', ()=>{ if(lb.classList.contains('on')) sizeWin(win.classList.contains('mob')); });
 document.addEventListener('click', e=>{
   const fr = e.target.closest('.frame'); if(fr) zoom(fr.closest('.slide'));
 });
 
-// 개요
+// ── 개요 ──
 const ov = document.getElementById('ov');
-function buildOv(){
-  ov.innerHTML = '<div class="lg">막대 표시가 있는 장이 말하는 장입니다 — 12장 · 나머지는 넘기거나 한 줄</div>';
-  ACTS.forEach(([a,name])=>{
-    const h = document.createElement('h2'); h.textContent = name; ov.appendChild(h);
-    const g = document.createElement('div'); g.className = 'gr';
-    slides.forEach((s,i)=>{
-      if(s.dataset.act != String(a)) return;
-      const b = document.createElement('button');
-      b.className = 'th' + (TALK.has(i+1) ? ' talk' : '');
-      const t = (s.querySelector('.h1, .display')||{}).textContent || '표지';
-      b.innerHTML = '<b>'+String(i+1).padStart(2,'0')+'</b><span>'+t.slice(0,44)+'</span>';
-      b.onclick = ()=>{ ov.classList.remove('on'); go(i); };
-      g.appendChild(b);
-    });
-    ov.appendChild(g);
+ov.innerHTML = '<div class="lg">막대 표시가 있는 장이 말하는 장입니다 — '+TALK.size+'장 · 나머지는 넘기거나 한 줄</div>';
+ACTS.forEach(([a,name])=>{
+  const h = document.createElement('h2'); h.textContent = name; ov.appendChild(h);
+  const g = document.createElement('div'); g.className = 'gr';
+  slides.forEach((s,i)=>{
+    if(s.dataset.act != String(a)) return;
+    const b = document.createElement('button');
+    b.className = 'th' + (TALK.has(i+1) ? ' talk' : '');
+    const t = (s.querySelector('.h1, .display')||{}).textContent || '표지';
+    b.innerHTML = '<b>'+String(i+1).padStart(2,'0')+'</b><span>'+t.slice(0,46)+'</span>';
+    b.onclick = ()=>{ ov.classList.remove('on'); go(i); };
+    g.appendChild(b);
   });
-}
-buildOv();
+  ov.appendChild(g);
+});
 
 document.getElementById('prev').onclick = ()=>go(cur-1);
 document.getElementById('next').onclick = ()=>go(cur+1);
 
 let buf = '';
 addEventListener('keydown', e=>{
-  if(e.key === 'Escape'){ if(lb.classList.contains('on')) closeLb(); else ov.classList.remove('on'); return; }
+  if(e.key === 'Escape'){
+    if(lb.classList.contains('on')) closeLb(); else ov.classList.remove('on');
+    return;
+  }
   if(lb.classList.contains('on')) return;
   if(/^[0-9]$/.test(e.key)){ buf += e.key; return; }
   if(e.key === 'Enter' && buf){ go(+buf - 1); buf = ''; return; }
@@ -981,9 +1004,10 @@ addEventListener('keydown', e=>{
   else if(e.key === 'Home') go(0);
   else if(e.key === 'End') go(N-1);
   else if(e.key.toLowerCase() === 'o') ov.classList.toggle('on');
-  else if(e.key.toLowerCase() === 'f'){ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+  else if(e.key.toLowerCase() === 'f'){
+    document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+  }
 });
-
 addEventListener('hashchange', ()=>{
   const n = (parseInt(location.hash.slice(1)) || 1) - 1;
   if(n !== cur) go(n);
