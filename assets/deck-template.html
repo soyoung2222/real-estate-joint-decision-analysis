@@ -873,7 +873,11 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
 <script type="text/plain" id="proto">__PROTO__</script>
 <script>
 const RAW = document.getElementById('proto').textContent;
-const PROTO = RAW.replace(/<\\\/script>/g, '<\/script>');
+// srcdoc 안에서는 상대 URL 이 부모 문서 기준으로 해석된다.
+// 프로토타입의 <iframe src="?b=1"> 이 deck.html?b=1 을 요청해 덱이 재귀로 로드됐다.
+// file:// 로 열면 쿼리가 무시되어 덱 안에 덱이 들어간다 — src 를 끊는다.
+const PROTO = RAW.replace(/<\\\/script>/g, '<\/script>')
+                 .split('src="?b=1"').join('src="about:blank"');
 // 프로토타입은 location.search 로 모바일 모드를 판단한다. srcdoc 에는 search 가 없어 직접 켠다.
 const PROTO_M = PROTO.replace("new URLSearchParams(location.search).has('b')", "true");
 
