@@ -105,6 +105,7 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
   overflow:hidden;background:var(--surface);cursor:zoom-in;
   box-shadow:0 1px 2px rgba(26,29,36,.04),0 8px 24px rgba(26,29,36,.06)}
 .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;background:#fff}
+#deck{outline:none}
 .frame.mob iframe{left:50%;width:430px;transform:translateX(-50%)}
 .frame .zi{position:absolute;right:12px;bottom:12px;width:34px;height:34px;border-radius:var(--r-s);
   background:rgba(26,29,36,.82);color:#fff;display:grid;place-items:center;font-size:15px;pointer-events:none}
@@ -147,7 +148,7 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
 </style>
 
 <div id="bar"></div>
-<div id="stage"><div id="deck">
+<div id="stage"><div id="deck" tabindex="-1">
 
 <!-- 1 · 표지 -->
 <section class="slide dark" data-act="1">
@@ -691,7 +692,7 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
   <span class="chip">To-Be · 핵심 화면 ①</span>
   <h1 class="h1 wide">초대받은 사람은 조건보다 집을 먼저 봅니다</h1>
   <div class="body">
-    <div class="frame mob"><iframe title="모바일 진입 화면"></iframe><span class="zi">⤢</span></div>
+    <div class="frame mob"><iframe title="모바일 진입 화면" tabindex="-1"></iframe><span class="zi">⤢</span></div>
     <div class="cap">집 5개와 상대가 바라는 것을 먼저 — 필수 입력은 예산과 출근 여부 두 개 · 클릭하면 직접 조작</div>
   </div>
 </section>
@@ -701,7 +702,7 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
   <span class="chip">To-Be · 핵심 화면 ②</span>
   <h1 class="h1 wide">누가 무엇을 얼마나 감수하는지</h1>
   <div class="body">
-    <div class="frame"><iframe title="양보 지점 화면"></iframe><span class="zi">⤢</span></div>
+    <div class="frame"><iframe title="양보 지점 화면" tabindex="-1"></iframe><span class="zi">⤢</span></div>
     <div class="cap">A는 역 도보 3분을 감수 · B는 감수하는 조건 없음 — 두 사람 칸의 크기와 순서가 같습니다</div>
   </div>
 </section>
@@ -711,7 +712,7 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
   <span class="chip">To-Be · 핵심 화면 ③</span>
   <h1 class="h1 wide">남은 한 자리만 다시 비교합니다</h1>
   <div class="body">
-    <div class="frame"><iframe title="보러 갈 집 정하기 화면"></iframe><span class="zi">⤢</span></div>
+    <div class="frame"><iframe title="보러 갈 집 정하기 화면" tabindex="-1"></iframe><span class="zi">⤢</span></div>
     <div class="cap">겹친 1개는 그대로 확정 · 총점 행이 없습니다</div>
   </div>
 </section>
@@ -731,7 +732,7 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
         <span class="cb sm">조건은 매물이 아니라 <b>사람</b>에게 저장 — 새 매물이 나와도 다시 대조됩니다</span>
         <span class="cb sm" style="margin-top:auto">판정 가능한 6개<br>예산 · 통근시간 · 역 도보 · 전용면적 · 주차 · 매물 유형</span>
       </div>
-      <div class="frame"><iframe title="판정 3분류 화면"></iframe><span class="zi">⤢</span></div>
+      <div class="frame"><iframe title="판정 3분류 화면" tabindex="-1"></iframe><span class="zi">⤢</span></div>
     </div>
     <div class="cap">둘 다 충족 1개 · 한쪽만 2개 · 둘 다 불충족 2개 — 클릭하면 직접 조작</div>
   </div>
@@ -3367,6 +3368,14 @@ function dressProto(d, key, keepGnb){
     }
     if(keepGnb) d.querySelectorAll('.gnb').forEach(e=>{ e.style.display = ''; });
     d.documentElement.scrollTop = 0;
+    // 프로토타입이 로드 직후 h1.focus() 로 포커스를 가져간다 — 부모가 키를 못 받는다.
+    // iframe 안에서도 같은 핸들러가 돌게 하고, 슬라이드 안일 때는 포커스를 되돌린다.
+    d.removeEventListener('keydown', onKey);
+    d.addEventListener('keydown', onKey);
+    if(!keepGnb){
+      if(d.activeElement && d.activeElement !== d.body) d.activeElement.blur();
+      requestAnimationFrame(()=>{ try{ document.getElementById('deck').focus({preventScroll:true}); }catch(e){} });
+    }
   }catch(e){}
 }
 
@@ -3394,6 +3403,8 @@ function go(n){
     i.className = a < act ? 'done' : (a === act ? 'cur' : '');
   });
   loadFrames();
+  // iframe 이 포커스를 가지고 있으면 키가 안 먹는다 — 매번 덱으로 회수한다
+  try{ document.getElementById('deck').focus({preventScroll:true}); }catch(e){}
   if(location.hash !== '#'+(cur+1)) location.hash = cur + 1;
 }
 
@@ -3420,7 +3431,11 @@ function zoom(s){
   const mob = key === 'm';
   win.classList.toggle('mob', mob);
   sizeWin(mob);
-  lbf.onload = ()=>dressProto(lbf.contentDocument, key, true);
+  lbf.onload = ()=>{
+    dressProto(lbf.contentDocument, key, true);
+    // 확대 중에는 프로토타입을 직접 조작하므로 Esc 만 가로챈다
+    lbf.contentDocument.addEventListener('keydown', ev=>{ if(ev.key === 'Escape') closeLb(); });
+  };
   lbf.srcdoc = mob ? PROTO_M : PROTO;
   lbc.textContent = ((s.querySelector('.cap')||{}).textContent || '') + '  —  Esc 로 닫기';
   lb.classList.add('on');
@@ -3454,7 +3469,7 @@ document.getElementById('prev').onclick = ()=>go(cur-1);
 document.getElementById('next').onclick = ()=>go(cur+1);
 
 let buf = '';
-addEventListener('keydown', e=>{
+function onKey(e){
   if(e.key === 'Escape'){
     if(lb.classList.contains('on')) closeLb(); else ov.classList.remove('on');
     return;
@@ -3471,7 +3486,8 @@ addEventListener('keydown', e=>{
   else if(e.key.toLowerCase() === 'f'){
     document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
   }
-});
+}
+addEventListener('keydown', onKey);
 addEventListener('hashchange', ()=>{
   const n = (parseInt(location.hash.slice(1)) || 1) - 1;
   if(n !== cur) go(n);
