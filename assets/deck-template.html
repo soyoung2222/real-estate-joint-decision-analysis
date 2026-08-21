@@ -52,7 +52,6 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
 .body.center{justify-content:center}
 .slide[data-proto] .body{gap:var(--s3)}
 .slide[data-proto] .h1{font-size:38px}
-.slide.fin .foot{border:0;color:#5F6B7A}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)}
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3)}
@@ -824,9 +823,9 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
 </section>
 
 <!-- 19 · 한계와 다음 결정 -->
-<section class="slide" data-act="4">
+<section class="slide dark" data-act="4">
   <span class="chip">한계와 다음 결정</span>
-  <h1 class="h1 wide">다음 두 가지를 확인하고 1단계로 갑니다</h1>
+  <h1 class="h1 wide" style="color:#fff">다음 두 가지를 확인하고 1단계로 갑니다</h1>
   <div class="body">
     <div class="g3" style="flex:1;min-height:0">
       <div class="card"><b class="badge b-ok" style="align-self:flex-start">확정</b>
@@ -841,35 +840,22 @@ figcaption{font-size:var(--fs-micro);font-weight:600;color:var(--ink-3);text-wra
           <span class="cb sm">Zillow 자료는 미국 · 2020년 · 매매</span>
           <span class="cb sm">초대 수락률 · 네이버 내부 데이터 미확인</span>
         </div></div>
-      <div class="card hi">
-        <b class="badge b-ok" style="align-self:flex-start">다음 결정</b>
+      <div class="card" style="border-color:var(--accent-lit)">
+        <b class="badge" style="align-self:flex-start;color:var(--accent-lit);background:rgba(0,229,109,.12);border-color:var(--accent-lit)">다음 결정</b>
         <div class="col" style="gap:var(--s2);margin-top:var(--s1)">
-          <span class="cb sm" style="color:var(--ink)"><b>1.</b> 초대받은 사람이 오는지 3단 깔때기로 측정</span>
-          <span class="cb sm" style="color:var(--ink)"><b>2.</b> 늦어진 원인을 가르는 인터뷰</span>
-          <span class="cb sm" style="color:var(--ink)"><b>3.</b> 둘 다 통과하면 1단계 프로토타입</span>
+          <span class="cb sm" style="color:#fff"><b>1.</b> 초대받은 사람이 오는지 3단 깔때기로 측정</span>
+          <span class="cb sm" style="color:#fff"><b>2.</b> 늦어진 원인을 가르는 인터뷰</span>
+          <span class="cb sm" style="color:#fff"><b>3.</b> 둘 다 통과하면 1단계 프로토타입</span>
         </div></div>
     </div>
-    <div class="card tint" style="align-items:center;padding:var(--s4)">
-      <span class="lead" style="margin:0;color:var(--ink);max-width:none;font-size:23px;text-align:center">두 사람이 정말 함께 쓰는지, 조건 차이가 결정을 얼마나 늦추는지를 먼저 확인합니다.</span>
+    <div class="card" style="border-color:rgba(0,229,109,.3);align-items:center;padding:var(--s5)">
+      <span class="lead" style="margin:0;color:#fff;max-width:none;font-size:24px;text-align:center">두 사람이 정말 함께 쓰는지, 조건 차이가 결정을 얼마나 늦추는지를 먼저 확인합니다.<br>확인되면 조건 차이를 설명하는 <span class="g">같이 보기</span> 1단계로 갑니다.</span>
     </div>
     <div class="foot">IPDAS journals.sagepub.com/doi/full/10.1177/0272989X211021397 · Option Grid ncbi.nlm.nih.gov/pmc/articles/PMC3986464 &nbsp;|&nbsp; 근거 문서 — 팀 브리프 · 가설 · 근거 로그 · 벤치마크 · 화면 설계 · 기획서</div>
   </div>
 </section>
 
-<!-- 20 · 발표 마무리 -->
-<section class="slide dark fin" data-act="4">
-  <div class="body center" style="align-items:center;gap:var(--s5);margin:0">
-    <span class="chip" style="align-self:center">네이버 매물 · 같이 보기</span>
-    <div class="display" style="text-align:center;font-size:62px">각자의 조건과 <span class="g">양보 지점</span>을 보고,<br>함께 <span class="g">보러 갈 집</span>을 정합니다.</div>
-    <div style="width:96px;height:2px;background:var(--accent-lit);margin:var(--s3) 0"></div>
-    <div class="lead" style="text-align:center;max-width:none;margin:0;font-size:30px;color:#fff;font-weight:700">감사합니다</div>
-    <div class="cb" style="text-align:center">질문 있으시면 말씀해 주세요 — <span class="nb">O 키로 전체 목록</span>을 열어 해당 장으로 바로 갑니다</div>
-  </div>
-  <div class="foot" style="display:flex;align-items:center;gap:var(--s5);padding-bottom:var(--s4)">
-    <span>서비스 역기획 · 4조 · 2026년 8월</span>
-    <span style="margin-left:auto">프로토타입은 이 덱 안에서 바로 조작할 수 있습니다</span>
-  </div>
-</section>
+
 
 </div></div>
 
@@ -889,7 +875,7 @@ const PROTO_M = PROTO.replace("new URLSearchParams(location.search).has('b')", "
 const slides = [...document.querySelectorAll('.slide')];
 const N = slides.length;
 const ACTS = [[1,'왜 만드나'],[2,'어떻게 푸나'],[3,'무엇을 만드나'],[4,'어떻게 확인하나']];
-const TALK = new Set([1,2,3,5,8,10,11,12,13,14,15,18,20]);
+const TALK = new Set([1,2,3,5,8,10,11,12,13,14,15,18,19]);
 let cur = 0;
 
 const bar = document.getElementById('bar');
